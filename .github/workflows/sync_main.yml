@@ -13,12 +13,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.EXTERNAL_VAULT_TOKEN }}
           ref: main
 
       - name: Add remote url
         run: |
           echo "Adding remote URL"
-          git remote add external-vault https://${{ secrets.EXTERNAL_VAULT_USERNAME }}:${{ secrets.EXTERNAL_VAULT_TOKEN }}@${{ secrets.EXTERNAL_VAULT_URL }}
+          git remote add external-vault ${{ secrets.EXTERNAL_VAULT_URL }}
           git config user.name ${{ secrets.EXTERNAL_VAULT_USERNAME }}
           git config user.email ${{ secrets.EXTERNAL_VAULT_EMAIL }}
 
