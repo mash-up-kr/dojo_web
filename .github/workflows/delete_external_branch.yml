@@ -1,0 +1,23 @@
+name: Delete Branch on PR Close/Merge
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.EXTERNAL_VAULT_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Delete branch in external vault
+        run: |
+          curl -X DELETE \
+            -H "Authorization: token ${{ secrets.EXTERNAL_VAULT_TOKEN }}" \
+            https://api.externalrepo.com/repos/owner/repo/branches/${{ github.event.pull_request.head.ref }}
