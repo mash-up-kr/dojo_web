@@ -11,6 +11,4 @@ jobs:
     steps:
       - name: Delete branch in external vault
         run: |
-          curl -X DELETE \
-            -H "Authorization: token ${{ secrets.EXTERNAL_VAULT_TOKEN }}" \
-            https://api.externalrepo.com/repos/owner/repo/branches/${{ github.event.pull_request.head.ref }}
+          curl -s -X DELETE -u ${{ secrets.EXTERNAL_VAULT_USERNAME }}:${{ secrets.EXTERNAL_VAULT_TOKEN }} https://api.github.com/repos/${{ secrets.EXTERNAL_VAULT_USERNAME }}/dojo-web/git/refs/heads/${{ github.event.pull_request.head.ref }}
