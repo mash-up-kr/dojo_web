@@ -26,7 +26,7 @@ jobs:
       - name: Push changes to external-vault 
         run: |
           echo "Pushing changes to external-vault main branch"
-          git push --force-with-lease external-vault main
+          git push --force external-vault main
 
       - name: Clean up
         run: |
