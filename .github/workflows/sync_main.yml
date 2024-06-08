@@ -1,0 +1,40 @@
+name: Sync with external vault
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Add remote url
+        run: |
+          echo "Adding remote URL"
+          git remote add external-vault ${{ secrets.EXTERNAL_VAULT_URL }}
+          git config user.name ${{ secrets.EXTERNAL_VAULT_USERNAME }}
+          git config user.email ${{ secrets.EXTERNAL_VAULT_EMAIL }}
+
+      - name: Fetch and Merge external-vault changes
+        run: |
+          echo "Fetching changes from external vault"
+          git fetch external-vault
+          echo "Merging changes from external-vault/main into main"
+          git merge external-vault/main --allow-unrelated-histories
+
+      - name: Push changes to external-vault 
+        run: |
+          echo "Pushing changes to external-vault main branch"
+          git push external-vault main
+
+      - name: Clean up
+        run: |
+          echo "Removing external-vault remote"
+          git remote remove external-vault
