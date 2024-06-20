@@ -12,6 +12,18 @@ declare module "@tanstack/react-router" {
 	}
 }
 
+const isMockingEnabled = import.meta.env.VITE_ENABLED_MOCKING === "true";
+
+async function enabledMocking() {
+	if (!isMockingEnabled) {
+		return;
+	}
+	const { worker } = await import("./mocks/browser");
+
+	worker.start();
+	return worker;
+}
+
 // Set up a Router instance
 const router = createRouter({
 	routeTree,
@@ -20,9 +32,11 @@ const router = createRouter({
 
 const root = document.getElementById("root");
 if (root) {
-	ReactDOM.createRoot(root).render(
-		<React.StrictMode>
-			<RouterProvider router={router} />
-		</React.StrictMode>,
-	);
+	enabledMocking().then(() => {
+		ReactDOM.createRoot(root).render(
+			<React.StrictMode>
+				<RouterProvider router={router} />
+			</React.StrictMode>,
+		);
+	});
 }
