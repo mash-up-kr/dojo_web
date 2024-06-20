@@ -1,36 +1,41 @@
 {
-  "name": "react-template",
-  "private": true,
-  "version": "0.0.1",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "biome check",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@tanstack/react-query": "^5.45.0",
-    "@tanstack/react-router": "^1.38.1",
-    "clsx": "^2.1.1",
-    "jotai": "^2.8.3",
-    "react": "19.0.0-beta-26f2496093-20240514",
-    "react-dom": "19.0.0-beta-26f2496093-20240514"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "1.8.1",
-    "@tanstack/router-devtools": "^1.38.1",
-    "@tanstack/router-vite-plugin": "^1.38.0",
-    "@types/node": "^20.14.2",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@vitejs/plugin-react": "^4.2.1",
-    "autoprefixer": "^10.4.19",
-    "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.4",
-    "typescript": "^5.4.5",
-    "vite": "^5.2.0",
-    "vite-plugin-svgr": "^4.2.0"
-  },
-  "packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631"
+	"name": "react-template",
+	"private": true,
+	"version": "0.0.1",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"dev:msw": "vite --mode msw",
+		"build": "tsc && vite build",
+		"lint": "biome check",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@tanstack/react-query": "^5.45.0",
+		"@tanstack/react-router": "^1.38.1",
+		"clsx": "^2.1.1",
+		"jotai": "^2.8.3",
+		"react": "19.0.0-beta-26f2496093-20240514",
+		"react-dom": "19.0.0-beta-26f2496093-20240514"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.8.1",
+		"@tanstack/router-devtools": "^1.38.1",
+		"@tanstack/router-vite-plugin": "^1.38.0",
+		"@types/node": "^20.14.2",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@vitejs/plugin-react": "^4.2.1",
+		"autoprefixer": "^10.4.19",
+		"msw": "2.3.1",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.4",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.0",
+		"vite-plugin-svgr": "^4.2.0"
+	},
+	"packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631",
+	"msw": {
+		"workerDirectory": ["public"]
+	}
 }
