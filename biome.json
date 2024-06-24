@@ -13,7 +13,8 @@
 		"ignore": [
 			"src/routeTree.gen.ts",
 			"src/tailwindcss.css",
-			"public/mockServiceWorker.js"
+			"public/mockServiceWorker.js",
+			"src/apis"
 		]
 	}
 }
