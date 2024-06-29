@@ -1,5 +1,6 @@
 import plugin from "tailwindcss/plugin";
 import backgroundLinear from "./tailwind-config/plugins/bg-linear";
+import bubbleArrow from "./tailwind-config/plugins/bubble-arrow";
 import scrollbarHide from "./tailwind-config/plugins/scrollbar-hide";
 import translateHalf from "./tailwind-config/plugins/translate-half";
 import borderRadius from "./tailwind-config/tokens/borderRadius";
@@ -21,6 +22,7 @@ const config = {
     scrollbarHide,
     translateHalf,
     backgroundLinear,
+    bubbleArrow,
     plugin(({ addComponents }) => {
       addComponents({ ...typography });
     }),

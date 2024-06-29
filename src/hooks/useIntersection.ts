@@ -17,7 +17,7 @@ type UseIntersectionObserverOptions = {
   initialIsIntersecting?: boolean;
 };
 
-type IntersectionReturn = [
+export type IntersectionReturn = [
   (node?: Element | null) => void,
   boolean,
   IntersectionObserverEntry | undefined,

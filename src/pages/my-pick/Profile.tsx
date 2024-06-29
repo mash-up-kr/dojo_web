@@ -1,9 +1,15 @@
 import Image from "@/components/common/Image";
+import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@tanstack/react-router";
+import { forwardRef } from "react";
 
-export const Profile = () => {
+export const Profile = ({
+  profileRef,
+}: {
+  profileRef: IntersectionReturn["ref"];
+}) => {
   return (
-    <div className="bg-gradient-purple px-4 pb-5 pt-[52px]">
+    <div className="bg-gradient-purple px-4 pb-5 pt-[52px]" ref={profileRef}>
       <div className="flex items-center">
         <Image
           src="https://picsum.photos/seed/picsum/200/300"
@@ -31,3 +37,5 @@ export const Profile = () => {
     </div>
   );
 };
+
+Profile.displayName = "Profile";
