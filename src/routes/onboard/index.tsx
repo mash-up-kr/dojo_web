@@ -1,14 +1,16 @@
+import { apiClient } from "@/apis/api-client";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
-import { createFileRoute } from "@tanstack/react-router";
-import { useRef } from "react";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { useRef, useState } from "react";
 
 export const Route = createFileRoute("/onboard/")({
   component: OnBoardPage,
 });
 
 function OnBoardPage() {
+  const [imageSrc, setImageSrc] = useState();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleButtonClick = () => {
@@ -17,33 +19,32 @@ function OnBoardPage() {
     }
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     if (file) {
-      console.log(file);
+      const response = await apiClient.request({
+        path: "/image",
+        method: "POST",
+        body: { file },
+      });
+      setImageSrc(response.data.url);
     }
-  };
-
-  const handleNextClick = () => {
-    console.log("Next button clicked");
   };
 
   return (
     <div>
       <Header
         right={
-          <button
-            type="button"
-            onClick={handleNextClick}
-            className="text-purple100 t-h5-sb-17"
-          >
+          <Link to="/vote" className="text-purple100 t-h5-sb-17">
             다음
-          </button>
+          </Link>
         }
       />
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center w-[280px] mt-[140px]">
-          <Image alt="Profile Image" w={80} h={80} />
+          <Image src={imageSrc} alt="Profile Image" w={80} h={80} />
           <div className="mt-3 flex flex-col items-center space-y-1">
             <h1 className="t-h4-b-20">낭은영</h1>
             <p className="t-b3-r-14 bg-grey054">14기 Product Design</p>
