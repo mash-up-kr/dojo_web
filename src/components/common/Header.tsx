@@ -29,13 +29,13 @@ export const Header = ({
         className,
       )}
     >
-      {left ? <div className="flex-shrink-0">{left}</div> : null}
+      {left ? <div className="flex-shrink-0 z-[11]">{left}</div> : null}
       {title ? (
         <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[60px] max-w-full">
           {title}
         </h1>
       ) : null}
-      {right ? <div className="flex-shrink-0">{right}</div> : null}
+      {right ? <div className="flex-shrink-0 z-[11]">{right}</div> : null}
     </header>
   );
 };
