@@ -7,26 +7,26 @@ import clsx from "clsx";
 import React from "react";
 import { customRipple } from "use-ripple-hook";
 
-export const Route = createFileRoute("/vote")({
+export const Route = createFileRoute("/vote/")({
   component: VotePage,
 });
 
-const bg = getGradientBg();
+export const voteRandomBg = getGradientBg();
 
 function VotePage() {
   const [selection, setSelection] = React.useState<number | null>(null);
 
   return (
-    <div className={clsx("h-screen", bg)}>
+    <div className={clsx("h-screen", voteRandomBg)}>
       <Header
         left={<HeaderLogo />}
         title="테스트입니다"
         right={<div className="w-8 h-8 bg-grey084 rounded-full" />}
       />
       <main className="flex flex-col gap-3 py-6 px-8 items-center">
+        <Indicator current={7} total={12} />
         {/* question */}
         <div className="flex flex-col items-center gap-3">
-          <Indicator current={1} total={12} />
           <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
             매쉬업에서 술 제일 잘 마실 것 같은 사람은?
           </p>
@@ -62,8 +62,16 @@ function VotePage() {
 
 function Indicator({ current, total }: { current: number; total: number }) {
   return (
-    <div className="px-2 py-1 text-gray054 t-h6-sb-15 bg-offWhite010/30 rounded-8">
-      <span className="text-gray084">{current}</span> of {total}
+    <div className="w-full flex flex-col items-center space-y-6">
+      <div className="relative w-full h-[2px] bg-purple100/30 rounded-full">
+        <div
+          className="absolute inset-0 h-[2px] bg-purple100 rounded-full"
+          style={{ width: `${(current / total) * 100}%` }}
+        />
+      </div>
+      <div className="px-2 py-1 text-purple100/30 t-h6-sb-15 bg-offWhite010/30 rounded-8">
+        <span className="text-purple100">{current}</span> of {total}
+      </div>
     </div>
   );
 }
