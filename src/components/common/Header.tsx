@@ -17,11 +17,10 @@ export const Header = ({
   right,
   title,
   className,
-}: AtLeastOne<{
+}: { className?: string } & AtLeastOne<{
   left: ReactNode;
   right: ReactNode;
-  title?: string;
-  className?: string;
+  title: string;
 }>) => {
   return (
     <header
@@ -30,17 +29,13 @@ export const Header = ({
         className,
       )}
     >
-      {left ? (
-        <div className="absolute top-4 left-4 flex-shrink-0">{left}</div>
-      ) : null}
+      {left ? <div className="flex-shrink-0">{left}</div> : null}
       {title ? (
-        <h1 className="t-h5-sb-17 grow text-center truncate flex-1 px-[60px]">
+        <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[60px]">
           {title}
         </h1>
       ) : null}
-      {right ? (
-        <div className="absolute top-4 right-4 flex-shrink-0">{right}</div>
-      ) : null}
+      {right ? <div className="flex-shrink-0">{right}</div> : null}
     </header>
   );
 };
