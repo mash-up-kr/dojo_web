@@ -1,10 +1,10 @@
 import plugin from "tailwindcss/plugin";
+import backgroundLinear from "./tailwind-config/plugins/bg-linear";
 import scrollbarHide from "./tailwind-config/plugins/scrollbar-hide";
 import translateHalf from "./tailwind-config/plugins/translate-half";
 import borderRadius from "./tailwind-config/tokens/borderRadius";
 import colors from "./tailwind-config/tokens/colors";
 import fontFamily from "./tailwind-config/tokens/fontFamily";
-import spacing from "./tailwind-config/tokens/spacing";
 import typography from "./tailwind-config/tokens/typography";
 
 const config = {
@@ -20,6 +20,7 @@ const config = {
   plugins: [
     scrollbarHide,
     translateHalf,
+    backgroundLinear,
     plugin(({ addComponents }) => {
       addComponents({ ...typography });
     }),
