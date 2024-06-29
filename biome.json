@@ -9,6 +9,11 @@
 			"recommended": true
 		}
 	},
+	"json": { "formatter": { "enabled": false } },
+	"formatter": {
+    "enabled": true,
+    "indentStyle": "space"
+  },
 	"files": {
 		"ignore": [
 			"src/routeTree.gen.ts",
