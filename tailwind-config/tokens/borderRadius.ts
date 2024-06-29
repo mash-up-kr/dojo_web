@@ -12,7 +12,6 @@ const borderRadius = {
   20: "20px",
   22: "22px",
   half: "50%",
-  full: "100%",
 } as const;
 
 export default borderRadius;
