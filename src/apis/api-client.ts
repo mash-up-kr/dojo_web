@@ -24,4 +24,4 @@ httpClient.instance.interceptors.request.use(
 	},
 );
 
-export const apiClient = httpClient.instance;
+export const apiClient = httpClient;
