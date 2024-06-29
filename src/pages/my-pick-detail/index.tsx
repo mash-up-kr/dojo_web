@@ -3,14 +3,26 @@ import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
 import { useRouter } from "@tanstack/react-router";
+import { useState } from "react";
+import { PickBottomSheet } from "./PickBottomSheet";
 import { PickNotice } from "./PickNotice";
 import { PickNoticeList } from "./PickNoticeList";
 
 export const MyPickDetailPage = () => {
+  // TODO: generator DTO 반영
+  const [selectedPick, setSelectedPick] = useState<null | {
+    pickId: string;
+  }>(null);
+  const [isOpenSheet, setIsOpenSheet] = useState(false);
   const { history } = useRouter();
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.5,
   });
+
+  const handleSelectPick = (pickId: string) => {
+    setSelectedPick({ pickId });
+    setIsOpenSheet(true);
+  };
 
   return (
     <>
@@ -35,8 +47,15 @@ export const MyPickDetailPage = () => {
       />
       <div className="flex flex-col">
         <PickNotice descriptionRef={ref} />
-        <PickNoticeList />
+        <PickNoticeList onSelectPick={handleSelectPick} />
       </div>
+      <PickBottomSheet
+        selectedPick={selectedPick}
+        isOpen={isOpenSheet}
+        onClose={() => {
+          setIsOpenSheet(false);
+        }}
+      />
     </>
   );
 };

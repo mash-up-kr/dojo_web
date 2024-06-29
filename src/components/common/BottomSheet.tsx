@@ -1,13 +1,14 @@
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { type ReactNode, useEffect } from "react";
 
-type BottomSheetProps = {
+export type BottomSheetProps = {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
 };
 
-const BottomSheet: React.FC<BottomSheetProps> = ({
+// TODO: Header/body 구조로 변경하면서 맥스 height를 제한해야함
+export const BottomSheet: React.FC<BottomSheetProps> = ({
   isOpen,
   onClose,
   children,
@@ -34,7 +35,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             exit={{ opacity: 0 }}
           />
           <motion.div
-            className="fixed bottom-0 left-0 right-0 bg-offWhite010 rounded-t-[24px] px-4 z-50"
+            className="fixed bottom-0 left-0 right-0 bg-offWhite010 rounded-t-[24px] px-4 z-50 max-h-[90%] overflow-y-auto"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
@@ -57,5 +58,3 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
     </AnimatePresence>
   );
 };
-
-export default BottomSheet;

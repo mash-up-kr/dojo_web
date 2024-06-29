@@ -15,6 +15,9 @@ const variants = tv({
       primary: "bg-purple100 text-offWhite010 t-c1-sb-13 border-0",
       line: "bg-offWhite010 text-purple100 border-solid border-purple100 border-[1px]",
     },
+    disabled: {
+      true: "bg-gray022",
+    },
     size: {
       sm: "px-3 py-2 t-c1-sb-13",
       md: "py-[14px] px-5 w-full t-h6-sb-15",
@@ -27,6 +30,7 @@ export const Button = ({
   children,
   buttonType = "primary",
   size = "md",
+  disabled,
   ...rest
 }: ButtonProps) => {
   return (
@@ -36,6 +40,7 @@ export const Button = ({
         type: buttonType,
         size,
         className,
+        disabled,
       })}
       {...rest}
     >
