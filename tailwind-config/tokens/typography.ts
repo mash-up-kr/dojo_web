@@ -84,6 +84,11 @@ const typography = {
     fontWeight: "400",
     lineHeight: "20px",
   },
+  ".t-b3-sb-14": {
+    fontSize: "14px",
+    fontWeight: "600",
+    lineHeight: "18px",
+  },
   ".t-b3-m-14": {
     fontSize: "14px",
     fontWeight: "500",

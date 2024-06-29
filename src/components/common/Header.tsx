@@ -1,4 +1,5 @@
 import MashupLogo from "@/assets/mashup.svg?react";
+import { cn } from "@/utils/cn";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 
@@ -16,9 +17,20 @@ export const Header = ({
   left,
   right,
   title,
-}: AtLeastOne<{ left: ReactNode; right: ReactNode; title: string }>) => {
+  className,
+}: AtLeastOne<{
+  left: ReactNode;
+  right: ReactNode;
+  title: string;
+  className?: string;
+}>) => {
   return (
-    <header className="relative flex items-center p-4 min-h-[52px]">
+    <header
+      className={cn(
+        "relative flex items-center p-4 min-h-[52px] w-full",
+        className,
+      )}
+    >
       {left ? <div className="absolute top-4 left-4">{left}</div> : null}
       {title ? <h1 className="t-h5-sb-17 grow text-center">{title}</h1> : null}
       {right ? <div className="absolute top-4 right-4">{right}</div> : null}
