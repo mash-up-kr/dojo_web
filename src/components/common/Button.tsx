@@ -16,8 +16,8 @@ const variants = tv({
       line: "bg-offWhite010 text-purple100 border-solid border-purple100 border-[1px]",
     },
     size: {
-      sm: "px-12 py-8 t-c1-sb-13",
-      md: "py-14 px-20 w-full t-h6-sb-15",
+      sm: "px-3 py-2 t-c1-sb-13",
+      md: "py-[14px] px-5 w-full t-h6-sb-15",
     },
   },
 });
