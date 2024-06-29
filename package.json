@@ -18,6 +18,7 @@
 		"axios": "^1.7.2",
 		"clsx": "^2.1.1",
 		"jotai": "^2.8.3",
+		"js-cookie": "^3.0.5",
 		"react": "19.0.0-beta-26f2496093-20240514",
 		"react-dom": "19.0.0-beta-26f2496093-20240514"
 	},
@@ -25,6 +26,7 @@
 		"@biomejs/biome": "1.8.1",
 		"@tanstack/router-devtools": "^1.38.1",
 		"@tanstack/router-vite-plugin": "^1.38.0",
+		"@types/js-cookie": "^3.0.6",
 		"@types/node": "^20.14.2",
 		"@types/react": "^18.2.66",
 		"@types/react-dom": "^18.2.22",
