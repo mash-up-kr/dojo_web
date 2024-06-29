@@ -1,4 +1,3 @@
-import MashupLogo from "@/assets/mashup.svg?react";
 import { cn } from "@/utils/cn";
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
@@ -6,7 +5,7 @@ import type { ReactNode } from "react";
 export function HeaderLogo() {
   return (
     <Link to="/" className="flex space-x-2 items-center">
-      <MashupLogo />
+      <span className="text-2xl">🤫</span>
       {/* TODO: update service name */}
       <h1 className="t-h3-b-22">Messhit</h1>
     </Link>
