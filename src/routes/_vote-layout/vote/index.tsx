@@ -5,7 +5,7 @@ import clsx from "clsx";
 import React from "react";
 import { customRipple } from "use-ripple-hook";
 
-export const Route = createFileRoute("/_vote-layout/vote")({
+export const Route = createFileRoute("/_vote-layout/vote/")({
   component: VotePage,
 });
 
