@@ -13,6 +13,9 @@ const config = {
     colors,
     fontFamily,
     borderRadius,
+    screen: {
+      xs: "360px",
+    },
   },
   plugins: [
     scrollbarHide,
