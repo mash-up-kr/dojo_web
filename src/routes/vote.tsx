@@ -31,7 +31,7 @@ function VotePage() {
             매쉬업에서 술 제일 잘 마실 것 같은 사람은?
           </p>
           {/* add gif icon */}
-          <div className="w-[120px] h-[120px] bg-gray054/20" />
+          <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px] bg-gray054/20" />
         </div>
         {/* answer */}
         <div className="grid grid-cols-2 gap-3">
@@ -54,10 +54,7 @@ function VotePage() {
           ))}
         </div>
         {/* shuffle */}
-        <button className="flex space-x-2 items-center py-2 px-4" type="button">
-          <ShuffleSvg />
-          <span>셔플</span>
-        </button>
+        <ShuffleButton leftCount={0} max={2} onClick={() => {}} />
       </main>
     </div>
   );
@@ -65,9 +62,35 @@ function VotePage() {
 
 function Indicator({ current, total }: { current: number; total: number }) {
   return (
-    <div className="px-2 py-1 text-purple100/50 t-h6-sb-15 bg-offWhite010/20 rounded-8">
-      <span className="text-purple100">{current}</span> of {total}
+    <div className="px-2 py-1 text-gray054 t-h6-sb-15 bg-offWhite010/30 rounded-8">
+      <span className="text-gray084">{current}</span> of {total}
     </div>
+  );
+}
+
+function ShuffleButton({
+  leftCount,
+  max,
+  onClick,
+}: {
+  leftCount: number;
+  max: number;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className="flex gap-2 items-center py-2 px-4 rounded-12 disabled:text-gray040"
+      disabled={leftCount === 0}
+      type="button"
+      onClick={onClick}
+    >
+      <ShuffleSvg
+        className={clsx({ "[&>path]:fill-gray040": leftCount === 0 })}
+      />
+      <span className="t-c1-sb-13">
+        {leftCount}/{max}
+      </span>
+    </button>
   );
 }
 
@@ -92,7 +115,7 @@ function AnswerCard({
     <button
       className={clsx(
         "odd:justify-self-end aspect-[13/10] rounded-10 max-w-44 w-full py-3 transition-colors duration-300",
-        selected ? "bg-offWhite010" : "bg-offWhite010/30",
+        selected ? "bg-offWhite010" : "bg-offWhite010/40",
       )}
       type="button"
       ref={ripple}
@@ -103,7 +126,11 @@ function AnswerCard({
     >
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-center">
-          <img src={imgSrc} alt={name} className="w-16 h-16 rounded-full" />
+          <img
+            src={imgSrc}
+            alt={name}
+            className="w-6 h-6 xs:w-16 xs:h-16 rounded-full"
+          />
         </div>
         <div className="flex flex-col items-center justify-center space-y-[2px]">
           <h6 className="t-h6-sb-15 text-gray084">{name}</h6>

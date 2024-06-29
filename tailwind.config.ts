@@ -1,3 +1,4 @@
+import defaultTheme from "tailwindcss/defaultTheme";
 import plugin from "tailwindcss/plugin";
 import backgroundLinear from "./tailwind-config/plugins/bg-linear";
 import bubbleArrow from "./tailwind-config/plugins/bubble-arrow";
@@ -14,8 +15,9 @@ const config = {
     colors,
     fontFamily,
     borderRadius,
-    screen: {
+    screens: {
       xs: "360px",
+      ...defaultTheme.screens,
     },
   },
   plugins: [
