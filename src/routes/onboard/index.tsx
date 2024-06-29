@@ -44,7 +44,7 @@ function OnBoardPage() {
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center w-[280px] mt-[140px]">
           <Image alt="Profile Image" w={80} h={80} />
-          <div className="mt-3 flex flex-col items-center gap-1">
+          <div className="mt-3 flex flex-col items-center space-y-1">
             <h1 className="t-h4-b-20">낭은영</h1>
             <p className="t-b3-r-14 bg-grey054">14기 Product Design</p>
           </div>

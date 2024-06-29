@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 export function HeaderLogo() {
   return (
-    <Link to="/" className="flex gap-2 items-center">
+    <Link to="/" className="flex space-x-2 items-center">
       <MashupLogo />
       {/* TODO: update service name */}
       <h1 className="t-h3-b-22">LOGO</h1>
