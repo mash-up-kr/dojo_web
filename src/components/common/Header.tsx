@@ -18,10 +18,10 @@ export const Header = ({
   title,
 }: AtLeastOne<{ left: ReactNode; right: ReactNode; title: string }>) => {
   return (
-    <header className="flex items-center px-4 py-[15px] min-h-[52px]">
-      {left ? <div>{left}</div> : null}
+    <header className="relative flex items-center p-4 min-h-[52px]">
+      {left ? <div className="absolute top-4 left-4">{left}</div> : null}
       {title ? <h1 className="t-h5-sb-17 grow text-center">{title}</h1> : null}
-      {right ? <div>{right}</div> : null}
+      {right ? <div className="absolute top-4 right-4">{right}</div> : null}
     </header>
   );
 };
