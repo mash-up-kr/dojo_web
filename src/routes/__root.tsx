@@ -15,6 +15,7 @@ function RootComponent() {
         expand={false}
         offset={8}
         visibleToasts={1}
+        duration={2000}
       />
       <TanStackRouterDevtools position="bottom-right" />
     </>

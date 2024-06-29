@@ -29,6 +29,7 @@ function ToastUI({
 
 export const Toast = {
   alert: (message: string, onAction: () => void) => {
+    toast.dismiss();
     toast.custom((t) => (
       <ToastUI
         message={message}
