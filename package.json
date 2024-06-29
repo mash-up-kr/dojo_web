@@ -21,7 +21,8 @@
 		"js-cookie": "^3.0.5",
 		"react": "19.0.0-beta-26f2496093-20240514",
 		"react-dom": "19.0.0-beta-26f2496093-20240514",
-		"tailwind-variants": "^0.2.1"
+		"tailwind-variants": "^0.2.1",
+		"use-ripple-hook": "^1.0.24"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.8.1",
