@@ -1,5 +1,6 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
 import { Header, HeaderLogo } from "@/components/common/Header";
+import { Toast } from "@/components/common/Toast";
 import { getGradientBg } from "@/utils/getGradientBg";
 import { createFileRoute } from "@tanstack/react-router";
 import clsx from "clsx";
@@ -38,7 +39,14 @@ function VotePage() {
             <AnswerCard
               key={i}
               selected={selection === i}
-              onClick={() => setTimeout(() => setSelection(i), 200)}
+              onClick={() => {
+                setTimeout(() => setSelection(i), 200);
+                // NOTE: This is a fake toast for demonstration purposes
+                Toast.alert(
+                  "방금 14기 ***님이 낭은영님을 Pick 했어요!",
+                  () => {},
+                );
+              }}
               name={`Answer ${i}`}
               imgSrc="https://via.placeholder.com/150"
               description="Description"
