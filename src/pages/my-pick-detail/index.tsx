@@ -36,7 +36,7 @@ export const MyPickDetailPage = () => {
           <button
             type="button"
             onClick={() => history.back()}
-            className="w-6 h"
+            className="w-6 h-6 flex items-center"
           >
             <Close />
           </button>
