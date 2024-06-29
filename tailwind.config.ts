@@ -11,7 +11,6 @@ const config = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     colors,
-    spacing,
     fontFamily,
     borderRadius,
   },

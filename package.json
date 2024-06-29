@@ -1,6 +1,5 @@
 {
-	"name": "react-template",
-	"private": true,
+	"name": "dojo-web",
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
