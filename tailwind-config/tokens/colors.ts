@@ -1,13 +1,13 @@
 const grayPalette = {
-  grey005: "#f0f0f0",
-  grey012: "#E0E0E1",
-  grey022: "#C7C7C9",
-  grey040: "#99999c",
-  grey054: "#75757a",
-  grey064: "#5c5c61",
-  grey072: "#47474d",
-  grey084: "#292930",
-  grey100: "#000008",
+  gray005: "#f0f0f0",
+  gray012: "#E0E0E1",
+  gray022: "#C7C7C9",
+  gray040: "#99999c",
+  gray054: "#75757a",
+  gray064: "#5c5c61",
+  gray072: "#47474d",
+  gray084: "#292930",
+  gray100: "#000008",
 } as const;
 
 const whitePalette = {

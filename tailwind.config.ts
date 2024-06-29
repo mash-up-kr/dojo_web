@@ -15,9 +15,6 @@ const config = {
     fontFamily,
     borderRadius,
   },
-  corePlugins: {
-    preflight: false,
-  },
   plugins: [
     scrollbarHide,
     translateHalf,
