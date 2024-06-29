@@ -1,5 +1,5 @@
 const fontFamily = {
-  web: ['Pretendard'],
-} as const
+  web: ["Pretendard"],
+} as const;
 
-export default fontFamily
+export default fontFamily;

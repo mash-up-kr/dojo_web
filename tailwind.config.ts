@@ -8,32 +8,32 @@ import spacing from "./tailwind-config/tokens/spacing";
 import typography from "./tailwind-config/tokens/typography";
 
 const config = {
-	content: ["./src/**/*.{js,ts,jsx,tsx}"],
-	theme: {
-		colors,
-		spacing,
-		fontFamily,
-		borderRadius,
-	},
-	corePlugins: {
-		preflight: false,
-	},
-	plugins: [
-		scrollbarHide,
-		translateHalf,
-		plugin(({ addComponents }) => {
-			addComponents({ ...typography });
-		}),
-	],
-	safeList: [...Object.keys(typography).map((key) => key)],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  theme: {
+    colors,
+    spacing,
+    fontFamily,
+    borderRadius,
+  },
+  corePlugins: {
+    preflight: false,
+  },
+  plugins: [
+    scrollbarHide,
+    translateHalf,
+    plugin(({ addComponents }) => {
+      addComponents({ ...typography });
+    }),
+  ],
+  safeList: [...Object.keys(typography).map((key) => key)],
 } as const;
 
 export type TailwindConfig = typeof config;
 
 export type KeyOfTheme<T extends keyof TailwindConfig["theme"]> =
-	keyof TailwindConfig["theme"][T];
+  keyof TailwindConfig["theme"][T];
 
 export type ValueOfTheme<T extends keyof TailwindConfig["theme"]> =
-	TailwindConfig["theme"][T][KeyOfTheme<T>];
+  TailwindConfig["theme"][T][KeyOfTheme<T>];
 
 export default config;
