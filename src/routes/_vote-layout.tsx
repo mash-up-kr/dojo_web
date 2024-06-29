@@ -7,7 +7,7 @@ const bg = getGradientBg();
 
 export const Route = createFileRoute("/_vote-layout")({
   component: () => (
-    <div className={clsx("h-screen", bg)}>
+    <div className={clsx("min-h-screen", bg)}>
       <Header
         left={<HeaderLogo />}
         title="테스트입니다"
