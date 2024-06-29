@@ -25,7 +25,7 @@ export const Header = ({
   return (
     <header
       className={cn(
-        "relative flex items-center p-4 min-h-[52px] w-full z-10",
+        "relative flex items-center justify-between p-4 min-h-[52px] w-full z-10",
         className,
       )}
     >

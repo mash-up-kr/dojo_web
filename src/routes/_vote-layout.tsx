@@ -11,7 +11,7 @@ export const Route = createFileRoute("/_vote-layout")({
       <Header
         left={<HeaderLogo />}
         title="테스트입니다"
-        right={<div className="w-8 h-8 bg-grey084 rounded-full" />}
+        right={<div className="w-8 h-8 bg-gray084 rounded-full" />}
       />
       <Outlet />
     </div>
