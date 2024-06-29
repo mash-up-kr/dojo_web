@@ -19,6 +19,22 @@ const config = {
       xs: "360px",
       ...defaultTheme.screens,
     },
+    extend: {
+      keyframes: {
+        zoom: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.2)" },
+        },
+        "zoom-sm": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
+        },
+      },
+      animation: {
+        zoom: "zoom 0.5s ease-in-out forwards",
+        "zoom-sm": "zoom-sm 0.5s ease-in-out forwards",
+      },
+    },
   },
   plugins: [
     scrollbarHide,
