@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { type ReactNode, useEffect } from "react";
 
 type BottomSheetProps = {
@@ -12,6 +12,8 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
   onClose,
   children,
 }) => {
+  const dragControls = useDragControls();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -38,6 +40,15 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
             exit={{ y: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             onClick={(e) => e.stopPropagation()}
+            drag="y"
+            dragElastic={0}
+            dragConstraints={{ top: 0 }}
+            dragControls={dragControls}
+            onDragEnd={(_, info) => {
+              if (info.offset.y > 10) {
+                onClose();
+              }
+            }}
           >
             {children}
           </motion.div>
