@@ -17,6 +17,7 @@ export const MyPickDetailPage = () => {
   const { history } = useRouter();
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.5,
+    initialIsIntersecting: true,
   });
 
   const handleSelectPick = (pickId: string) => {

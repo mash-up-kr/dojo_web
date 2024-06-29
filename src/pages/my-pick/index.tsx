@@ -10,7 +10,9 @@ import { Profile } from "./Profile";
 export const MyPickPage = () => {
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.9,
+    initialIsIntersecting: true,
   });
+
   const [selectedChipFilter, setSelectedChipFilter] = useState<
     "latest" | "popular"
   >("latest");
