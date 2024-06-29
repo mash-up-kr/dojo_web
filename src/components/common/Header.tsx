@@ -8,7 +8,7 @@ export function HeaderLogo() {
     <Link to="/" className="flex space-x-2 items-center">
       <MashupLogo />
       {/* TODO: update service name */}
-      <h1 className="t-h3-b-22">LOGO</h1>
+      <h1 className="t-h3-b-22">Messhit</h1>
     </Link>
   );
 }
