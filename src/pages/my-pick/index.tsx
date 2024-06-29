@@ -22,7 +22,7 @@ export const MyPickPage = () => {
       <Header
         title="내가 받은 픽"
         left={<Back />}
-        className={cn("fixed transition-colors duration-300", {
+        className={cn("fixed transition-colors duration-100", {
           "bg-offWhite010": !isIntersecting,
         })}
       />

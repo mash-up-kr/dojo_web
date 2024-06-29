@@ -1,7 +1,7 @@
+import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@tanstack/react-router";
-import { forwardRef } from "react";
 
 export const Profile = ({
   profileRef,
@@ -27,8 +27,9 @@ export const Profile = ({
           사진 변경
         </button>
       </div>
-      <div className="flex mt-5 bg-offWhite010 py-[13px] px-4 rounded-8">
-        <span className="t-b3-m-14">Mash-Gem</span>
+      <div className="flex mt-5 bg-offWhite010 py-[13px] px-4 rounded-8 items-center">
+        <GEM />
+        <span className="t-b3-m-14 ml-[2px]">매시젬</span>
         <strong className="text-purple100 t-b3-sb-14 ml-2">200개</strong>
         <Link className="text-gray054 t-c1-m-13 ml-auto">
           질문 답해서 얻기 {">"}

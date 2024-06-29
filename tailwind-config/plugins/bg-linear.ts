@@ -26,6 +26,10 @@ const backgroundLinear = plugin(({ addUtilities }) => {
       background:
         "linear-gradient(168deg, #FAB9FF 0%, #FFB9E8 47.22%, #FFB9B9 100%)",
     },
+    ".bg-gradient-white": {
+      background:
+        "linear-gradient(360deg, #ffffff 0%, #ffffff80 50%, #ffffff00 100%)",
+    },
   });
 });
 

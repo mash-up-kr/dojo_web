@@ -7,7 +7,8 @@ export const PickNotice = ({
   descriptionRef: IntersectionReturn["ref"];
 }) => {
   return (
-    <div className="bg-gradient-purple pt-[54px] flex flex-col items-center">
+    <div className="bg-gradient-purple pt-[54px] flex flex-col items-center relative">
+      <div className="bg-gradient-white absolute bottom-0 right-0 left-0 top-[175px]" />
       <p
         className="t-h3-sb-22 text-gray084 text-center px-[28px] h-[84px]"
         ref={descriptionRef}
@@ -19,7 +20,7 @@ export const PickNotice = ({
         <Image
           src="https://picsum.photos/seed/picsum/200/300"
           alt="pick"
-          className="w-[96px] h-[96px] rounded-0"
+          className="w-[96px] h-[96px] rounded-0 z-[1]"
         />
       </div>
       <div className="w-[250px] relative mt-5">
