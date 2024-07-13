@@ -2,7 +2,7 @@ import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
-import { useRouter } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChipButton } from "./ChipButton";
 import { PickCardList } from "./PickCardList";
@@ -13,7 +13,6 @@ export const MyPickPage = () => {
     threshold: 0.9,
     initialIsIntersecting: true,
   });
-  const { history } = useRouter();
 
   const [selectedChipFilter, setSelectedChipFilter] = useState<
     "latest" | "popular"
@@ -24,13 +23,9 @@ export const MyPickPage = () => {
       <Header
         title="내가 받은 픽"
         left={
-          <button
-            type="button"
-            onClick={() => history.back()}
-            className="w-6 h-6 flex items-center"
-          >
+          <Link to="/vote">
             <Back />
-          </button>
+          </Link>
         }
         className={cn("fixed transition-colors duration-100", {
           "bg-offWhite010": !isIntersecting,

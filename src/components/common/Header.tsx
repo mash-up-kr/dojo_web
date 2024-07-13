@@ -31,7 +31,7 @@ export const Header = ({
     >
       {left ? <div className="flex-shrink-0 z-[11]">{left}</div> : <div />}
       {title ? (
-        <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[60px] max-w-full">
+        <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[64px] max-w-full">
           {title}
         </h1>
       ) : null}

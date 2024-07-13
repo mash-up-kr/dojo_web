@@ -1,5 +1,6 @@
 import Image from "@/components/common/Image";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
+import { motion } from "framer-motion";
 
 export const PickNotice = ({
   descriptionRef,
@@ -23,8 +24,13 @@ export const PickNotice = ({
           className="w-[96px] h-[96px] rounded-0 z-[1]"
         />
       </div>
-      <div className="w-[250px] relative mt-5">
-        <div className="flex flex-col space-y-1 items-center bg-offWhite010 px-7 pt-3 pb-4 rounded-[100px] relative  shadow-lg">
+      <motion.div
+        className="w-[250px] relative mt-5"
+        initial={{ transform: "translateY(-10px)" }}
+        animate={{ transform: "translateY(0px)" }}
+        transition={{ duration: 0.65, repeat: 5, repeatType: "reverse" }}
+      >
+        <div className="flex flex-col space-y-1 items-center bg-offWhite010 px-7 pt-3 pb-4 rounded-[100px] relative shadow-lg">
           <strong className="t-h5-b-17 text-gray084">7명</strong>
           <span className=" t-c2-m-12 text-gray054">
             이 질문에서 이현재님을{" "}
@@ -32,7 +38,7 @@ export const PickNotice = ({
           </span>
         </div>
         <div className="absolute -top-[16px] arrow-top" />
-      </div>
+      </motion.div>
     </div>
   );
 };
