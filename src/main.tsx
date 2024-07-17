@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import "./tailwindcss.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
@@ -29,12 +30,24 @@ const router = createRouter({
   defaultPreload: "intent",
 });
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+    },
+  },
+});
+
 const root = document.getElementById("root");
 if (root) {
   enabledMocking().then(() => {
     ReactDOM.createRoot(root).render(
       <React.StrictMode>
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </React.StrictMode>,
     );
   });
