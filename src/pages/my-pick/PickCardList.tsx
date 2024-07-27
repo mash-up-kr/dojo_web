@@ -17,9 +17,7 @@ const PickCard = () => {
   return (
     <li className="h-[116px] px-4 items-center">
       <Link
-        resetScroll
-        params={{ pickId: "1" }}
-        to="/my-pick/$pickId"
+        to="/pick/1"
         className="h-[116px] flex items-center border-b-gray005 border-solid border-b-[1px]"
       >
         <div className="flex flex-col space-y-1.5 flex-1">
