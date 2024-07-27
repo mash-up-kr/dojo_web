@@ -1,4 +1,4 @@
-import { customInstance } from "@/apis/custom-client";
+// import { customInstance } from "@/apis/custom-client";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
@@ -10,7 +10,9 @@ export const Route = createFileRoute("/onboard/")({
 });
 
 function OnBoardPage() {
-  const [imageSrc, setImageSrc] = useState();
+  // const [imageSrc, setImageSrc] = useState();
+  const [imageSrc] = useState();
+
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const handleButtonClick = () => {
