@@ -1,8 +1,8 @@
 import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
-import { Link } from "@tanstack/react-router";
 import { memo } from "react";
+import { Link } from "react-router-dom";
 
 export const Profile = memo(
   ({

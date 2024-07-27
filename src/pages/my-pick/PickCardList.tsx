@@ -1,6 +1,6 @@
 import Image from "@/components/common/Image";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
-import { Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 
 export const PickCardList = () => {
   return (
