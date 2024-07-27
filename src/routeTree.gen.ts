@@ -11,7 +11,6 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as AboutImport } from './routes/about'
 import { Route as VoteLayoutImport } from './routes/_vote-layout'
 import { Route as IndexImport } from './routes/index'
 import { Route as OnboardIndexImport } from './routes/onboard/index'
@@ -21,11 +20,6 @@ import { Route as VoteLayoutVoteIndexImport } from './routes/_vote-layout/vote/i
 import { Route as VoteLayoutVoteDoneImport } from './routes/_vote-layout/vote/done'
 
 // Create/Update Routes
-
-const AboutRoute = AboutImport.update({
-  path: '/about',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const VoteLayoutRoute = VoteLayoutImport.update({
   id: '/_vote-layout',
@@ -80,13 +74,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VoteLayoutImport
       parentRoute: typeof rootRoute
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutImport
-      parentRoute: typeof rootRoute
-    }
     '/my-pick/$pickId': {
       id: '/my-pick/$pickId'
       path: '/my-pick/$pickId'
@@ -133,7 +120,6 @@ export const routeTree = rootRoute.addChildren({
     VoteLayoutVoteDoneRoute,
     VoteLayoutVoteIndexRoute,
   }),
-  AboutRoute,
   MyPickPickIdRoute,
   MyPickIndexRoute,
   OnboardIndexRoute,
@@ -149,7 +135,6 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/_vote-layout",
-        "/about",
         "/my-pick/$pickId",
         "/my-pick/",
         "/onboard/"
@@ -164,9 +149,6 @@ export const routeTree = rootRoute.addChildren({
         "/_vote-layout/vote/done",
         "/_vote-layout/vote/"
       ]
-    },
-    "/about": {
-      "filePath": "about.tsx"
     },
     "/my-pick/$pickId": {
       "filePath": "my-pick/$pickId.tsx"
