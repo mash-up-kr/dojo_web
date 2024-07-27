@@ -32,8 +32,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.8.1",
 		"@faker-js/faker": "^8.4.1",
-		"@tanstack/router-devtools": "^1.38.1",
-		"@tanstack/router-vite-plugin": "^1.38.0",
 		"@types/canvas-confetti": "^1.6.4",
 		"@types/js-cookie": "^3.0.6",
 		"@types/node": "^20.14.2",
