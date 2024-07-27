@@ -1,4 +1,4 @@
-import { apiClient } from "@/apis/api-client";
+import { customInstance } from "@/apis/custom-client";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
@@ -24,12 +24,12 @@ function OnBoardPage() {
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      const response = await apiClient.request({
-        path: "/image",
-        method: "POST",
-        body: { file },
-      });
-      setImageSrc(response.data.url);
+      // const response = await customInstance({
+      //   path: "/image",
+      //   method: "POST",
+      //   body: { file },
+      // });
+      // setImageSrc(response.data.url);
     }
   };
 
