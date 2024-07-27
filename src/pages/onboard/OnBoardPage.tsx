@@ -2,14 +2,10 @@
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
-import { Link, createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
-export const Route = createFileRoute("/onboard/")({
-  component: OnBoardPage,
-});
-
-function OnBoardPage() {
+export function OnBoardPage() {
   // const [imageSrc, setImageSrc] = useState();
   const [imageSrc] = useState();
 

@@ -1,15 +1,10 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
 import { Toast } from "@/components/common/Toast";
-import { createFileRoute } from "@tanstack/react-router";
 import clsx from "clsx";
 import React from "react";
 import { customRipple } from "use-ripple-hook";
 
-export const Route = createFileRoute("/_vote-layout/vote/")({
-  component: VotePage,
-});
-
-function VotePage() {
+export function VotePage() {
   const [selection, setSelection] = React.useState<number | null>(null);
 
   return (

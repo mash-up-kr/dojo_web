@@ -1,13 +1,13 @@
 import { Header, HeaderLogo } from "@/components/common/Header";
 import Image from "@/components/common/Image";
 import { getGradientBg } from "@/utils/getGradientBg";
-import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 const bg = getGradientBg();
 
-export const Route = createFileRoute("/_vote-layout")({
-  component: () => (
+export function VoteLayout({ children }: { children: React.ReactNode }) {
+  return (
     <div className={clsx("min-h-screen", bg)}>
       <Header
         left={<HeaderLogo />}
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/_vote-layout")({
           </Link>
         }
       />
-      <Outlet />
+      {children}
     </div>
-  ),
-});
+  );
+}

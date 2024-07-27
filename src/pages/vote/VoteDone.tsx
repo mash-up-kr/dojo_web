@@ -1,12 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import React from "react";
 
-export const Route = createFileRoute("/_vote-layout/vote/done")({
-  component: VoteDonePage,
-});
-
-function VoteDonePage() {
+export function VoteDonePage() {
   const [next, setNext] = React.useState(false);
 
   React.useEffect(() => {
