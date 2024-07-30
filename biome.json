@@ -22,8 +22,8 @@
 		"ignore": [
 			"src/tailwindcss.css",
 			"public/mockServiceWorker.js",
-			"src/generated/*.tsx",
-			"src/generated/*.ts"
+			"src/generated/**/*.tsx",
+			"src/generated/**/*.ts"
 		]
 	}
 }
