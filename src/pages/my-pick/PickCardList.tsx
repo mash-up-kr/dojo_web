@@ -18,7 +18,7 @@ const PickCard = () => {
     <li className="h-[116px] px-4 items-center">
       <Link
         to="/pick/1"
-        className="h-[116px] flex items-center border-b-gray005 border-solid border-b-[1px]"
+        className="h-[116px] flex items-center border-b-gray005 border-solid border-b-[1px] &:first-of-type:border-t-gray005 &:first-child:border-t-[1px]"
       >
         <div className="flex flex-col space-y-1.5 flex-1">
           <p className="text-gray084">
