@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { DojoApiErrorResponse } from "./dojoApiErrorResponse";
+import type { DojoApiErrorResponse } from './dojoApiErrorResponse';
 
 export interface DojoApiResponseString {
   data?: string;

@@ -4,72 +4,54 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { faker } from "@faker-js/faker";
-import { http, HttpResponse, delay } from "msw";
-import type { DojoApiResponseReceivedPickListGetResponse } from ".././model";
+import {
+  faker
+} from '@faker-js/faker'
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw'
+import type {
+  DojoApiResponsePickId,
+  DojoApiResponseReceivedPickListGetResponse
+} from '.././model'
 
-export const getGetReceivedPickListResponseMock = (
-  overrideResponse: Partial<DojoApiResponseReceivedPickListGetResponse> = {},
-): DojoApiResponseReceivedPickListGetResponse => ({
-  data: faker.helpers.arrayElement([
-    {
-      pickList: Array.from(
-        { length: faker.number.int({ min: 1, max: 10 }) },
-        (_, i) => i + 1,
-      ).map(() => ({
-        latestPickedAt: `${faker.date.past().toISOString().split(".")[0]}Z`,
-        questionContent: faker.word.sample(),
-        questionEmojiImageUrl: faker.word.sample(),
-        questionId: faker.word.sample(),
-        totalReceivedPickCount: faker.number.int({
-          min: undefined,
-          max: undefined,
-        }),
-      })),
-      sort: faker.helpers.arrayElement(["LATEST", "MOST_PICKED"] as const),
-    },
-    undefined,
-  ]),
-  error: faker.helpers.arrayElement([
-    {
-      code: faker.word.sample(),
-      message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-    },
-    undefined,
-  ]),
-  success: faker.datatype.boolean(),
-  ...overrideResponse,
-});
+export const getCreateResponseMock = (overrideResponse: Partial< DojoApiResponsePickId > = {}): DojoApiResponsePickId => ({data: faker.helpers.arrayElement([{value: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
-export const getGetReceivedPickListMockHandler = (
-  overrideResponse?:
-    | DojoApiResponseReceivedPickListGetResponse
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) =>
-        | Promise<DojoApiResponseReceivedPickListGetResponse>
-        | DojoApiResponseReceivedPickListGetResponse),
-) => {
-  return http.get(
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list",
-    async (info) => {
-      await delay(1000);
-      return new HttpResponse(
-        JSON.stringify(
-          overrideResponse !== undefined
-            ? typeof overrideResponse === "function"
-              ? await overrideResponse(info)
-              : overrideResponse
-            : getGetReceivedPickListResponseMock(),
-        ),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    },
-  );
-};
-export const getPickMock = () => [getGetReceivedPickListMockHandler()];
+export const getGetReceivedPickListResponseMock = (overrideResponse: Partial< DojoApiResponseReceivedPickListGetResponse > = {}): DojoApiResponseReceivedPickListGetResponse => ({data: faker.helpers.arrayElement([{pickList: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({latestPickedAt: `${faker.date.past().toISOString().split('.')[0]}Z`, questionContent: faker.word.sample(), questionEmojiImageUrl: faker.word.sample(), questionId: faker.word.sample(), totalReceivedPickCount: faker.number.int({min: undefined, max: undefined})})), sort: faker.helpers.arrayElement(['LATEST','MOST_PICKED'] as const)}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+
+export const getCreateMockHandler = (overrideResponse?: DojoApiResponsePickId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponsePickId> | DojoApiResponsePickId)) => {
+  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getCreateResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
+export const getGetReceivedPickListMockHandler = (overrideResponse?: DojoApiResponseReceivedPickListGetResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseReceivedPickListGetResponse> | DojoApiResponseReceivedPickListGetResponse)) => {
+  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getGetReceivedPickListResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+export const getPickMock = () => [
+  getCreateMockHandler(),
+  getGetReceivedPickListMockHandler()
+]

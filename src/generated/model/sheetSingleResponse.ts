@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { Candidate } from "./candidate";
-import type { Question } from "./question";
+import type { Candidate } from './candidate';
+import type { Question } from './question';
 
 export interface SheetSingleResponse {
   candidates: Candidate[];

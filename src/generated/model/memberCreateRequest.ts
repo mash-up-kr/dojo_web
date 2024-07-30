@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { MemberCreateRequestGender } from "./memberCreateRequestGender";
-import type { MemberCreateRequestPlatform } from "./memberCreateRequestPlatform";
+import type { MemberCreateRequestGender } from './memberCreateRequestGender';
+import type { MemberCreateRequestPlatform } from './memberCreateRequestPlatform';
 
 /**
  * 멤버 등록 요청

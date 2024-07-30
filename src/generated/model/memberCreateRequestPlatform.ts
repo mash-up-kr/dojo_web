@@ -5,15 +5,15 @@
  * OpenAPI spec version: v0
  */
 
-export type MemberCreateRequestPlatform =
-  (typeof MemberCreateRequestPlatform)[keyof typeof MemberCreateRequestPlatform];
+export type MemberCreateRequestPlatform = typeof MemberCreateRequestPlatform[keyof typeof MemberCreateRequestPlatform];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MemberCreateRequestPlatform = {
-  SPRING: "SPRING",
-  WEB: "WEB",
-  NODE: "NODE",
-  ANDROID: "ANDROID",
-  IOS: "IOS",
-  DESIGN: "DESIGN",
+  SPRING: 'SPRING',
+  WEB: 'WEB',
+  NODE: 'NODE',
+  ANDROID: 'ANDROID',
+  IOS: 'IOS',
+  DESIGN: 'DESIGN',
 } as const;

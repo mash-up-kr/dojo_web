@@ -4,11 +4,11 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { ReceivedPickListGetResponse } from './receivedPickListGetResponse';
+import type { PickId } from './pickId';
 import type { DojoApiErrorResponse } from './dojoApiErrorResponse';
 
-export interface DojoApiResponseReceivedPickListGetResponse {
-  data?: ReceivedPickListGetResponse;
+export interface DojoApiResponsePickId {
+  data?: PickId;
   error?: DojoApiErrorResponse;
   success: boolean;
 }

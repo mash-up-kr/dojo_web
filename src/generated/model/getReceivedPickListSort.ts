@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type GetReceivedPickListSort =
-  (typeof GetReceivedPickListSort)[keyof typeof GetReceivedPickListSort];
+export type GetReceivedPickListSort = typeof GetReceivedPickListSort[keyof typeof GetReceivedPickListSort];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GetReceivedPickListSort = {
-  LATEST: "LATEST",
-  MOST_PICKED: "MOST_PICKED",
+  LATEST: 'LATEST',
+  MOST_PICKED: 'MOST_PICKED',
 } as const;

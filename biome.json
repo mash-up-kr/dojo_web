@@ -20,10 +20,10 @@
   },
 	"files": {
 		"ignore": [
-			"src/routeTree.gen.ts",
 			"src/tailwindcss.css",
 			"public/mockServiceWorker.js",
-			"src/apis"
+			"src/generated/*.tsx",
+			"src/generated/*.ts"
 		]
 	}
 }

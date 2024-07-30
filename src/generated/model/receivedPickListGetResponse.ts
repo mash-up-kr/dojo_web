@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { PickResponse } from "./pickResponse";
-import type { ReceivedPickListGetResponseSort } from "./receivedPickListGetResponseSort";
+import type { PickResponse } from './pickResponse';
+import type { ReceivedPickListGetResponseSort } from './receivedPickListGetResponseSort';
 
 export interface ReceivedPickListGetResponse {
   pickList: PickResponse[];

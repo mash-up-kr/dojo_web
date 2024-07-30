@@ -4,91 +4,84 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery
+} from '@tanstack/react-query'
 import type {
   QueryFunction,
   QueryKey,
   UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-import { customInstance } from "../../apis/custom-client";
-import type { ErrorType } from "../../apis/custom-client";
-import type { DojoApiResponseSheetResponse } from ".././model";
+  UseQueryResult
+} from '@tanstack/react-query'
+import type {
+  DojoApiResponseSheetResponse
+} from '.././model'
+import { customInstance } from '../../apis/custom-client';
+import type { ErrorType } from '../../apis/custom-client';
+
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
+
 
 /**
  * 질문 리스트와 질문에 해당하는 후보자 4명과 현재 질문의 순서, 총 질문의 개수를 반환합니다.
  * @summary 질문 리스트 목록 조회
  */
 export const getQuestionSheet = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<DojoApiResponseSheetResponse>(
-    {
-      url: "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet",
-      method: "GET",
-      signal,
+      
+      
+      return customInstance<DojoApiResponseSheetResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet`, method: 'GET', signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
 export const getGetQuestionSheetQueryKey = () => {
-  return [
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet",
-  ] as const;
-};
+    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet`] as const;
+    }
 
-export const getGetQuestionSheetQueryOptions = <
-  TData = Awaited<ReturnType<typeof getQuestionSheet>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getQuestionSheet>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getGetQuestionSheetQueryOptions = <TData = Awaited<ReturnType<typeof getQuestionSheet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getQuestionSheet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getGetQuestionSheetQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getQuestionSheet>>
-  > = ({ signal }) => getQuestionSheet(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getGetQuestionSheetQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getQuestionSheet>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
-};
+  
 
-export type GetQuestionSheetQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getQuestionSheet>>
->;
-export type GetQuestionSheetQueryError = ErrorType<unknown>;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getQuestionSheet>>> = ({ signal }) => getQuestionSheet(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getQuestionSheet>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetQuestionSheetQueryResult = NonNullable<Awaited<ReturnType<typeof getQuestionSheet>>>
+export type GetQuestionSheetQueryError = ErrorType<unknown>
 
 /**
  * @summary 질문 리스트 목록 조회
  */
-export const useGetQuestionSheet = <
-  TData = Awaited<ReturnType<typeof getQuestionSheet>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getQuestionSheet>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getGetQuestionSheetQueryOptions(options);
+export const useGetQuestionSheet = <TData = Awaited<ReturnType<typeof getQuestionSheet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getQuestionSheet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  query.queryKey = queryOptions.queryKey;
+  const queryOptions = getGetQuestionSheetQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+
+
+

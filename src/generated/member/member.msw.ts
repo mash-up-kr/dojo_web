@@ -4,54 +4,54 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { faker } from "@faker-js/faker";
-import { http, HttpResponse, delay } from "msw";
-import type { DojoApiResponseMemberCreateResponse } from ".././model";
+import {
+  faker
+} from '@faker-js/faker'
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw'
+import type {
+  DojoApiResponseMemberCreateResponse,
+  DojoApiResponseMemberUpdateResponse
+} from '.././model'
 
-export const getCreateResponseMock = (
-  overrideResponse: Partial<DojoApiResponseMemberCreateResponse> = {},
-): DojoApiResponseMemberCreateResponse => ({
-  data: faker.helpers.arrayElement([{ id: faker.word.sample() }, undefined]),
-  error: faker.helpers.arrayElement([
-    {
-      code: faker.word.sample(),
-      message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-    },
-    undefined,
-  ]),
-  success: faker.datatype.boolean(),
-  ...overrideResponse,
-});
+export const getCreate1ResponseMock = (overrideResponse: Partial< DojoApiResponseMemberCreateResponse > = {}): DojoApiResponseMemberCreateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
-export const getCreateMockHandler = (
-  overrideResponse?:
-    | DojoApiResponseMemberCreateResponse
-    | ((
-        info: Parameters<Parameters<typeof http.post>[1]>[0],
-      ) =>
-        | Promise<DojoApiResponseMemberCreateResponse>
-        | DojoApiResponseMemberCreateResponse),
-) => {
-  return http.post(
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member",
-    async (info) => {
-      await delay(1000);
-      return new HttpResponse(
-        JSON.stringify(
-          overrideResponse !== undefined
-            ? typeof overrideResponse === "function"
-              ? await overrideResponse(info)
-              : overrideResponse
-            : getCreateResponseMock(),
-        ),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    },
-  );
-};
-export const getMemberMock = () => [getCreateMockHandler()];
+export const getUpdateResponseMock = (overrideResponse: Partial< DojoApiResponseMemberUpdateResponse > = {}): DojoApiResponseMemberUpdateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+
+export const getCreate1MockHandler = (overrideResponse?: DojoApiResponseMemberCreateResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseMemberCreateResponse> | DojoApiResponseMemberCreateResponse)) => {
+  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getCreate1ResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
+export const getUpdateMockHandler = (overrideResponse?: DojoApiResponseMemberUpdateResponse | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<DojoApiResponseMemberUpdateResponse> | DojoApiResponseMemberUpdateResponse)) => {
+  return http.patch('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member/:id', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getUpdateResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+export const getMemberMock = () => [
+  getCreate1MockHandler(),
+  getUpdateMockHandler()
+]

@@ -4,114 +4,150 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { useQuery } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery
+} from '@tanstack/react-query'
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-import { customInstance } from "../../apis/custom-client";
-import type { ErrorType } from "../../apis/custom-client";
+  UseQueryResult
+} from '@tanstack/react-query'
 import type {
+  CreatePickRequest,
+  DojoApiResponsePickId,
   DojoApiResponseReceivedPickListGetResponse,
-  GetReceivedPickListParams,
-} from ".././model";
+  GetReceivedPickListParams
+} from '.././model'
+import { customInstance } from '../../apis/custom-client';
+import type { ErrorType, BodyType } from '../../apis/custom-client';
+
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
+
 /**
+ * 질문에 대해 상대방을 선택 시, Pick 정보가 생성됩니다.
+ * @summary 픽 생성 API
+ */
+export const create = (
+    createPickRequest: BodyType<CreatePickRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponsePickId>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: createPickRequest
+    },
+      options);
+    }
+  
+
+
+export const getCreateMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<CreatePickRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<CreatePickRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof create>>, {data: BodyType<CreatePickRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  create(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>
+    export type CreateMutationBody = BodyType<CreatePickRequest>
+    export type CreateMutationError = ErrorType<unknown>
+
+    /**
+ * @summary 픽 생성 API
+ */
+export const useCreate = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<CreatePickRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof create>>,
+        TError,
+        {data: BodyType<CreatePickRequest>},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
  * 내가 받은 픽들을 정렬하여 보여주는 API. default sort : 최신 순
  * @summary 내가 받은 픽 List API
  */
 export const getReceivedPickList = (
-  params?: GetReceivedPickListParams,
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    params?: GetReceivedPickListParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<DojoApiResponseReceivedPickListGetResponse>(
-    {
-      url: "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list",
-      method: "GET",
-      params,
-      signal,
+      
+      
+      return customInstance<DojoApiResponseReceivedPickListGetResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list`, method: 'GET',
+        params, signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getGetReceivedPickListQueryKey = (
-  params?: GetReceivedPickListParams,
+export const getGetReceivedPickListQueryKey = (params?: GetReceivedPickListParams,) => {
+    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getGetReceivedPickListQueryOptions = <TData = Awaited<ReturnType<typeof getReceivedPickList>>, TError = ErrorType<unknown>>(params?: GetReceivedPickListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReceivedPickList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
-  return [
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list",
-    ...(params ? [params] : []),
-  ] as const;
-};
 
-export const getGetReceivedPickListQueryOptions = <
-  TData = Awaited<ReturnType<typeof getReceivedPickList>>,
-  TError = ErrorType<unknown>,
->(
-  params?: GetReceivedPickListParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getReceivedPickList>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =
-    queryOptions?.queryKey ?? getGetReceivedPickListQueryKey(params);
+  const queryKey =  queryOptions?.queryKey ?? getGetReceivedPickListQueryKey(params);
 
-  const queryFn: QueryFunction<
-    Awaited<ReturnType<typeof getReceivedPickList>>
-  > = ({ signal }) => getReceivedPickList(params, requestOptions, signal);
+  
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getReceivedPickList>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
-};
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getReceivedPickList>>> = ({ signal }) => getReceivedPickList(params, requestOptions, signal);
 
-export type GetReceivedPickListQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getReceivedPickList>>
->;
-export type GetReceivedPickListQueryError = ErrorType<unknown>;
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getReceivedPickList>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetReceivedPickListQueryResult = NonNullable<Awaited<ReturnType<typeof getReceivedPickList>>>
+export type GetReceivedPickListQueryError = ErrorType<unknown>
 
 /**
  * @summary 내가 받은 픽 List API
  */
-export const useGetReceivedPickList = <
-  TData = Awaited<ReturnType<typeof getReceivedPickList>>,
-  TError = ErrorType<unknown>,
->(
-  params?: GetReceivedPickListParams,
-  options?: {
-    query?: Partial<
-      UseQueryOptions<
-        Awaited<ReturnType<typeof getReceivedPickList>>,
-        TError,
-        TData
-      >
-    >;
-    request?: SecondParameter<typeof customInstance>;
-  },
-): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getGetReceivedPickListQueryOptions(params, options);
+export const useGetReceivedPickList = <TData = Awaited<ReturnType<typeof getReceivedPickList>>, TError = ErrorType<unknown>>(
+ params?: GetReceivedPickListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReceivedPickList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  query.queryKey = queryOptions.queryKey;
+  const queryOptions = getGetReceivedPickListQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+
+
+

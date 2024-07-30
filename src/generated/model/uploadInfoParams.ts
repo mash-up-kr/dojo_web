@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { UploadInfoContentType } from "./uploadInfoContentType";
+import type { UploadInfoContentType } from './uploadInfoContentType';
 
 export type UploadInfoParams = {
-  contentType: UploadInfoContentType;
+contentType: UploadInfoContentType;
 };

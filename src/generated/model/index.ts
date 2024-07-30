@@ -6,10 +6,15 @@
  */
 
 export * from "./candidate";
+export * from "./createPickRequest";
+export * from "./currentCoinResponse";
 export * from "./dojoApiErrorResponse";
+export * from "./dojoApiResponseCurrentCoinResponse";
 export * from "./dojoApiResponseImageUploadUrlResponse";
 export * from "./dojoApiResponseListQuestionId";
 export * from "./dojoApiResponseMemberCreateResponse";
+export * from "./dojoApiResponseMemberUpdateResponse";
+export * from "./dojoApiResponsePickId";
 export * from "./dojoApiResponseQuestionId";
 export * from "./dojoApiResponseQuestionSetId";
 export * from "./dojoApiResponseReceivedPickListGetResponse";
@@ -22,6 +27,9 @@ export * from "./memberCreateRequest";
 export * from "./memberCreateRequestGender";
 export * from "./memberCreateRequestPlatform";
 export * from "./memberCreateResponse";
+export * from "./memberUpdateRequest";
+export * from "./memberUpdateResponse";
+export * from "./pickId";
 export * from "./pickResponse";
 export * from "./question";
 export * from "./questionBulkCreateRequest";

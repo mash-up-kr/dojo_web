@@ -2,9 +2,6 @@ import { defineConfig } from "orval";
 
 export default defineConfig({
   "chauffeur-api": {
-    hooks: {
-      afterAllFilesWrite: ["biome check --fix --unsafe"],
-    },
     input: {
       target:
         "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/v3/api-docs",
@@ -28,7 +25,6 @@ export default defineConfig({
         },
         title: (title) => `${title}-api`,
       },
-      prettier: true,
       schemas: "src/generated/model",
       target: "src/generated",
     },

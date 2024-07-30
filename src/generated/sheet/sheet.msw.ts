@@ -4,82 +4,35 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { faker } from "@faker-js/faker";
-import { http, HttpResponse, delay } from "msw";
-import type { DojoApiResponseSheetResponse } from ".././model";
+import {
+  faker
+} from '@faker-js/faker'
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw'
+import type {
+  DojoApiResponseSheetResponse
+} from '.././model'
 
-export const getGetQuestionSheetResponseMock = (
-  overrideResponse: Partial<DojoApiResponseSheetResponse> = {},
-): DojoApiResponseSheetResponse => ({
-  data: faker.helpers.arrayElement([
-    {
-      questionSheetResponses: Array.from(
-        { length: faker.number.int({ min: 1, max: 10 }) },
-        (_, i) => i + 1,
-      ).map(() => ({
-        candidates: Array.from(
-          { length: faker.number.int({ min: 1, max: 10 }) },
-          (_, i) => i + 1,
-        ).map(() => ({
-          memberId: faker.word.sample(),
-          memberName: faker.word.sample(),
-          order: faker.number.int({ min: undefined, max: undefined }),
-        })),
-        currentQuestionIndex: faker.number.int({
-          min: undefined,
-          max: undefined,
-        }),
-        question: {
-          content: faker.word.sample(),
-          id: faker.word.sample(),
-          imageUrl: faker.word.sample(),
-          sheetId: faker.word.sample(),
-        },
-        totalIndex: faker.number.int({ min: undefined, max: undefined }),
-      })),
-    },
-    undefined,
-  ]),
-  error: faker.helpers.arrayElement([
-    {
-      code: faker.word.sample(),
-      message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-    },
-    undefined,
-  ]),
-  success: faker.datatype.boolean(),
-  ...overrideResponse,
-});
+export const getGetQuestionSheetResponseMock = (overrideResponse: Partial< DojoApiResponseSheetResponse > = {}): DojoApiResponseSheetResponse => ({data: faker.helpers.arrayElement([{questionSheetResponses: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({candidates: Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({memberId: faker.word.sample(), memberName: faker.word.sample(), order: faker.number.int({min: undefined, max: undefined})})), currentQuestionIndex: faker.number.int({min: undefined, max: undefined}), question: {content: faker.word.sample(), id: faker.word.sample(), imageUrl: faker.word.sample(), sheetId: faker.word.sample()}, totalIndex: faker.number.int({min: undefined, max: undefined})}))}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
-export const getGetQuestionSheetMockHandler = (
-  overrideResponse?:
-    | DojoApiResponseSheetResponse
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) =>
-        | Promise<DojoApiResponseSheetResponse>
-        | DojoApiResponseSheetResponse),
-) => {
-  return http.get(
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet",
-    async (info) => {
-      await delay(1000);
-      return new HttpResponse(
-        JSON.stringify(
-          overrideResponse !== undefined
-            ? typeof overrideResponse === "function"
-              ? await overrideResponse(info)
-              : overrideResponse
-            : getGetQuestionSheetResponseMock(),
-        ),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    },
-  );
-};
-export const getSheetMock = () => [getGetQuestionSheetMockHandler()];
+
+export const getGetQuestionSheetMockHandler = (overrideResponse?: DojoApiResponseSheetResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseSheetResponse> | DojoApiResponseSheetResponse)) => {
+  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/api/sheet', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getGetQuestionSheetResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+export const getSheetMock = () => [
+  getGetQuestionSheetMockHandler()
+]

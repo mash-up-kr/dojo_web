@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { SheetSingleResponse } from "./sheetSingleResponse";
+import type { SheetSingleResponse } from './sheetSingleResponse';
 
 export interface SheetResponse {
   questionSheetResponses: SheetSingleResponse[];

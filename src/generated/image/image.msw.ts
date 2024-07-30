@@ -4,57 +4,35 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { faker } from "@faker-js/faker";
-import { http, HttpResponse, delay } from "msw";
-import type { DojoApiResponseImageUploadUrlResponse } from ".././model";
+import {
+  faker
+} from '@faker-js/faker'
+import {
+  HttpResponse,
+  delay,
+  http
+} from 'msw'
+import type {
+  DojoApiResponseImageUploadUrlResponse
+} from '.././model'
 
-export const getUploadInfoResponseMock = (
-  overrideResponse: Partial<DojoApiResponseImageUploadUrlResponse> = {},
-): DojoApiResponseImageUploadUrlResponse => ({
-  data: faker.helpers.arrayElement([
-    { uploadUrl: faker.word.sample(), uuid: faker.word.sample() },
-    undefined,
-  ]),
-  error: faker.helpers.arrayElement([
-    {
-      code: faker.word.sample(),
-      message: faker.helpers.arrayElement([faker.word.sample(), undefined]),
-    },
-    undefined,
-  ]),
-  success: faker.datatype.boolean(),
-  ...overrideResponse,
-});
+export const getUploadInfoResponseMock = (overrideResponse: Partial< DojoApiResponseImageUploadUrlResponse > = {}): DojoApiResponseImageUploadUrlResponse => ({data: faker.helpers.arrayElement([{uploadUrl: faker.word.sample(), uuid: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
-export const getUploadInfoMockHandler = (
-  overrideResponse?:
-    | DojoApiResponseImageUploadUrlResponse
-    | ((
-        info: Parameters<Parameters<typeof http.get>[1]>[0],
-      ) =>
-        | Promise<DojoApiResponseImageUploadUrlResponse>
-        | DojoApiResponseImageUploadUrlResponse),
-) => {
-  return http.get(
-    "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/image-upload-url",
-    async (info) => {
-      await delay(1000);
-      return new HttpResponse(
-        JSON.stringify(
-          overrideResponse !== undefined
-            ? typeof overrideResponse === "function"
-              ? await overrideResponse(info)
-              : overrideResponse
-            : getUploadInfoResponseMock(),
-        ),
-        {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    },
-  );
-};
-export const getImageMock = () => [getUploadInfoMockHandler()];
+
+export const getUploadInfoMockHandler = (overrideResponse?: DojoApiResponseImageUploadUrlResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseImageUploadUrlResponse> | DojoApiResponseImageUploadUrlResponse)) => {
+  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/image-upload-url', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getUploadInfoResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+export const getImageMock = () => [
+  getUploadInfoMockHandler()
+]

@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { QuestionId } from "./questionId";
+import type { QuestionId } from './questionId';
 
 /**
  * 커스텀 질문지 세트 생성 요청

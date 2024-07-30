@@ -4,7 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import type { QuestionCreateRequest } from "./questionCreateRequest";
+import type { QuestionCreateRequest } from './questionCreateRequest';
 
 /**
  * 질문 등록 bulk 요청

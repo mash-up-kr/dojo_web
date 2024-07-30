@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type UploadInfoContentType =
-  (typeof UploadInfoContentType)[keyof typeof UploadInfoContentType];
+export type UploadInfoContentType = typeof UploadInfoContentType[keyof typeof UploadInfoContentType];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const UploadInfoContentType = {
-  PNG: "PNG",
-  JPEG: "JPEG",
+  PNG: 'PNG',
+  JPEG: 'JPEG',
 } as const;

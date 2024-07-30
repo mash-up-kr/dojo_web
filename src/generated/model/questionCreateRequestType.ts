@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type QuestionCreateRequestType =
-  (typeof QuestionCreateRequestType)[keyof typeof QuestionCreateRequestType];
+export type QuestionCreateRequestType = typeof QuestionCreateRequestType[keyof typeof QuestionCreateRequestType];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const QuestionCreateRequestType = {
-  FRIEND: "FRIEND",
-  ACCOMPANY: "ACCOMPANY",
+  FRIEND: 'FRIEND',
+  ACCOMPANY: 'ACCOMPANY',
 } as const;

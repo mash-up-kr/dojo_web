@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type MemberCreateRequestGender =
-  (typeof MemberCreateRequestGender)[keyof typeof MemberCreateRequestGender];
+export type MemberCreateRequestGender = typeof MemberCreateRequestGender[keyof typeof MemberCreateRequestGender];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MemberCreateRequestGender = {
-  MALE: "MALE",
-  FEMALE: "FEMALE",
+  MALE: 'MALE',
+  FEMALE: 'FEMALE',
 } as const;
