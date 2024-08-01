@@ -13,7 +13,7 @@ export const PickRankCard = ({
   return (
     <button
       type="button"
-      className="px-4 h-[86px] bg-offWhite020 rounded-12 flex items-center"
+      className="px-4 h-[86px] bg-offWhite020 rounded-12 flex items-center w-full"
       {...rest}
     >
       <div className="shrink-0">{icon}</div>

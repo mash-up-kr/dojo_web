@@ -51,11 +51,7 @@ export const MySpacePage = () => {
               content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
               pickCount={14}
             />
-            <PickRankCard
-              icon={<BRONZE />}
-              content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
-              pickCount={14}
-            />
+            <PickRankCard icon={<BRONZE />} content="zz" pickCount={14} />
           </div>
         </ListContainer>
         <ListContainer
