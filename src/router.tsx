@@ -4,7 +4,6 @@ import { VoteDonePage } from "@/pages/vote/VoteDone";
 import { VoteLayout } from "@/pages/vote/VoteLayout";
 import { VotePage } from "@/pages/vote/VotePage";
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
-import { MySpacePage } from "./pages/my-space";
 import { OnBoardPage } from "./pages/onboard/OnBoardPage";
 
 const router = createBrowserRouter([
@@ -29,10 +28,6 @@ const router = createBrowserRouter([
         element: <VoteDonePage />,
       },
     ],
-  },
-  {
-    path: "/my-space",
-    element: <MySpacePage />,
   },
   {
     path: "/my-pick",
