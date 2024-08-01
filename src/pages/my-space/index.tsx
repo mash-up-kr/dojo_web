@@ -1,11 +1,15 @@
+import GHOST from "@/assets/ic24_ghost.svg?react";
+import THUMB from "@/assets/ic24_thumb.svg?react";
+import BRONZE from "@/assets/ic32_bronze.svg?react";
+import GOLD from "@/assets/ic32_gold.svg?react";
+import SILVER from "@/assets/ic32_silver.svg?react";
 import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
-import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ChipButton } from "./ChipButton";
-import { PickCardList } from "./PickCardList";
+import { ListContainer } from "./ListContainer";
+import { PickRankCard } from "./PickRankCard";
 import { Profile } from "./Profile";
 
 export const MySpacePage = () => {
@@ -13,10 +17,6 @@ export const MySpacePage = () => {
     threshold: 0.9,
     initialIsIntersecting: true,
   });
-
-  const [selectedChipFilter, setSelectedChipFilter] = useState<
-    "latest" | "popular"
-  >("latest");
 
   return (
     <>
@@ -31,24 +31,49 @@ export const MySpacePage = () => {
           "bg-offWhite010": !isIntersecting,
         })}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col pb-20">
         <Profile profileRef={ref} />
-        <div className="flex items-center space-x-2 px-4 py-1.5 mt-7 sticky top-[56px] bg-offWhite010">
-          <ChipButton
-            isActive={selectedChipFilter === "latest"}
-            onClick={() => setSelectedChipFilter("latest")}
-          >
-            최신 Pick 순
-          </ChipButton>
-          <ChipButton
-            isActive={selectedChipFilter === "popular"}
-            onClick={() => setSelectedChipFilter("popular")}
-          >
-            Pick 많은 순
-          </ChipButton>
-        </div>
-        {/* TODO: Chip Filter에 따른 필터 */}
-        <PickCardList />
+        <ListContainer
+          titleIcon={<THUMB />}
+          title="내가 받은 픽"
+          redirectUrl="/"
+          containerClassName="pt-6"
+        >
+          <div className="space-y-2.5">
+            {/* TODO: 내가 받은 픽 정책 반영하기 */}
+            <PickRankCard
+              icon={<GOLD />}
+              content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
+              pickCount={14}
+            />
+            <PickRankCard
+              icon={<SILVER />}
+              content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
+              pickCount={14}
+            />
+            <PickRankCard
+              icon={<BRONZE />}
+              content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
+              pickCount={14}
+            />
+          </div>
+        </ListContainer>
+        <ListContainer
+          containerClassName="pt-10"
+          titleIcon={<GHOST />}
+          title="내 친구들"
+          redirectUrl="/"
+        >
+          <div className="h-[76px] flex items-center justify-center bg-gray040">
+            태규형 마무리 부탁~!
+          </div>
+          <div className="h-[76px] flex items-center justify-center bg-gray040">
+            태규형 마무리 부탁~!
+          </div>
+          <div className="h-[76px] flex items-center justify-center bg-gray040">
+            태규형 마무리 부탁~!
+          </div>
+        </ListContainer>
       </div>
     </>
   );
