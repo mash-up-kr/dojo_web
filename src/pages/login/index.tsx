@@ -5,10 +5,12 @@ import { getGradientBg } from "@/utils/getGradientBg";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
 import KeyVisualImage from "../../assets/images/key-visual.png";
-
+import { useLoginHandler } from "./useLoginHandler";
 const bg = getGradientBg();
 
 export const LogInPage = () => {
+  const { onClickLoginButton } = useLoginHandler();
+
   return (
     <div className={clsx("min-h-screen flex flex-col", bg)}>
       <Header
@@ -25,11 +27,12 @@ export const LogInPage = () => {
         </div>
         <button
           type="button"
+          onClick={onClickLoginButton}
           className="size-full flex gap-2 justify-center items-center py-3 px-4 rounded-8 h-min"
           style={{ backgroundColor: "#fee500" }}
         >
           <KAKAOTALK width={18} height={18} />
-          <span className="t-b2-m-15">카카오로 3초 만에 시작하기</span>
+          <span className="t-b2-m-15">카카오 로그인은 아니지만 로그인하기</span>
         </button>
       </main>
     </div>
