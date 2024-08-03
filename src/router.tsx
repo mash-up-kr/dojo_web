@@ -5,8 +5,8 @@ import { VoteLayout } from "@/pages/vote/VoteLayout";
 import { VotePage } from "@/pages/vote/VotePage";
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
 import { LogInPage } from "./pages/login";
-import { MySpacePage } from "./pages/my-space";
 import { OnBoardPage } from "./pages/onboard/OnBoardPage";
+import { SpacePage } from "./pages/space";
 
 const router = createBrowserRouter([
   {
@@ -36,8 +36,8 @@ const router = createBrowserRouter([
     element: <MyPickPage />,
   },
   {
-    path: "/my-space",
-    element: <MySpacePage />,
+    path: "/space",
+    element: <SpacePage />,
   },
   {
     path: "/my-pick/:pickId",

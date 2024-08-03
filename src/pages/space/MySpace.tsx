@@ -9,10 +9,10 @@ import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
 import { Link } from "react-router-dom";
 import { ListContainer } from "./ListContainer";
+import { MyProfile } from "./MyProfile";
 import { PickRankCard } from "./PickRankCard";
-import { Profile } from "./Profile";
 
-export const MySpacePage = () => {
+export const MySpace = () => {
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.9,
     initialIsIntersecting: true,
@@ -32,7 +32,7 @@ export const MySpacePage = () => {
         })}
       />
       <div className="flex flex-col pb-20">
-        <Profile profileRef={ref} />
+        <MyProfile profileRef={ref} />
         <ListContainer
           titleIcon={<THUMB />}
           title="내가 받은 픽"

@@ -8,11 +8,13 @@ export const ListContainer = ({
   title,
   children,
   containerClassName,
+  isMore = true,
 }: PropsWithChildren<{
   titleIcon: ReactNode;
   title: string;
   redirectUrl: string;
   containerClassName?: string;
+  isMore?: boolean;
 }>) => {
   return (
     <div className={cn("px-4", containerClassName)}>
@@ -21,9 +23,11 @@ export const ListContainer = ({
           {titleIcon}
           <h2 className="text-[#2b2b2b] t-h4-b-20">{title}</h2>
         </div>
-        <Link to={redirectUrl} className="t-c1-m-13 text-gray54">
-          더보기
-        </Link>
+        {isMore && (
+          <Link to={redirectUrl} className="t-c1-m-13 text-gray54">
+            더보기
+          </Link>
+        )}
       </div>
       {children}
     </div>
