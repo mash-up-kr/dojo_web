@@ -9,7 +9,8 @@
 			"recommended": true,
 			"correctness": {
         "useExhaustiveDependencies": "warn",
-				"noUnusedVariables": "error"
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error"
 			}
 		}
 	},
@@ -23,7 +24,8 @@
 			"src/tailwindcss.css",
 			"public/mockServiceWorker.js",
 			"src/generated/**/*.tsx",
-			"src/generated/**/*.ts"
+			"src/generated/**/*.ts",
+			"dist"
 		]
 	}
 }
