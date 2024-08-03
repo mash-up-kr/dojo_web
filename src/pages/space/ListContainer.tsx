@@ -5,8 +5,6 @@ type ListContainerProps = PropsWithChildren<{
   titleIcon: ReactNode;
   title: string;
   containerClassName?: string;
-  isMore?: boolean;
-  onClickMoreButton: React.MouseEventHandler<HTMLButtonElement>;
 }> &
   (
     | {

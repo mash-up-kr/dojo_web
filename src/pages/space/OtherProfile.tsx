@@ -1,5 +1,3 @@
-import CAMERA from "@/assets/ic14_camera.svg?react";
-import GEM from "@/assets/ic22_dia.svg?react";
 import { Button } from "@/components/common/Button";
 import Image from "@/components/common/Image";
 import type { IntersectionReturn } from "@/hooks/useIntersection";

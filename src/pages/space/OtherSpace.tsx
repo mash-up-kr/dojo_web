@@ -5,8 +5,8 @@ import SILVER from "@/assets/ic32_silver.svg?react";
 import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
+import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
-import { Link } from "react-router-dom";
 import { ListContainer } from "./ListContainer";
 import { OtherProfile } from "./OtherProfile";
 import { PickRankCard } from "./PickRankCard";
@@ -22,7 +22,7 @@ export const OtherSpace = () => {
       <Header
         title="친구 스페이스"
         left={
-          <Link to="/vote">
+          <Link activityName="VotePage" activityParams={{}}>
             <Back />
           </Link>
         }
@@ -36,7 +36,6 @@ export const OtherSpace = () => {
           isMore={false}
           titleIcon={<THUMB />}
           title="친구가 받은 픽"
-          redirectUrl="/"
           containerClassName="pt-6"
         >
           <div className="space-y-2.5">
