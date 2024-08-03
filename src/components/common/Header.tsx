@@ -1,14 +1,18 @@
+import { FlowLink } from "@/stackflow/FlowLink";
 import { cn } from "@/utils/cn";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
 
 export function HeaderLogo() {
   return (
-    <Link to="/" className="flex space-x-2 items-center">
+    <FlowLink
+      page="VotePage"
+      params={{}}
+      className="flex space-x-2 items-center"
+    >
       <span className="text-2xl">🤫</span>
       {/* TODO: update service name */}
       <h1 className="t-h3-b-22">Messhit</h1>
-    </Link>
+    </FlowLink>
   );
 }
 

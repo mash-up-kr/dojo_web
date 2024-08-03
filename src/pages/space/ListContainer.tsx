@@ -1,20 +1,19 @@
 import { cn } from "@/utils/cn";
 import type { PropsWithChildren, ReactNode } from "react";
-import { Link } from "react-router-dom";
 
 export const ListContainer = ({
-  redirectUrl,
   titleIcon,
   title,
   children,
   containerClassName,
   isMore = true,
+  onClickMoreButton,
 }: PropsWithChildren<{
   titleIcon: ReactNode;
   title: string;
-  redirectUrl: string;
   containerClassName?: string;
   isMore?: boolean;
+  onClickMoreButton: React.MouseEventHandler<HTMLButtonElement>;
 }>) => {
   return (
     <div className={cn("px-4", containerClassName)}>
@@ -24,9 +23,13 @@ export const ListContainer = ({
           <h2 className="text-[#2b2b2b] t-h4-b-20">{title}</h2>
         </div>
         {isMore && (
-          <Link to={redirectUrl} className="t-c1-m-13 text-gray54">
+          <button
+            type="button"
+            onClick={onClickMoreButton}
+            className="t-c1-m-13 text-gray54"
+          >
             더보기
-          </Link>
+          </button>
         )}
       </div>
       {children}

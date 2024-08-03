@@ -1,18 +1,22 @@
 import { Toast } from "@/components/common/Toast";
 import { useLogin } from "@/generated/member/member";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import Cookies from "js-cookie";
 import { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 export const useLoginHandler = () => {
+  const { push } = useMyFlow();
   const { mutate: login, isSuccess, isError, data } = useLogin();
-  const navigate = useNavigate();
 
   const onSuccessLogin = useCallback(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const returnUrl = urlParams.get("returnUrl");
-    navigate(returnUrl || "/vote");
-  }, [navigate]);
+    if (returnUrl) {
+      window.location.href = returnUrl;
+    } else {
+      push("VotePage", {});
+    }
+  }, [push]);
 
   const onFailLogin = useCallback(() => {
     Toast.alert(

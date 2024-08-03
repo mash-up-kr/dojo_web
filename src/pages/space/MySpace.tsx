@@ -6,26 +6,29 @@ import SILVER from "@/assets/ic32_silver.svg?react";
 import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
+import { FlowLink } from "@/stackflow/FlowLink";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
-import { Link } from "react-router-dom";
+import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { ListContainer } from "./ListContainer";
 import { MyProfile } from "./MyProfile";
 import { PickRankCard } from "./PickRankCard";
 
 export const MySpace = () => {
+  const { push } = useMyFlow();
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.9,
     initialIsIntersecting: true,
   });
 
   return (
-    <>
+    <AppScreen>
       <Header
         title="마이 스페이스"
         left={
-          <Link to="/vote">
+          <FlowLink page="VotePage" params={{}}>
             <Back />
-          </Link>
+          </FlowLink>
         }
         className={cn("fixed transition-colors duration-100", {
           "bg-offWhite010": !isIntersecting,
@@ -36,7 +39,7 @@ export const MySpace = () => {
         <ListContainer
           titleIcon={<THUMB />}
           title="내가 받은 픽"
-          redirectUrl="/"
+          onClickMoreButton={() => push("MyPickPage", {})}
           containerClassName="pt-6"
         >
           <div className="space-y-2.5">
@@ -58,7 +61,7 @@ export const MySpace = () => {
           containerClassName="pt-10"
           titleIcon={<GHOST />}
           title="내 친구들"
-          redirectUrl="/"
+          onClickMoreButton={() => push("VotePage", {})}
         >
           <div className="h-[76px] flex items-center justify-center bg-gray040">
             태규형 마무리 부탁~!
@@ -71,6 +74,6 @@ export const MySpace = () => {
           </div>
         </ListContainer>
       </div>
-    </>
+    </AppScreen>
   );
 };

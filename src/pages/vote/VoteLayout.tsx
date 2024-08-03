@@ -1,8 +1,8 @@
 import { Header, HeaderLogo } from "@/components/common/Header";
 import Image from "@/components/common/Image";
+import { FlowLink } from "@/stackflow/FlowLink";
 import { getGradientBg } from "@/utils/getGradientBg";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
 
 const bg = getGradientBg();
 
@@ -13,9 +13,9 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
         left={<HeaderLogo />}
         title="테스트입니다"
         right={
-          <Link to="/my-pick">
+          <FlowLink page="MyPickPage" params={{}}>
             <Image className="w-8 h-8 bg-gray084 rounded-full" />
-          </Link>
+          </FlowLink>
         }
       />
       {children}

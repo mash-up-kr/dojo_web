@@ -1,46 +1,52 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
 import { Toast } from "@/components/common/Toast";
+import { AppScreen } from "@stackflow/plugin-basic-ui";
 import clsx from "clsx";
 import React from "react";
 import { customRipple } from "use-ripple-hook";
+import { VoteLayout } from "./VoteLayout";
 
 export function VotePage() {
   const [selection, setSelection] = React.useState<number | null>(null);
 
   return (
-    <main className="flex flex-col gap-3 py-6 px-8 items-center">
-      <Indicator current={7} total={12} />
-      {/* question */}
-      <div className="flex flex-col items-center gap-3">
-        <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
-          매쉬업에서 술 제일 잘 마실 것 같은 사람은?
-        </p>
-        {/* add gif icon */}
-        <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px] bg-gray054/20" />
-      </div>
-      {/* answer */}
-      <div className="grid grid-cols-2 gap-3">
-        {[1, 2, 3, 4].map((i) => (
-          <AnswerCard
-            key={i}
-            selected={selection === i}
-            onClick={() => {
-              setTimeout(() => setSelection(i), 200);
-              // NOTE: This is a fake toast for demonstration purposes
-              Toast.alert(
-                "방금 14기 ***님이 낭은영님을 Pick 했어요!",
-                () => {},
-              );
-            }}
-            name={`Answer ${i}`}
-            imgSrc="https://via.placeholder.com/150"
-            description="Description"
-          />
-        ))}
-      </div>
-      {/* shuffle */}
-      <ShuffleButton leftCount={0} max={2} onClick={() => {}} />
-    </main>
+    <AppScreen>
+      <VoteLayout>
+        <main className="flex flex-col gap-3 py-6 px-8 items-center">
+          <Indicator current={7} total={12} />
+          {/* question */}
+          <div className="flex flex-col items-center gap-3">
+            <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
+              매쉬업에서 술 제일 잘 마실 것 같은 사람은?
+            </p>
+            {/* add gif icon */}
+            <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px] bg-gray054/20" />
+          </div>
+          {/* answer */}
+          <div className="grid grid-cols-2 gap-3">
+            {[1, 2, 3, 4].map((i) => (
+              <AnswerCard
+                key={i}
+                selected={selection === i}
+                onClick={() => {
+                  setTimeout(() => setSelection(i), 200);
+                  // NOTE: This is a fake toast for demonstration purposes
+                  Toast.alert(
+                    "방금 14기 ***님이 낭은영님을 Pick 했어요!",
+                    () => {},
+                  );
+                }}
+                name={`Answer ${i}`}
+                imgSrc="https://via.placeholder.com/150"
+                description="Description"
+              />
+            ))}
+          </div>
+          {/* shuffle */}
+          <ShuffleButton leftCount={0} max={2} onClick={() => {}} />
+        </main>
+      </VoteLayout>
+    </AppScreen>
   );
 }
 
