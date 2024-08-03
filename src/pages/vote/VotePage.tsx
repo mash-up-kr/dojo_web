@@ -44,21 +44,22 @@ function VotePageInner() {
             imgAlt={question.questionCategory}
             members={question.candidates}
             onSelect={async (v) => {
-              try {
-                await mutateAsync({
-                  data: {
-                    pickedId: v.pickId,
-                    questionId: question.questionId,
-                  },
-                });
-                if (qIndex === data.sheetTotalCount) {
-                  push("VoteDonePage", {});
-                  return;
-                }
-                setQIndex((p) => p + 1);
-              } catch (e) {
-                console.error(e);
+              // TODO: uncomment this after impl the mutation
+              // try {
+              await mutateAsync({
+                data: {
+                  pickedId: v.pickId,
+                  questionId: question.questionId,
+                },
+              });
+              if (qIndex === data.sheetTotalCount) {
+                push("VoteDonePage", {});
+                return;
               }
+              setQIndex((p) => p + 1);
+              // } catch (e) {
+              // console.error(e);
+              // }
             }}
           />
         </main>
