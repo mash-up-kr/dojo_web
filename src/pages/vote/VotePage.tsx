@@ -1,9 +1,10 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
 import type { QuestionSheetCandidate } from "@/generated/model/questionSheetCandidate";
+import { getCreate1MutationOptions } from "@/generated/pick/pick";
 import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import React, { Suspense, useMemo } from "react";
 import { customRipple } from "use-ripple-hook";
@@ -20,6 +21,7 @@ export function VotePage() {
 function VotePageInner() {
   const { data } = useSuspenseQuery(getGetQuestionSheetQueryOptions());
   const { push } = useMyFlow();
+  const { mutateAsync } = useMutation(getCreate1MutationOptions());
 
   const [qIndex, setQIndex] = React.useState(data.startingQuestionIndex);
 
@@ -41,12 +43,22 @@ function VotePageInner() {
             imgSrc={question.questionEmojiImageUrl}
             imgAlt={question.questionCategory}
             members={question.candidates}
-            onSelect={() => {
-              if (qIndex === data.sheetTotalCount) {
-                push("VoteDonePage", {});
-                return;
+            onSelect={async (v) => {
+              try {
+                await mutateAsync({
+                  data: {
+                    pickedId: v.pickId,
+                    questionId: question.questionId,
+                  },
+                });
+                if (qIndex === data.sheetTotalCount) {
+                  push("VoteDonePage", {});
+                  return;
+                }
+                setQIndex((p) => p + 1);
+              } catch (e) {
+                console.error(e);
               }
-              setQIndex((p) => p + 1);
             }}
           />
         </main>
@@ -66,7 +78,7 @@ function VoteQuestions({
   imgSrc: string;
   imgAlt: string;
   members: QuestionSheetCandidate[];
-  onSelect: () => void;
+  onSelect: (v: { pickId: string }) => void;
 }) {
   const [selection, setSelection] = React.useState<number | null>(null);
   const [shuffled, setIsShuffled] = React.useState(false);
@@ -95,7 +107,7 @@ function VoteQuestions({
             onClick={() => {
               setSelection(i);
               setTimeout(() => {
-                onSelect();
+                onSelect({ pickId: v.memberId });
                 setSelection(null);
               }, 500);
             }}
