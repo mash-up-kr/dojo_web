@@ -1,8 +1,8 @@
 import { LogInPage } from "@/pages/login";
 import { MyPickPage } from "@/pages/my-pick";
 import { MyPickDetailPage } from "@/pages/my-pick-detail";
-import { MySpacePage } from "@/pages/my-space";
 import { OnBoardPage } from "@/pages/onboard/OnBoardPage";
+import { SpacePage } from "@/pages/space";
 import { VoteDonePage } from "@/pages/vote/VoteDone";
 import { VotePage } from "@/pages/vote/VotePage";
 import { basicUIPlugin } from "@stackflow/plugin-basic-ui";
@@ -16,7 +16,7 @@ export const routes = {
   VoteDonePage: "/vote/done",
   MyPickPage: "/my-pick",
   MyPickDetailPage: "/my-pick/:pickId",
-  MySpacePage: "/my-space",
+  SpacePage: "/space",
   OnBoardPage: "/onboard",
 };
 
@@ -38,7 +38,7 @@ export const { Stack, activities } = stackflow({
     VoteDonePage,
     MyPickPage,
     MyPickDetailPage,
-    MySpacePage,
+    SpacePage,
     OnBoardPage,
   },
   initialActivity: () => "LogInPage",
