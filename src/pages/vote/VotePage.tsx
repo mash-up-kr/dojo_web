@@ -46,7 +46,8 @@ function VotePageInner() {
             onSelect={async (v) => {
               // TODO: uncomment this after impl the mutation
               // try {
-              await mutateAsync({
+              // await mutateAsync({
+              mutateAsync({
                 data: {
                   pickedId: v.pickId,
                   questionId: question.questionId,
