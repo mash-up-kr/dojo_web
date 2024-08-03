@@ -56,6 +56,9 @@ importers:
       react-dom:
         specifier: 19.0.0-beta-26f2496093-20240514
         version: 19.0.0-beta-26f2496093-20240514(react@19.0.0-beta-26f2496093-20240514)
+      react-error-boundary:
+        specifier: ^4.0.13
+        version: 4.0.13(react@19.0.0-beta-26f2496093-20240514)
       sonner:
         specifier: ^1.5.0
         version: 1.5.0(react-dom@19.0.0-beta-26f2496093-20240514(react@19.0.0-beta-26f2496093-20240514))(react@19.0.0-beta-26f2496093-20240514)
@@ -2252,6 +2255,11 @@ packages:
     resolution: {integrity: sha512-UvQ+K1l3DFQ34LDgfFSNuUGi9EC+yfE9tS6MdpNTd5fx7qC7KLfepfC/KpxWMQZ7JfE3axD4ZO6H4cBSpAZpqw==}
     peerDependencies:
       react: 19.0.0-beta-26f2496093-20240514
+
+  react-error-boundary@4.0.13:
+    resolution: {integrity: sha512-b6PwbdSv8XeOSYvjt8LpgpKrZ0yGdtZokYwkwV2wlcZbxgopHX/hgPl5VgpnoVOWd868n1hktM8Qm4b+02MiLQ==}
+    peerDependencies:
+      react: '>=16.13.1'
 
   react-fast-compare@3.2.2:
     resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
@@ -4870,6 +4878,11 @@ snapshots:
     dependencies:
       react: 19.0.0-beta-26f2496093-20240514
       scheduler: 0.25.0-beta-26f2496093-20240514
+
+  react-error-boundary@4.0.13(react@19.0.0-beta-26f2496093-20240514):
+    dependencies:
+      '@babel/runtime': 7.24.7
+      react: 19.0.0-beta-26f2496093-20240514
 
   react-fast-compare@3.2.2: {}
 
