@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type MemberCreateRequestPlatform = typeof MemberCreateRequestPlatform[keyof typeof MemberCreateRequestPlatform];
+export type ReceivedPickDetailPickerPlatform = typeof ReceivedPickDetailPickerPlatform[keyof typeof ReceivedPickDetailPickerPlatform];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const MemberCreateRequestPlatform = {
+export const ReceivedPickDetailPickerPlatform = {
   SPRING: 'SPRING',
   WEB: 'WEB',
   NODE: 'NODE',

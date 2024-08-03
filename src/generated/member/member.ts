@@ -4,181 +4,202 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { useMutation } from "@tanstack/react-query";
+import {
+  useMutation
+} from '@tanstack/react-query'
 import type {
   MutationFunction,
   UseMutationOptions,
-  UseMutationResult,
-} from "@tanstack/react-query";
-import { customInstance } from "../../apis/custom-client";
-import type { BodyType, ErrorType } from "../../apis/custom-client";
+  UseMutationResult
+} from '@tanstack/react-query'
 import type {
   DojoApiResponseMemberCreateResponse,
+  DojoApiResponseMemberLoginResponse,
   DojoApiResponseMemberUpdateResponse,
   MemberCreateRequest,
-  MemberUpdateRequest,
-} from ".././model";
+  MemberLoginRequest,
+  MemberUpdateRequest
+} from '.././model'
+import { customInstance } from '../../apis/custom-client';
+import type { ErrorType, BodyType } from '../../apis/custom-client';
+
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
 
+
 /**
  * 멤버 가입 시 사용하는 API. 현재 ID 제외(auto generation) 별도의 unique 값은 없어요.
- * @summary 멤버 가입 API
+ * @summary [PUBLIC] 멤버 가입 API
  */
-export const create1 = (
-  memberCreateRequest: BodyType<MemberCreateRequest>,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<DojoApiResponseMemberCreateResponse>(
-    {
-      url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member`,
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      data: memberCreateRequest,
+export const create = (
+    memberCreateRequest: BodyType<MemberCreateRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponseMemberCreateResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: memberCreateRequest
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getCreate1MutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof create1>>,
-    TError,
-    { data: BodyType<MemberCreateRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof create1>>,
-  TError,
-  { data: BodyType<MemberCreateRequest> },
-  TContext
-> => {
-  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof create1>>,
-    { data: BodyType<MemberCreateRequest> }
-  > = (props) => {
-    const { data } = props ?? {};
+export const getCreateMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<MemberCreateRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<MemberCreateRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-    return create1(data, requestOptions);
-  };
+      
 
-  return { mutationFn, ...mutationOptions };
-};
 
-export type Create1MutationResult = NonNullable<
-  Awaited<ReturnType<typeof create1>>
->;
-export type Create1MutationBody = BodyType<MemberCreateRequest>;
-export type Create1MutationError = ErrorType<unknown>;
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof create>>, {data: BodyType<MemberCreateRequest>}> = (props) => {
+          const {data} = props ?? {};
 
-/**
- * @summary 멤버 가입 API
+          return  create(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMutationResult = NonNullable<Awaited<ReturnType<typeof create>>>
+    export type CreateMutationBody = BodyType<MemberCreateRequest>
+    export type CreateMutationError = ErrorType<unknown>
+
+    /**
+ * @summary [PUBLIC] 멤버 가입 API
  */
-export const useCreate1 = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof create1>>,
-    TError,
-    { data: BodyType<MemberCreateRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof create1>>,
-  TError,
-  { data: BodyType<MemberCreateRequest> },
-  TContext
-> => {
-  const mutationOptions = getCreate1MutationOptions(options);
+export const useCreate = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof create>>, TError,{data: BodyType<MemberCreateRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof create>>,
+        TError,
+        {data: BodyType<MemberCreateRequest>},
+        TContext
+      > => {
 
-  return useMutation(mutationOptions);
-};
-/**
+      const mutationOptions = getCreateMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
+ * 멤버 로그인 API, ID 값으로만 로그인하며 token을 발급받는 용도
+ * @summary [PUBLIC] 멤버 로그인 API
+ */
+export const login = (
+    memberLoginRequest: BodyType<MemberLoginRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponseMemberLoginResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member-login`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: memberLoginRequest
+    },
+      options);
+    }
+  
+
+
+export const getLoginMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: BodyType<MemberLoginRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: BodyType<MemberLoginRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof login>>, {data: BodyType<MemberLoginRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  login(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LoginMutationResult = NonNullable<Awaited<ReturnType<typeof login>>>
+    export type LoginMutationBody = BodyType<MemberLoginRequest>
+    export type LoginMutationError = ErrorType<unknown>
+
+    /**
+ * @summary [PUBLIC] 멤버 로그인 API
+ */
+export const useLogin = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof login>>, TError,{data: BodyType<MemberLoginRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof login>>,
+        TError,
+        {data: BodyType<MemberLoginRequest>},
+        TContext
+      > => {
+
+      const mutationOptions = getLoginMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
  * 멤버 정보 수정 시 사용하는 API. 수정될 요소만 not-null로 받아요. null로 들어온 프로퍼티는 기존 값을 유지해요.
  * @summary 멤버 정보 갱신 API
  */
 export const update = (
-  id: string,
-  memberUpdateRequest: BodyType<MemberUpdateRequest>,
-  options?: SecondParameter<typeof customInstance>,
-) => {
-  return customInstance<DojoApiResponseMemberUpdateResponse>(
-    {
-      url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member/${id}`,
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      data: memberUpdateRequest,
+    id: string,
+    memberUpdateRequest: BodyType<MemberUpdateRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponseMemberUpdateResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member/${id}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: memberUpdateRequest
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
-export const getUpdateMutationOptions = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof update>>,
-    TError,
-    { id: string; data: BodyType<MemberUpdateRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationOptions<
-  Awaited<ReturnType<typeof update>>,
-  TError,
-  { id: string; data: BodyType<MemberUpdateRequest> },
-  TContext
-> => {
-  const { mutation: mutationOptions, request: requestOptions } = options ?? {};
 
-  const mutationFn: MutationFunction<
-    Awaited<ReturnType<typeof update>>,
-    { id: string; data: BodyType<MemberUpdateRequest> }
-  > = (props) => {
-    const { id, data } = props ?? {};
+export const getUpdateMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: BodyType<MemberUpdateRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: BodyType<MemberUpdateRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
 
-    return update(id, data, requestOptions);
-  };
+      
 
-  return { mutationFn, ...mutationOptions };
-};
 
-export type UpdateMutationResult = NonNullable<
-  Awaited<ReturnType<typeof update>>
->;
-export type UpdateMutationBody = BodyType<MemberUpdateRequest>;
-export type UpdateMutationError = ErrorType<unknown>;
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof update>>, {id: string;data: BodyType<MemberUpdateRequest>}> = (props) => {
+          const {id,data} = props ?? {};
 
-/**
+          return  update(id,data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMutationResult = NonNullable<Awaited<ReturnType<typeof update>>>
+    export type UpdateMutationBody = BodyType<MemberUpdateRequest>
+    export type UpdateMutationError = ErrorType<unknown>
+
+    /**
  * @summary 멤버 정보 갱신 API
  */
-export const useUpdate = <
-  TError = ErrorType<unknown>,
-  TContext = unknown,
->(options?: {
-  mutation?: UseMutationOptions<
-    Awaited<ReturnType<typeof update>>,
-    TError,
-    { id: string; data: BodyType<MemberUpdateRequest> },
-    TContext
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseMutationResult<
-  Awaited<ReturnType<typeof update>>,
-  TError,
-  { id: string; data: BodyType<MemberUpdateRequest> },
-  TContext
-> => {
-  const mutationOptions = getUpdateMutationOptions(options);
+export const useUpdate = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof update>>, TError,{id: string;data: BodyType<MemberUpdateRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof update>>,
+        TError,
+        {id: string;data: BodyType<MemberUpdateRequest>},
+        TContext
+      > => {
 
-  return useMutation(mutationOptions);
-};
+      const mutationOptions = getUpdateMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    

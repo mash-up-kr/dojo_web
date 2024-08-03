@@ -4,91 +4,84 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery
+} from '@tanstack/react-query'
 import type {
   QueryFunction,
   QueryKey,
   UseQueryOptions,
-  UseQueryResult,
-} from "@tanstack/react-query";
-import { customInstance } from "../../apis/custom-client";
-import type { ErrorType } from "../../apis/custom-client";
-import type { DojoApiResponseCurrentCoinResponse } from ".././model";
+  UseQueryResult
+} from '@tanstack/react-query'
+import type {
+  DojoApiResponseCurrentCoinResponse
+} from '.././model'
+import { customInstance } from '../../apis/custom-client';
+import type { ErrorType } from '../../apis/custom-client';
+
 
 type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
+
 
 /**
  * 유저의 현재 남은 코인 정보를 조회합니다
  * @summary 본인의 현재 코인을 조회합니다.
  */
 export const getCurrentCoin = (
-  options?: SecondParameter<typeof customInstance>,
-  signal?: AbortSignal,
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
-  return customInstance<DojoApiResponseCurrentCoinResponse>(
-    {
-      url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`,
-      method: "GET",
-      signal,
+      
+      
+      return customInstance<DojoApiResponseCurrentCoinResponse>(
+      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`, method: 'GET', signal
     },
-    options,
-  );
-};
+      options);
+    }
+  
 
 export const getGetCurrentCoinQueryKey = () => {
-  return [
-    `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`,
-  ] as const;
-};
+    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`] as const;
+    }
 
-export const getGetCurrentCoinQueryOptions = <
-  TData = Awaited<ReturnType<typeof getCurrentCoin>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getCurrentCoin>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}) => {
-  const { query: queryOptions, request: requestOptions } = options ?? {};
+    
+export const getGetCurrentCoinQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentCoin>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentCoin>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
 
-  const queryKey = queryOptions?.queryKey ?? getGetCurrentCoinQueryKey();
+const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentCoin>>> = ({
-    signal,
-  }) => getCurrentCoin(requestOptions, signal);
+  const queryKey =  queryOptions?.queryKey ?? getGetCurrentCoinQueryKey();
 
-  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-    Awaited<ReturnType<typeof getCurrentCoin>>,
-    TError,
-    TData
-  > & { queryKey: QueryKey };
-};
+  
 
-export type GetCurrentCoinQueryResult = NonNullable<
-  Awaited<ReturnType<typeof getCurrentCoin>>
->;
-export type GetCurrentCoinQueryError = ErrorType<unknown>;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentCoin>>> = ({ signal }) => getCurrentCoin(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCurrentCoin>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCurrentCoinQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentCoin>>>
+export type GetCurrentCoinQueryError = ErrorType<unknown>
 
 /**
  * @summary 본인의 현재 코인을 조회합니다.
  */
-export const useGetCurrentCoin = <
-  TData = Awaited<ReturnType<typeof getCurrentCoin>>,
-  TError = ErrorType<unknown>,
->(options?: {
-  query?: Partial<
-    UseQueryOptions<Awaited<ReturnType<typeof getCurrentCoin>>, TError, TData>
-  >;
-  request?: SecondParameter<typeof customInstance>;
-}): UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
-  const queryOptions = getGetCurrentCoinQueryOptions(options);
+export const useGetCurrentCoin = <TData = Awaited<ReturnType<typeof getCurrentCoin>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentCoin>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 
-  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
-    queryKey: QueryKey;
-  };
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  query.queryKey = queryOptions.queryKey;
+  const queryOptions = getGetCurrentCoinQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
 
   return query;
-};
+}
+
+
+

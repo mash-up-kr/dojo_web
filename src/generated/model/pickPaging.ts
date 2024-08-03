@@ -4,12 +4,16 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { ReceivedPickDetail } from './receivedPickDetail';
 
-export interface PickResponse {
-  latestPickedAt: string;
-  pickId: string;
+export interface PickPaging {
+  isFirst: boolean;
+  isLast: boolean;
+  picks: ReceivedPickDetail[];
   questionContent: string;
   questionEmojiImageUrl: string;
   questionId: string;
+  totalElements: number;
+  totalPage: number;
   totalReceivedPickCount: number;
 }

@@ -5,11 +5,11 @@
  * OpenAPI spec version: v0
  */
 
-export type MemberCreateRequestGender = typeof MemberCreateRequestGender[keyof typeof MemberCreateRequestGender];
+export type ReceivedPickDetailPickerGender = typeof ReceivedPickDetailPickerGender[keyof typeof ReceivedPickDetailPickerGender];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const MemberCreateRequestGender = {
+export const ReceivedPickDetailPickerGender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
   UNKNOWN: 'UNKNOWN',

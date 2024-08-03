@@ -4,12 +4,14 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { QuestionCreateRequestCategory } from './questionCreateRequestCategory';
 import type { QuestionCreateRequestType } from './questionCreateRequestType';
 
 /**
  * 질문 등록 요청
  */
 export interface QuestionCreateRequest {
+  category: QuestionCreateRequestCategory;
   content: string;
   emojiImageId: string;
   type: QuestionCreateRequestType;
