@@ -1,4 +1,6 @@
+import { getGetNextPickTimeQueryOptions } from "@/generated/pick/pick";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import React from "react";
 import { VoteLayout } from "./VoteLayout";
@@ -17,11 +19,7 @@ export function VoteDonePage() {
     <AppScreen>
       <VoteLayout>
         <main className="flex flex-col px-8 py-7 space-y-4">
-          {!next ? (
-            <DoneCongrat />
-          ) : (
-            <VoteLeftTime endDate={dayjs().add(6, "hour").toISOString()} />
-          )}
+          {!next ? <DoneCongrat /> : <VoteLeftTime />}
         </main>
       </VoteLayout>
     </AppScreen>
@@ -48,16 +46,25 @@ function DoneCongrat() {
   );
 }
 
-function VoteLeftTime({ endDate }: { endDate: string }) {
-  const leftTime = dayjs(endDate).diff(dayjs(), "second");
-  const [time, setTime] = React.useState(leftTime);
+function VoteLeftTime() {
+  const { data } = useSuspenseQuery(getGetNextPickTimeQueryOptions());
+  const [time, setTime] = React.useState(() =>
+    dayjs(data.data).diff(dayjs(), "second"),
+  );
   const formattedTime = dayjs(time * 1000)
     .format("HH:mm:ss")
     .toString();
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setTime((prev) => prev - 1);
+      setTime((prev) => {
+        if (prev <= 0) {
+          // move to vote page
+          location.assign("/vote");
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
     return () => clearInterval(timer);
   }, []);
