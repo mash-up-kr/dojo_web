@@ -1,4 +1,4 @@
 pre-commit:
   commands:
-    build:
-      run: pnpm build
+    biome-check:
+      run: pnpm biome check
