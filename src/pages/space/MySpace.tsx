@@ -6,7 +6,7 @@ import SILVER from "@/assets/ic32_silver.svg?react";
 import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
@@ -26,9 +26,9 @@ export const MySpace = () => {
       <Header
         title="마이 스페이스"
         left={
-          <FlowLink page="VotePage" params={{}}>
+          <Link activityName="VotePage" activityParams={{}}>
             <Back />
-          </FlowLink>
+          </Link>
         }
         className={cn("fixed transition-colors duration-100", {
           "bg-offWhite010": !isIntersecting,

@@ -1,7 +1,7 @@
 import Image from "@/components/common/Image";
 import type { PickResponse } from "@/generated/model";
 import { useGetReceivedPickList } from "@/generated/pick/pick";
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
 
 export const PickCardList = () => {
@@ -40,9 +40,9 @@ const PickCard = ({
 }: PickResponse) => {
   return (
     <li className="h-[116px] px-4 items-center">
-      <FlowLink
-        page="MyPickDetailPage"
-        params={{ pickId: "1" }}
+      <Link
+        activityName="MyPickDetailPage"
+        activityParams={{ pickId: "1" }}
         className="h-[116px] flex items-center border-b-gray005 border-solid border-b &:first-of-type:border-t-gray005 &:first-child:border-t"
       >
         <div className="flex flex-col space-y-1.5 flex-1">
@@ -64,7 +64,7 @@ const PickCard = ({
             className="w-[60px] h-[60px] rounded-0"
           />
         </div>
-      </FlowLink>
+      </Link>
     </li>
   );
 };

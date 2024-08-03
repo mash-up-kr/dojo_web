@@ -1,18 +1,18 @@
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import type { ReactNode } from "react";
 
 export function HeaderLogo() {
   return (
-    <FlowLink
-      page="VotePage"
-      params={{}}
+    <Link
+      activityName="VotePage"
+      activityParams={{}}
       className="flex space-x-2 items-center"
     >
       <span className="text-2xl">🤫</span>
       {/* TODO: update service name */}
       <h1 className="t-h3-b-22">Messhit</h1>
-    </FlowLink>
+    </Link>
   );
 }
 

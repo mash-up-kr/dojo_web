@@ -2,7 +2,7 @@
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useRef, useState } from "react";
 
@@ -37,13 +37,13 @@ export function OnBoardPage() {
       <div>
         <Header
           right={
-            <FlowLink
-              page="VotePage"
-              params={{}}
+            <Link
+              activityName="VotePage"
+              activityParams={{}}
               className="text-purple100 t-h5-sb-17"
             >
               다음
-            </FlowLink>
+            </Link>
           }
         />
         <main className="flex flex-col items-center">

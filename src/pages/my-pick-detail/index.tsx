@@ -2,7 +2,7 @@ import GEM from "@/assets/ic22_dia.svg?react";
 import Close from "@/assets/ic_24_close.svg?react";
 import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
@@ -44,13 +44,13 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
             : "매쉬업에서 친구에게 이성으로 소개시켜주고 싶은 사람? 매쉬업에서 매쉬업에서 친구에게 이성으로 소개소개"
         }
         left={
-          <FlowLink
-            page="MyPickPage"
-            params={{}}
+          <Link
+            activityName="MyPickPage"
+            activityParams={{}}
             className="w-6 h-6 flex items-center"
           >
             <Close />
-          </FlowLink>
+          </Link>
         }
         right={
           // TODO: GEM 개수 API 연동

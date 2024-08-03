@@ -1,7 +1,7 @@
 import KAKAOTALK from "@/assets/kakaotalk.svg?react";
 import { Header, HeaderLogo } from "@/components/common/Header";
 import Image from "@/components/common/Image";
-import { FlowLink } from "@/stackflow/FlowLink";
+import { Link } from "@/stackflow/Link";
 import { getGradientBg } from "@/utils/getGradientBg";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
@@ -19,9 +19,9 @@ export const LogInPage: ActivityComponentType = () => {
         <Header
           left={<HeaderLogo />}
           right={
-            <FlowLink page="MyPickPage" params={{}}>
+            <Link activityName="MyPickPage" activityParams={{}}>
               <Image className="w-8 h-8 bg-gray084 rounded-full" />
-            </FlowLink>
+            </Link>
           }
         />
         <main className="flex flex-col flex-grow px-4 py-7 items-center ">
