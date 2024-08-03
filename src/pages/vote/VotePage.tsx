@@ -34,8 +34,6 @@ function VotePageInner() {
     return members.slice(0, 4);
   }, [currentQ, shuffled]);
 
-  console.log("data", data);
-
   return (
     <AppScreen>
       <VoteLayout>
