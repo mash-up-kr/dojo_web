@@ -1,5 +1,7 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
+import type { QuestionSheetCandidate } from "@/generated/model/questionSheetCandidate";
 import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
@@ -16,67 +18,97 @@ export function VotePage() {
 }
 
 function VotePageInner() {
-  const [selection, setSelection] = React.useState<number | null>(null);
-  const [shuffled, setIsShuffled] = React.useState(false);
-
   const { data } = useSuspenseQuery(getGetQuestionSheetQueryOptions());
+  const { push } = useMyFlow();
 
-  const currentQ = data.questionSheetList.find(
-    (q) => q.questionOrder === data.startingQuestionIndex,
-  );
+  const [qIndex, setQIndex] = React.useState(data.startingQuestionIndex);
 
-  const selects = useMemo(() => {
-    if (!currentQ) return [];
-    const members = currentQ.candidates
-      .slice(0, 8)
-      .sort(() => Math.random() - 0.5);
-    if (shuffled) return members.slice(4, 8);
-    return members.slice(0, 4);
-  }, [currentQ, shuffled]);
+  const question =
+    data.questionSheetList.find((q) => q.questionOrder === qIndex) ??
+    // TODO: remove this line after fixing the bug
+    data.questionSheetList[0];
 
+  if (!question) {
+    return;
+  }
   return (
     <AppScreen>
       <VoteLayout>
         <main className="flex flex-col gap-3 py-6 px-8 items-center">
-          <Indicator
-            current={data.startingQuestionIndex}
-            total={data.sheetTotalCount}
-          />
-          <div className="flex flex-col items-center gap-3">
-            <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
-              {currentQ?.questionContent}
-            </p>
-            <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px]">
-              <img
-                src={currentQ?.questionEmojiImageUrl}
-                alt={currentQ?.questionCategory}
-                className="w-full"
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            {selects.map((v, i) => (
-              <AnswerCard
-                key={v.memberId}
-                selected={selection === i}
-                onClick={() => {
-                  setTimeout(() => setSelection(i), 200);
-                }}
-                name={v.memberName}
-                // TODO: need to add imgSrc
-                imgSrc={""}
-                description={v.platform}
-              />
-            ))}
-          </div>
-          {/* shuffle */}
-          <ShuffleButton
-            disabled={shuffled}
-            onClick={() => setIsShuffled(true)}
+          <Indicator current={qIndex} total={data.sheetTotalCount} />
+          <VoteQuestions
+            content={question.questionContent}
+            imgSrc={question.questionEmojiImageUrl}
+            imgAlt={question.questionCategory}
+            members={question.candidates}
+            onSelect={() => {
+              if (qIndex === data.sheetTotalCount) {
+                push("VoteDonePage", {});
+                return;
+              }
+              setQIndex((p) => p + 1);
+            }}
           />
         </main>
       </VoteLayout>
     </AppScreen>
+  );
+}
+
+function VoteQuestions({
+  content,
+  imgSrc,
+  imgAlt,
+  members,
+  onSelect,
+}: {
+  content: string;
+  imgSrc: string;
+  imgAlt: string;
+  members: QuestionSheetCandidate[];
+  onSelect: () => void;
+}) {
+  const [selection, setSelection] = React.useState<number | null>(null);
+  const [shuffled, setIsShuffled] = React.useState(false);
+
+  const selects = useMemo(() => {
+    const randMems = members.slice(0, 8).sort(() => Math.random() - 0.5);
+    if (shuffled) return randMems.slice(4, 8);
+    return randMems.slice(0, 4);
+  }, [members, shuffled]);
+
+  return (
+    <>
+      <div className="flex flex-col items-center gap-3">
+        <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
+          {content}
+        </p>
+        <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px]">
+          <img src={imgSrc} alt={imgAlt} className="w-full" />
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {selects.map((v, i) => (
+          <AnswerCard
+            key={v.memberId}
+            selected={selection === i}
+            onClick={() => {
+              setSelection(i);
+              setTimeout(() => {
+                onSelect();
+                setSelection(null);
+              }, 500);
+            }}
+            name={v.memberName}
+            // TODO: need to add imgSrc
+            imgSrc={"https://via.placeholder.com/150"}
+            description={v.platform}
+          />
+        ))}
+      </div>
+      {/* shuffle */}
+      <ShuffleButton disabled={shuffled} onClick={() => setIsShuffled(true)} />
+    </>
   );
 }
 
