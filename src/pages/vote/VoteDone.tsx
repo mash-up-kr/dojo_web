@@ -3,6 +3,7 @@ import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import React, { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { VoteLayout } from "./VoteLayout";
 
 export function VoteDonePage() {
@@ -17,13 +18,15 @@ export function VoteDonePage() {
 
   return (
     <AppScreen>
-      <Suspense>
-        <VoteLayout>
-          <main className="flex flex-col px-8 py-7 space-y-4">
-            {!next ? <DoneCongrat /> : <VoteLeftTime />}
-          </main>
-        </VoteLayout>
-      </Suspense>
+      <ErrorBoundary fallback={<div>Something went wrong</div>}>
+        <Suspense>
+          <VoteLayout>
+            <main className="flex flex-col px-8 py-7 space-y-4">
+              {!next ? <DoneCongrat /> : <VoteLeftTime />}
+            </main>
+          </VoteLayout>
+        </Suspense>
+      </ErrorBoundary>
     </AppScreen>
   );
 }

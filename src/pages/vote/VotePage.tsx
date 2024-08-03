@@ -7,14 +7,17 @@ import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import React, { Suspense, useMemo } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { customRipple } from "use-ripple-hook";
 import { VoteLayout } from "./VoteLayout";
 
 export function VotePage() {
   return (
-    <Suspense>
-      <VotePageInner />
-    </Suspense>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Suspense>
+        <VotePageInner />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
