@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./tailwindcss.css";
+import "@stackflow/plugin-basic-ui/index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { RouterProvider } from "react-router-dom";
 import { App } from "./app";
-import router from "./router";
+import { Stack } from "./stackflow";
 
 const isMockingEnabled = import.meta.env.VITE_ENABLED_MOCKING === "true";
 
@@ -35,7 +35,7 @@ if (root) {
       <React.StrictMode>
         <App>
           <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
+            <Stack />
           </QueryClientProvider>
         </App>
       </React.StrictMode>,
