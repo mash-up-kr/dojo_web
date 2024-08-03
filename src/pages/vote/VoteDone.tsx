@@ -2,7 +2,7 @@ import { getGetNextPickTimeQueryOptions } from "@/generated/pick/pick";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import React from "react";
+import React, { Suspense } from "react";
 import { VoteLayout } from "./VoteLayout";
 
 export function VoteDonePage() {
@@ -17,11 +17,13 @@ export function VoteDonePage() {
 
   return (
     <AppScreen>
-      <VoteLayout>
-        <main className="flex flex-col px-8 py-7 space-y-4">
-          {!next ? <DoneCongrat /> : <VoteLeftTime />}
-        </main>
-      </VoteLayout>
+      <Suspense>
+        <VoteLayout>
+          <main className="flex flex-col px-8 py-7 space-y-4">
+            {!next ? <DoneCongrat /> : <VoteLeftTime />}
+          </main>
+        </VoteLayout>
+      </Suspense>
     </AppScreen>
   );
 }
