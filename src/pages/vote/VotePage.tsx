@@ -1,49 +1,81 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
-import { Toast } from "@/components/common/Toast";
+import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import React from "react";
+import React, { Suspense, useMemo } from "react";
 import { customRipple } from "use-ripple-hook";
 import { VoteLayout } from "./VoteLayout";
 
 export function VotePage() {
+  return (
+    <Suspense>
+      <VotePageInner />
+    </Suspense>
+  );
+}
+
+function VotePageInner() {
   const [selection, setSelection] = React.useState<number | null>(null);
+  const [shuffled, setIsShuffled] = React.useState(false);
+
+  const { data } = useSuspenseQuery(getGetQuestionSheetQueryOptions());
+
+  const currentQ = data.questionSheetList.find(
+    (q) => q.questionOrder === data.startingQuestionIndex,
+  );
+
+  const selects = useMemo(() => {
+    if (!currentQ) return [];
+    const members = currentQ.candidates
+      .slice(0, 8)
+      .sort(() => Math.random() - 0.5);
+    if (shuffled) return members.slice(4, 8);
+    return members.slice(0, 4);
+  }, [currentQ, shuffled]);
+
+  console.log("data", data);
 
   return (
     <AppScreen>
       <VoteLayout>
         <main className="flex flex-col gap-3 py-6 px-8 items-center">
-          <Indicator current={7} total={12} />
-          {/* question */}
+          <Indicator
+            current={data.startingQuestionIndex}
+            total={data.sheetTotalCount}
+          />
           <div className="flex flex-col items-center gap-3">
             <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
-              매쉬업에서 술 제일 잘 마실 것 같은 사람은?
+              {currentQ?.questionContent}
             </p>
-            {/* add gif icon */}
-            <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px] bg-gray054/20" />
+            <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px]">
+              <img
+                src={currentQ?.questionEmojiImageUrl}
+                alt={currentQ?.questionCategory}
+                className="w-full"
+              />
+            </div>
           </div>
-          {/* answer */}
           <div className="grid grid-cols-2 gap-3">
-            {[1, 2, 3, 4].map((i) => (
+            {selects.map((v, i) => (
               <AnswerCard
-                key={i}
+                key={v.memberId}
                 selected={selection === i}
                 onClick={() => {
                   setTimeout(() => setSelection(i), 200);
-                  // NOTE: This is a fake toast for demonstration purposes
-                  Toast.alert(
-                    "방금 14기 ***님이 낭은영님을 Pick 했어요!",
-                    () => {},
-                  );
                 }}
-                name={`Answer ${i}`}
-                imgSrc="https://via.placeholder.com/150"
-                description="Description"
+                name={v.memberName}
+                // TODO: need to add imgSrc
+                imgSrc={""}
+                description={v.platform}
               />
             ))}
           </div>
           {/* shuffle */}
-          <ShuffleButton leftCount={0} max={2} onClick={() => {}} />
+          <ShuffleButton
+            disabled={shuffled}
+            onClick={() => setIsShuffled(true)}
+          />
         </main>
       </VoteLayout>
     </AppScreen>
@@ -67,27 +99,21 @@ function Indicator({ current, total }: { current: number; total: number }) {
 }
 
 function ShuffleButton({
-  leftCount,
-  max,
+  disabled,
   onClick,
 }: {
-  leftCount: number;
-  max: number;
+  disabled: boolean;
   onClick: () => void;
 }) {
   return (
     <button
-      className="flex gap-2 items-center py-2 px-4 rounded-12 disabled:text-gray040"
-      disabled={leftCount === 0}
+      className="group flex gap-2 items-center py-2 px-4 rounded-12 disabled:text-gray040"
+      disabled={disabled}
       type="button"
       onClick={onClick}
     >
-      <ShuffleSvg
-        className={clsx({ "[&>path]:fill-gray040": leftCount === 0 })}
-      />
-      <span className="t-c1-sb-13">
-        {leftCount}/{max}
-      </span>
+      <ShuffleSvg className={clsx("group-disabled:[&>path]:fill-gray040")} />
+      <span className="t-b3-m-14">셔플</span>
     </button>
   );
 }
