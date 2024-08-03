@@ -1,24 +1,25 @@
 import Back from "@/assets/ic_24_back.svg?react";
 import { Header } from "@/components/common/Header";
-
+import { useMyFlow } from "@/stackflow/useMyFlow";
+import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { ChipButton } from "./ChipButton";
 import { PickCardList } from "./PickCardList";
 
 export const MyPickPage = () => {
+  const { pop } = useMyFlow();
   const [selectedChipFilter, setSelectedChipFilter] = useState<
     "latest" | "popular"
   >("latest");
 
   return (
-    <>
+    <AppScreen>
       <Header
         title="내가 받은 픽"
         left={
-          <Link to="/vote">
+          <button type="button" onClick={pop}>
             <Back />
-          </Link>
+          </button>
         }
         className="sticky top-0 bg-offWhite010"
       />
@@ -39,6 +40,6 @@ export const MyPickPage = () => {
         </div>
         <PickCardList />
       </div>
-    </>
+    </AppScreen>
   );
 };

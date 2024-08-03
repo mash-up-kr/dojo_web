@@ -1,5 +1,7 @@
+import { AppScreen } from "@stackflow/plugin-basic-ui";
 import dayjs from "dayjs";
 import React from "react";
+import { VoteLayout } from "./VoteLayout";
 
 export function VoteDonePage() {
   const [next, setNext] = React.useState(false);
@@ -12,13 +14,17 @@ export function VoteDonePage() {
   }, []);
 
   return (
-    <main className="flex flex-col px-8 py-7 space-y-4">
-      {!next ? (
-        <DoneCongrat />
-      ) : (
-        <VoteLeftTime endDate={dayjs().add(6, "hour").toISOString()} />
-      )}
-    </main>
+    <AppScreen>
+      <VoteLayout>
+        <main className="flex flex-col px-8 py-7 space-y-4">
+          {!next ? (
+            <DoneCongrat />
+          ) : (
+            <VoteLeftTime endDate={dayjs().add(6, "hour").toISOString()} />
+          )}
+        </main>
+      </VoteLayout>
+    </AppScreen>
   );
 }
 

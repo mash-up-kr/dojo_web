@@ -1,8 +1,8 @@
 import Image from "@/components/common/Image";
-import { PickResponse } from "@/generated/model";
+import type { PickResponse } from "@/generated/model";
 import { useGetReceivedPickList } from "@/generated/pick/pick";
+import { Link } from "@/stackflow/Link";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
-import { Link } from "react-router-dom";
 
 export const PickCardList = () => {
   const { data: cardList, isPending } = useGetReceivedPickList(
@@ -41,7 +41,8 @@ const PickCard = ({
   return (
     <li className="h-[116px] px-4 items-center">
       <Link
-        to="/pick/1"
+        activityName="MyPickDetailPage"
+        activityParams={{ pickId: "1" }}
         className="h-[116px] flex items-center border-b-gray005 border-solid border-b &:first-of-type:border-t-gray005 &:first-child:border-t"
       >
         <div className="flex flex-col space-y-1.5 flex-1">
