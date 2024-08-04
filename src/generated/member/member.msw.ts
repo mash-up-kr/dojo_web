@@ -26,7 +26,7 @@ export const getUpdateResponseMock = (overrideResponse: Partial< DojoApiResponse
 
 
 export const getCreateMockHandler = (overrideResponse?: DojoApiResponseMemberCreateResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseMemberCreateResponse> | DojoApiResponseMemberCreateResponse)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/public/member', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getCreateResponseMock()),
@@ -41,7 +41,7 @@ export const getCreateMockHandler = (overrideResponse?: DojoApiResponseMemberCre
 }
 
 export const getLoginMockHandler = (overrideResponse?: DojoApiResponseMemberLoginResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseMemberLoginResponse> | DojoApiResponseMemberLoginResponse)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member-login', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/public/member-login', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getLoginResponseMock()),
@@ -56,7 +56,7 @@ export const getLoginMockHandler = (overrideResponse?: DojoApiResponseMemberLogi
 }
 
 export const getUpdateMockHandler = (overrideResponse?: DojoApiResponseMemberUpdateResponse | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<DojoApiResponseMemberUpdateResponse> | DojoApiResponseMemberUpdateResponse)) => {
-  return http.patch('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member/:id', async (info) => {await delay(1000);
+  return http.patch('https://docker-ecs.net/member/:id', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getUpdateResponseMock()),

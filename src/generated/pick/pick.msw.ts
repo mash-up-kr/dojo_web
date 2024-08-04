@@ -32,7 +32,7 @@ export const getGetNextPickTimeResponseMock = (overrideResponse: Partial< DojoAp
 
 
 export const getCreate1MockHandler = (overrideResponse?: DojoApiResponsePickId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponsePickId> | DojoApiResponsePickId)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/pick', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getCreate1ResponseMock()),
@@ -47,7 +47,7 @@ export const getCreate1MockHandler = (overrideResponse?: DojoApiResponsePickId |
 }
 
 export const getOpenPickMockHandler = (overrideResponse?: DojoApiResponsePickOpenResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponsePickOpenResponse> | DojoApiResponsePickOpenResponse)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/:id/open', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/pick/:id/open', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getOpenPickResponseMock()),
@@ -62,7 +62,7 @@ export const getOpenPickMockHandler = (overrideResponse?: DojoApiResponsePickOpe
 }
 
 export const getGetReceivedPickListMockHandler = (overrideResponse?: DojoApiResponseReceivedPickListGetResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseReceivedPickListGetResponse> | DojoApiResponseReceivedPickListGetResponse)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/pick/picked-list', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getGetReceivedPickListResponseMock()),
@@ -77,7 +77,7 @@ export const getGetReceivedPickListMockHandler = (overrideResponse?: DojoApiResp
 }
 
 export const getGetPickDetailMockHandler = (overrideResponse?: DojoApiResponsePickPaging | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponsePickPaging> | DojoApiResponsePickPaging)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-detail', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/pick/picked-detail', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getGetPickDetailResponseMock()),
@@ -92,7 +92,7 @@ export const getGetPickDetailMockHandler = (overrideResponse?: DojoApiResponsePi
 }
 
 export const getGetNextPickTimeMockHandler = (overrideResponse?: DojoApiResponseLocalDateTime | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseLocalDateTime> | DojoApiResponseLocalDateTime)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/next-pick-time', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/pick/next-pick-time', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getGetNextPickTimeResponseMock()),

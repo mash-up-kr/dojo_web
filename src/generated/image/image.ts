@@ -35,7 +35,7 @@ export const uploadInfo = (
       
       
       return customInstance<DojoApiResponseImageUploadUrlResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/image-upload-url`, method: 'GET',
+      {url: `https://docker-ecs.net/image-upload-url`, method: 'GET',
         params, signal
     },
       options);
@@ -43,7 +43,7 @@ export const uploadInfo = (
   
 
 export const getUploadInfoQueryKey = (params: UploadInfoParams,) => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/image-upload-url`, ...(params ? [params]: [])] as const;
+    return [`https://docker-ecs.net/image-upload-url`, ...(params ? [params]: [])] as const;
     }
 
     

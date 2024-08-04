@@ -37,7 +37,7 @@ export const create = (
       
       
       return customInstance<DojoApiResponseMemberCreateResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member`, method: 'POST',
+      {url: `https://docker-ecs.net/public/member`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: memberCreateRequest
     },
@@ -95,7 +95,7 @@ export const login = (
       
       
       return customInstance<DojoApiResponseMemberLoginResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/public/member-login`, method: 'POST',
+      {url: `https://docker-ecs.net/public/member-login`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: memberLoginRequest
     },
@@ -154,7 +154,7 @@ export const update = (
       
       
       return customInstance<DojoApiResponseMemberUpdateResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/member/${id}`, method: 'PATCH',
+      {url: `https://docker-ecs.net/member/${id}`, method: 'PATCH',
       headers: {'Content-Type': 'application/json', },
       data: memberUpdateRequest
     },

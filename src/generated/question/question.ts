@@ -34,14 +34,14 @@ export const getQuestionSheet = (
       
       
       return customInstance<QuestionSheetsGetResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/question`, method: 'GET', signal
+      {url: `https://docker-ecs.net/question`, method: 'GET', signal
     },
       options);
     }
   
 
 export const getGetQuestionSheetQueryKey = () => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/question`] as const;
+    return [`https://docker-ecs.net/question`] as const;
     }
 
     

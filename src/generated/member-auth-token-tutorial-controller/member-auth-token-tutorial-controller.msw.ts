@@ -17,7 +17,7 @@ export const getTest1ResponseMock = (): string => (faker.word.sample())
 
 
 export const getTest1MockHandler = (overrideResponse?: string | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<string> | string)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/authentication/test', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/authentication/test', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getTest1ResponseMock()),

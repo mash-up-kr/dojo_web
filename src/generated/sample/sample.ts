@@ -34,14 +34,14 @@ export const test = (
       
       
       return customInstance<DojoApiResponseString>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/test/${id}`, method: 'GET', signal
+      {url: `https://docker-ecs.net/test/${id}`, method: 'GET', signal
     },
       options);
     }
   
 
 export const getTestQueryKey = (id: string,) => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/test/${id}`] as const;
+    return [`https://docker-ecs.net/test/${id}`] as const;
     }
 
     

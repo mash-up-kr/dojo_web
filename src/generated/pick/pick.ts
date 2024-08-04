@@ -45,7 +45,7 @@ export const create1 = (
       
       
       return customInstance<DojoApiResponsePickId>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick`, method: 'POST',
+      {url: `https://docker-ecs.net/pick`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createPickRequest
     },
@@ -104,7 +104,7 @@ export const openPick = (
       
       
       return customInstance<DojoApiResponsePickOpenResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/${id}/open`, method: 'POST',
+      {url: `https://docker-ecs.net/pick/${id}/open`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: pickOpenRequest
     },
@@ -163,7 +163,7 @@ export const getReceivedPickList = (
       
       
       return customInstance<DojoApiResponseReceivedPickListGetResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list`, method: 'GET',
+      {url: `https://docker-ecs.net/pick/picked-list`, method: 'GET',
         params, signal
     },
       options);
@@ -171,7 +171,7 @@ export const getReceivedPickList = (
   
 
 export const getGetReceivedPickListQueryKey = (params?: GetReceivedPickListParams,) => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-list`, ...(params ? [params]: [])] as const;
+    return [`https://docker-ecs.net/pick/picked-list`, ...(params ? [params]: [])] as const;
     }
 
     
@@ -226,7 +226,7 @@ export const getPickDetail = (
       
       
       return customInstance<DojoApiResponsePickPaging>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-detail`, method: 'GET',
+      {url: `https://docker-ecs.net/pick/picked-detail`, method: 'GET',
         params, signal
     },
       options);
@@ -234,7 +234,7 @@ export const getPickDetail = (
   
 
 export const getGetPickDetailQueryKey = (params: GetPickDetailParams,) => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/picked-detail`, ...(params ? [params]: [])] as const;
+    return [`https://docker-ecs.net/pick/picked-detail`, ...(params ? [params]: [])] as const;
     }
 
     
@@ -289,14 +289,14 @@ export const getNextPickTime = (
       
       
       return customInstance<DojoApiResponseLocalDateTime>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/next-pick-time`, method: 'GET', signal
+      {url: `https://docker-ecs.net/pick/next-pick-time`, method: 'GET', signal
     },
       options);
     }
   
 
 export const getGetNextPickTimeQueryKey = () => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/pick/next-pick-time`] as const;
+    return [`https://docker-ecs.net/pick/next-pick-time`] as const;
     }
 
     

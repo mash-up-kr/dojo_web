@@ -34,14 +34,14 @@ export const getCurrentCoin = (
       
       
       return customInstance<DojoApiResponseCurrentCoinResponse>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`, method: 'GET', signal
+      {url: `https://docker-ecs.net/coin`, method: 'GET', signal
     },
       options);
     }
   
 
 export const getGetCurrentCoinQueryKey = () => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin`] as const;
+    return [`https://docker-ecs.net/coin`] as const;
     }
 
     

@@ -26,7 +26,7 @@ export const getCreateCustomQuestionSetResponseMock = (overrideResponse: Partial
 
 
 export const getCreateQuestionMockHandler = (overrideResponse?: DojoApiResponseQuestionId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseQuestionId> | DojoApiResponseQuestionId)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/question', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/admin/question', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getCreateQuestionResponseMock()),
@@ -41,7 +41,7 @@ export const getCreateQuestionMockHandler = (overrideResponse?: DojoApiResponseQ
 }
 
 export const getBulkCreateQuestionMockHandler = (overrideResponse?: DojoApiResponseListQuestionId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseListQuestionId> | DojoApiResponseListQuestionId)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/question-bulk', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/admin/question-bulk', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getBulkCreateQuestionResponseMock()),
@@ -56,7 +56,7 @@ export const getBulkCreateQuestionMockHandler = (overrideResponse?: DojoApiRespo
 }
 
 export const getCreateCustomQuestionSetMockHandler = (overrideResponse?: DojoApiResponseQuestionSetId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseQuestionSetId> | DojoApiResponseQuestionSetId)) => {
-  return http.post('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/custom-question-set', async (info) => {await delay(1000);
+  return http.post('https://docker-ecs.net/admin/custom-question-set', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getCreateCustomQuestionSetResponseMock()),

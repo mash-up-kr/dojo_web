@@ -4,8 +4,7 @@ import Cookies from "js-cookie";
 
 const createApiInstance = () => {
   const instance: AxiosInstance = axios.create({
-    baseURL:
-      "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com",
+    baseURL: "https://docker-ecs.net",
     headers: {
       "Content-Type": "application/json",
     },

@@ -27,14 +27,14 @@ export const test1 = (
       
       
       return customInstance<string>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/authentication/test`, method: 'GET', signal
+      {url: `https://docker-ecs.net/authentication/test`, method: 'GET', signal
     },
       options);
     }
   
 
 export const getTest1QueryKey = () => {
-    return [`http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/authentication/test`] as const;
+    return [`https://docker-ecs.net/authentication/test`] as const;
     }
 
     

@@ -20,7 +20,7 @@ export const getGetCurrentCoinResponseMock = (overrideResponse: Partial< DojoApi
 
 
 export const getGetCurrentCoinMockHandler = (overrideResponse?: DojoApiResponseCurrentCoinResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseCurrentCoinResponse> | DojoApiResponseCurrentCoinResponse)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/coin', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/coin', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getGetCurrentCoinResponseMock()),

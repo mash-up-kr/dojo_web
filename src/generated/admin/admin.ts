@@ -37,7 +37,7 @@ export const createQuestion = (
       
       
       return customInstance<DojoApiResponseQuestionId>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/question`, method: 'POST',
+      {url: `https://docker-ecs.net/admin/question`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: questionCreateRequest
     },
@@ -95,7 +95,7 @@ export const bulkCreateQuestion = (
       
       
       return customInstance<DojoApiResponseListQuestionId>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/question-bulk`, method: 'POST',
+      {url: `https://docker-ecs.net/admin/question-bulk`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: questionBulkCreateRequest
     },
@@ -153,7 +153,7 @@ export const createCustomQuestionSet = (
       
       
       return customInstance<DojoApiResponseQuestionSetId>(
-      {url: `http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/admin/custom-question-set`, method: 'POST',
+      {url: `https://docker-ecs.net/admin/custom-question-set`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: questionSetCustomCreateRequest
     },

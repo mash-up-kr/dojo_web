@@ -3,16 +3,13 @@ import { defineConfig } from "orval";
 export default defineConfig({
   "chauffeur-api": {
     input: {
-      target:
-        "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/v3/api-docs",
+      target: "https://docker-ecs.net/v3/api-docs",
     },
     output: {
-      baseUrl:
-        "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com",
+      baseUrl: "https://docker-ecs.net",
       client: "react-query",
       mock: {
-        baseUrl:
-          "http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com",
+        baseUrl: "https://docker-ecs.net",
         delay: 1000,
         type: "msw",
         useExamples: false,

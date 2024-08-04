@@ -20,7 +20,7 @@ export const getTestResponseMock = (overrideResponse: Partial< DojoApiResponseSt
 
 
 export const getTestMockHandler = (overrideResponse?: DojoApiResponseString | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseString> | DojoApiResponseString)) => {
-  return http.get('http://dojo-backend-eb-env.eba-33qhzuax.ap-northeast-2.elasticbeanstalk.com/test/:id', async (info) => {await delay(1000);
+  return http.get('https://docker-ecs.net/test/:id', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getTestResponseMock()),
