@@ -28,7 +28,7 @@ const createApiInstance = () => {
     (err: AxiosError) => {
       if (err.response?.status === 401) {
         Cookies.remove("token");
-        const urlParams = new URLSearchParams(window.location.href);
+        const urlParams = new URLSearchParams(window.location.search);
         const memberId = urlParams.get("memberId");
         window.location.href = `/login?memberId=${memberId}&returnUrl=${encodeURIComponent(window.location.href)}`;
       }
