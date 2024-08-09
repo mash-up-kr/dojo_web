@@ -54,6 +54,8 @@ function VotePageInner() {
                 data: {
                   pickedId: v.pickId,
                   questionId: question.questionId,
+                  questionSetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
+                  questionSheetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
                 },
               });
               if (qIndex === data.sheetTotalCount) {
