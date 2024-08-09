@@ -7,6 +7,7 @@
 import type { ReceivedPickDetail } from './receivedPickDetail';
 
 export interface PickPaging {
+  anyOpenPickerCount: number;
   isFirst: boolean;
   isLast: boolean;
   picks: ReceivedPickDetail[];

@@ -11,4 +11,6 @@
 export interface CreatePickRequest {
   pickedId: string;
   questionId: string;
+  questionSetId: string;
+  questionSheetId: string;
 }

@@ -5,16 +5,22 @@
  * OpenAPI spec version: v0
  */
 import {
-  useMutation
+  useMutation,
+  useQuery
 } from '@tanstack/react-query'
 import type {
   MutationFunction,
+  QueryFunction,
+  QueryKey,
   UseMutationOptions,
-  UseMutationResult
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult
 } from '@tanstack/react-query'
 import type {
   DojoApiResponseMemberCreateResponse,
   DojoApiResponseMemberLoginResponse,
+  DojoApiResponseMemberProfileResponse,
   DojoApiResponseMemberUpdateResponse,
   MemberCreateRequest,
   MemberLoginRequest,
@@ -202,4 +208,127 @@ export const useUpdate = <TError = ErrorType<unknown>,
 
       return useMutation(mutationOptions);
     }
+    /**
+ * 멤버의 프로필을 조회하는 API.
+ * @summary 타인 멤버 프로필 조회 API
+ */
+export const getProfile = (
+    memberId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DojoApiResponseMemberProfileResponse>(
+      {url: `https://docker-ecs.net/member/${memberId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetProfileQueryKey = (memberId: string,) => {
+    return [`https://docker-ecs.net/member/${memberId}`] as const;
+    }
+
     
+export const getGetProfileQueryOptions = <TData = Awaited<ReturnType<typeof getProfile>>, TError = ErrorType<unknown>>(memberId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfileQueryKey(memberId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfile>>> = ({ signal }) => getProfile(memberId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(memberId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetProfileQueryResult = NonNullable<Awaited<ReturnType<typeof getProfile>>>
+export type GetProfileQueryError = ErrorType<unknown>
+
+/**
+ * @summary 타인 멤버 프로필 조회 API
+ */
+export const useGetProfile = <TData = Awaited<ReturnType<typeof getProfile>>, TError = ErrorType<unknown>>(
+ memberId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetProfileQueryOptions(memberId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * 멤버의 프로필을 조회하는 API.
+ * @summary 타인 멤버 프로필 조회 API
+ */
+export const getProfileMock = (
+    memberId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DojoApiResponseMemberProfileResponse>(
+      {url: `https://docker-ecs.net/member/mock/${memberId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getGetProfileMockQueryKey = (memberId: string,) => {
+    return [`https://docker-ecs.net/member/mock/${memberId}`] as const;
+    }
+
+    
+export const getGetProfileMockQueryOptions = <TData = Awaited<ReturnType<typeof getProfileMock>>, TError = ErrorType<unknown>>(memberId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileMock>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfileMockQueryKey(memberId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfileMock>>> = ({ signal }) => getProfileMock(memberId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(memberId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfileMock>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetProfileMockQueryResult = NonNullable<Awaited<ReturnType<typeof getProfileMock>>>
+export type GetProfileMockQueryError = ErrorType<unknown>
+
+/**
+ * @summary 타인 멤버 프로필 조회 API
+ */
+export const useGetProfileMock = <TData = Awaited<ReturnType<typeof getProfileMock>>, TError = ErrorType<unknown>>(
+ memberId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfileMock>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getGetProfileMockQueryOptions(memberId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+

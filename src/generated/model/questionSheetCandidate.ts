@@ -10,6 +10,7 @@
  */
 export interface QuestionSheetCandidate {
   memberId: string;
+  memberImageUrl: string;
   memberName: string;
   platform: string;
 }
