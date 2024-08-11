@@ -1,8 +1,10 @@
 import CAMERA from "@/assets/ic14_camera.svg?react";
 import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
+import { getMeQueryOptions } from "@/generated/member/member";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import type { ClassNameValue } from "tailwind-merge";
 import { CounterBox } from "./CounterBox";
@@ -15,6 +17,15 @@ export const MyProfile = memo(
     profileRef: IntersectionReturn["ref"];
     containerClassName?: ClassNameValue;
   }) => {
+    const { data: profile } = useSuspenseQuery(
+      getMeQueryOptions({
+        query: {
+          select: ({ data }) => {
+            return data;
+          },
+        },
+      }),
+    );
     return (
       <div
         className={cn(
@@ -28,7 +39,7 @@ export const MyProfile = memo(
           <div className="flex items-center">
             <div className="relative">
               <Image
-                src="https://picsum.photos/seed/picsum/200/300"
+                src={profile?.profileImageUrl}
                 alt="이름"
                 className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-offWhite010"
               />
@@ -43,18 +54,20 @@ export const MyProfile = memo(
               </button>
             </div>
             <div className="flex flex-col space-y-1 ml-3">
-              <strong className="t-h5-b-17">리아코</strong>
-              <p className="t-c1-r-13">Product Design 14기</p>
+              <strong className="t-h5-b-17">{profile?.memberName}</strong>
+              <p className="t-c1-r-13">{profile?.platform}</p>
             </div>
           </div>
           <div className="flex justify-center mt-5 items-center">
             <GEM />
-            <strong className="text-gray100 t-h6-sb-15 ml-1">200</strong>
+            <strong className="text-gray100 t-h6-sb-15 ml-1">
+              {profile?.coinCount}
+            </strong>
           </div>
         </div>
         <div className="flex space-x-4 mt-6 z-10 relative">
-          <CounterBox title="내가 받은 픽" counter={14} />
-          <CounterBox title="내 친구들" counter={32} />
+          <CounterBox title="내가 받은 픽" counter={profile?.pickCount ?? 0} />
+          <CounterBox title="내 친구들" counter={profile?.friendCount ?? 0} />
         </div>
       </div>
     );

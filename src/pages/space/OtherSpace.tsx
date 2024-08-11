@@ -7,6 +7,8 @@ import { Header } from "@/components/common/Header";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
+import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { ListContainer } from "./ListContainer";
 import { OtherProfile } from "./OtherProfile";
 import { PickRankCard } from "./PickRankCard";
@@ -18,7 +20,7 @@ export const OtherSpace = () => {
   });
 
   return (
-    <>
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
       <Header
         title="친구 스페이스"
         left={
@@ -31,7 +33,13 @@ export const OtherSpace = () => {
         })}
       />
       <div className="flex flex-col pb-20">
-        <OtherProfile profileRef={ref} containerClassName="bg-gradient-blue" />
+        {/* TODO: 스켈레톤 적용 */}
+        <Suspense fallback={<div>loading...</div>}>
+          <OtherProfile
+            profileRef={ref}
+            containerClassName="bg-gradient-blue"
+          />
+        </Suspense>
         <ListContainer
           isMore={false}
           titleIcon={<THUMB />}
@@ -61,6 +69,6 @@ export const OtherSpace = () => {
           </div>
         </ListContainer>
       </div>
-    </>
+    </ErrorBoundary>
   );
 };

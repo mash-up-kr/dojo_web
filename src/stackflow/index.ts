@@ -16,7 +16,7 @@ export const routes = {
   VoteDonePage: "/vote/done",
   MyPickPage: "/my-pick",
   MyPickDetailPage: "/my-pick/:pickId",
-  SpacePage: "/space",
+  SpacePage: "/space/:memberId",
   OnBoardPage: "/onboard",
 };
 

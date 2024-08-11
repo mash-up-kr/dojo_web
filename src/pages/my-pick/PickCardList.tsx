@@ -1,31 +1,51 @@
 import Image from "@/components/common/Image";
-import type { PickResponse } from "@/generated/model";
-import { useGetReceivedPickList } from "@/generated/pick/pick";
+import type { GetReceivedPickListSort, PickResponse } from "@/generated/model";
+import { getGetReceivedPickListQueryOptions } from "@/generated/pick/pick";
 import { Link } from "@/stackflow/Link";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
-export const PickCardList = () => {
-  const { data: cardList, isPending } = useGetReceivedPickList(
-    { sort: "LATEST" },
-    {
-      query: {
-        select: ({ data }) => {
-          if (!data) {
-            return [];
-          }
-          return data.pickList || [];
-        },
-      },
-    },
+export const PickCardList = ({
+  sort,
+}: {
+  sort: GetReceivedPickListSort;
+}) => {
+  console.log(sort);
+
+  const { data } = useSuspenseQuery(
+    getGetReceivedPickListQueryOptions({
+      sort,
+    }),
   );
 
-  if (isPending) {
-    return <div>loading...</div>;
+  const cardList = data.data?.pickList ?? [];
+
+  // const { data: cardList, isPending } = useGetReceivedPickList(
+  //   { sort: "LATEST" },
+  //   {
+  //     query: {
+  //       select: ({ data }) => {
+  //         if (!data) {
+  //           return [];
+  //         }
+  //         return data.pickList || [];
+  //       },
+  //     },
+  //   },
+  // );
+
+  if (cardList.length === 0) {
+    return (
+      <div className="flex-1 flex flex-col space-y-1.5 items-center justify-center">
+        <p className="text-gray084 t-h5-sb-17">아직 날 선택한 사람이 없어요</p>
+        <p className="text-gray054 t-b3-r-14">조금만 더 기다려볼까요?</p>
+      </div>
+    );
   }
 
   return (
     <ul className="pb-[60px]">
-      {cardList?.map((card) => (
+      {cardList.map((card) => (
         <PickCard key={card.questionId} {...card} />
       ))}
     </ul>

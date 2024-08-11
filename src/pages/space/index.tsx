@@ -1,8 +1,26 @@
+import { useMe } from "@/generated/member/member";
+import { useActivityParams } from "@stackflow/react";
 import { MySpace } from "./MySpace";
+import { OtherSpace } from "./OtherSpace";
 
 export const SpacePage = () => {
-  // TODO: my-space/other-space 분기 로직 추가
-  return <MySpace />;
+  const { data, isPending } = useMe({
+    query: {
+      select: ({ data }) => {
+        return data;
+      },
+    },
+  });
+  const { memberId } = useActivityParams<{
+    memberId: string;
+  }>();
 
-  // <OtherSpace />;
+  const isMySpace = data?.memberId === memberId;
+
+  if (isPending) {
+    // TODO: Loading Component
+    return <div>loading...</div>;
+  }
+
+  return isMySpace ? <MySpace /> : <OtherSpace />;
 };
