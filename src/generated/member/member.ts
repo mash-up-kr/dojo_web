@@ -22,6 +22,7 @@ import type {
   DojoApiResponseMemberLoginResponse,
   DojoApiResponseMemberProfileResponse,
   DojoApiResponseMemberUpdateResponse,
+  DojoApiResponseMyProfileResponse,
   MemberCreateRequest,
   MemberLoginRequest,
   MemberUpdateRequest
@@ -322,6 +323,68 @@ export const useGetProfileMock = <TData = Awaited<ReturnType<typeof getProfileMo
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetProfileMockQueryOptions(memberId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * 본인 프로필 조회 API, header 토큰에 의해 본인을 식별해요
+ * @summary 본인 프로필 조회 API
+ */
+export const me = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DojoApiResponseMyProfileResponse>(
+      {url: `https://docker-ecs.net/member/me`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getMeQueryKey = () => {
+    return [`https://docker-ecs.net/member/me`] as const;
+    }
+
+    
+export const getMeQueryOptions = <TData = Awaited<ReturnType<typeof me>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getMeQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof me>>> = ({ signal }) => me(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type MeQueryResult = NonNullable<Awaited<ReturnType<typeof me>>>
+export type MeQueryError = ErrorType<unknown>
+
+/**
+ * @summary 본인 프로필 조회 API
+ */
+export const useMe = <TData = Awaited<ReturnType<typeof me>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof me>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getMeQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

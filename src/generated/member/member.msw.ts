@@ -16,7 +16,8 @@ import type {
   DojoApiResponseMemberCreateResponse,
   DojoApiResponseMemberLoginResponse,
   DojoApiResponseMemberProfileResponse,
-  DojoApiResponseMemberUpdateResponse
+  DojoApiResponseMemberUpdateResponse,
+  DojoApiResponseMyProfileResponse
 } from '.././model'
 
 export const getCreateResponseMock = (overrideResponse: Partial< DojoApiResponseMemberCreateResponse > = {}): DojoApiResponseMemberCreateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
@@ -28,6 +29,8 @@ export const getUpdateResponseMock = (overrideResponse: Partial< DojoApiResponse
 export const getGetProfileResponseMock = (overrideResponse: Partial< DojoApiResponseMemberProfileResponse > = {}): DojoApiResponseMemberProfileResponse => ({data: faker.helpers.arrayElement([{friendCount: faker.number.int({min: undefined, max: undefined}), isFriend: faker.datatype.boolean(), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), pickCount: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getGetProfileMockResponseMock = (overrideResponse: Partial< DojoApiResponseMemberProfileResponse > = {}): DojoApiResponseMemberProfileResponse => ({data: faker.helpers.arrayElement([{friendCount: faker.number.int({min: undefined, max: undefined}), isFriend: faker.datatype.boolean(), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), pickCount: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+export const getMeResponseMock = (overrideResponse: Partial< DojoApiResponseMyProfileResponse > = {}): DojoApiResponseMyProfileResponse => ({data: faker.helpers.arrayElement([{coinCount: faker.number.int({min: undefined, max: undefined}), friendCount: faker.number.int({min: undefined, max: undefined}), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), pickCount: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 
 export const getCreateMockHandler = (overrideResponse?: DojoApiResponseMemberCreateResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseMemberCreateResponse> | DojoApiResponseMemberCreateResponse)) => {
@@ -104,10 +107,26 @@ export const getGetProfileMockMockHandler = (overrideResponse?: DojoApiResponseM
     )
   })
 }
+
+export const getMeMockHandler = (overrideResponse?: DojoApiResponseMyProfileResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseMyProfileResponse> | DojoApiResponseMyProfileResponse)) => {
+  return http.get('https://docker-ecs.net/member/me', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getMeResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
 export const getMemberMock = () => [
   getCreateMockHandler(),
   getLoginMockHandler(),
   getUpdateMockHandler(),
   getGetProfileMockHandler(),
-  getGetProfileMockMockHandler()
+  getGetProfileMockMockHandler(),
+  getMeMockHandler()
 ]
