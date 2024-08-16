@@ -10,6 +10,8 @@ import type { QuestionId } from './questionId';
  * 커스텀 질문지 세트 생성 요청
  */
 export interface QuestionSetCustomCreateRequest {
+  /** 질문지 세트를 종료할 시각 */
+  endAt: string;
   /** 질문지 세트를 발행할 시각 */
   publishedAt: string;
   /**

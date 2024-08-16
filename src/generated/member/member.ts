@@ -18,14 +18,18 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
+  DojoApiResponseListMemberSearchResponse,
   DojoApiResponseMemberCreateResponse,
   DojoApiResponseMemberLoginResponse,
   DojoApiResponseMemberProfileResponse,
+  DojoApiResponseMemberRelationId,
   DojoApiResponseMemberUpdateResponse,
   DojoApiResponseMyProfileResponse,
+  MemberCreateFriendRelationRequest,
   MemberCreateRequest,
   MemberLoginRequest,
-  MemberUpdateRequest
+  MemberUpdateRequest,
+  SearchMemberParams
 } from '.././model'
 import { customInstance } from '../../apis/custom-client';
 import type { ErrorType, BodyType } from '../../apis/custom-client';
@@ -151,6 +155,64 @@ export const useLogin = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     /**
+ * 친구(팔로우) 관계 생성 API, 친구 추가 기능에 대해서 from 이 to 를 follow 합니다. 이미 follow가 존재한다면 예외를 반환해요
+ * @summary 친구(팔로우)추가 API
+ */
+export const createFriend = (
+    memberCreateFriendRelationRequest: BodyType<MemberCreateFriendRelationRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponseMemberRelationId>(
+      {url: `https://docker-ecs.net/member/friend`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: memberCreateFriendRelationRequest
+    },
+      options);
+    }
+  
+
+
+export const getCreateFriendMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createFriend>>, TError,{data: BodyType<MemberCreateFriendRelationRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createFriend>>, TError,{data: BodyType<MemberCreateFriendRelationRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createFriend>>, {data: BodyType<MemberCreateFriendRelationRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createFriend(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateFriendMutationResult = NonNullable<Awaited<ReturnType<typeof createFriend>>>
+    export type CreateFriendMutationBody = BodyType<MemberCreateFriendRelationRequest>
+    export type CreateFriendMutationError = ErrorType<unknown>
+
+    /**
+ * @summary 친구(팔로우)추가 API
+ */
+export const useCreateFriend = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createFriend>>, TError,{data: BodyType<MemberCreateFriendRelationRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof createFriend>>,
+        TError,
+        {data: BodyType<MemberCreateFriendRelationRequest>},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateFriendMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
  * 멤버 정보 수정 시 사용하는 API. 수정될 요소만 not-null로 받아요. null로 들어온 프로퍼티는 기존 값을 유지해요.
  * @summary 멤버 정보 갱신 API
  */
@@ -261,6 +323,131 @@ export const useGetProfile = <TData = Awaited<ReturnType<typeof getProfile>>, TE
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getGetProfileQueryOptions(memberId,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * 친구, 친구 아닌 사람 모두 검색 가능한 통합 검색 기능입니다.
+ * @summary 멤버 검색 API
+ */
+export const searchMember = (
+    params: SearchMemberParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DojoApiResponseListMemberSearchResponse>(
+      {url: `https://docker-ecs.net/member/search`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+export const getSearchMemberQueryKey = (params: SearchMemberParams,) => {
+    return [`https://docker-ecs.net/member/search`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getSearchMemberQueryOptions = <TData = Awaited<ReturnType<typeof searchMember>>, TError = ErrorType<unknown>>(params: SearchMemberParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof searchMember>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getSearchMemberQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof searchMember>>> = ({ signal }) => searchMember(params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof searchMember>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type SearchMemberQueryResult = NonNullable<Awaited<ReturnType<typeof searchMember>>>
+export type SearchMemberQueryError = ErrorType<unknown>
+
+/**
+ * @summary 멤버 검색 API
+ */
+export const useSearchMember = <TData = Awaited<ReturnType<typeof searchMember>>, TError = ErrorType<unknown>>(
+ params: SearchMemberParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof searchMember>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getSearchMemberQueryOptions(params,options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * 마이스페이스 탭 중 내가 받은 픽의 대한 API입니다. 공동 등수를 자동으로 계산하고 반환합니다. Pick이 많은 순서대로 등수를 나누고, 최신순, 내림차순으로 정렬합니다.
+ * @summary 마이 스페이스 내가 받은 픽 API
+ */
+export const myPick = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<unknown>(
+      {url: `https://docker-ecs.net/member/my-space/pick`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getMyPickQueryKey = () => {
+    return [`https://docker-ecs.net/member/my-space/pick`] as const;
+    }
+
+    
+export const getMyPickQueryOptions = <TData = Awaited<ReturnType<typeof myPick>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getMyPickQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof myPick>>> = ({ signal }) => myPick(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type MyPickQueryResult = NonNullable<Awaited<ReturnType<typeof myPick>>>
+export type MyPickQueryError = ErrorType<unknown>
+
+/**
+ * @summary 마이 스페이스 내가 받은 픽 API
+ */
+export const useMyPick = <TData = Awaited<ReturnType<typeof myPick>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getMyPickQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

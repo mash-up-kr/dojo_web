@@ -13,9 +13,11 @@ import {
   http
 } from 'msw'
 import type {
+  DojoApiResponseListMemberSearchResponse,
   DojoApiResponseMemberCreateResponse,
   DojoApiResponseMemberLoginResponse,
   DojoApiResponseMemberProfileResponse,
+  DojoApiResponseMemberRelationId,
   DojoApiResponseMemberUpdateResponse,
   DojoApiResponseMyProfileResponse
 } from '.././model'
@@ -24,9 +26,13 @@ export const getCreateResponseMock = (overrideResponse: Partial< DojoApiResponse
 
 export const getLoginResponseMock = (overrideResponse: Partial< DojoApiResponseMemberLoginResponse > = {}): DojoApiResponseMemberLoginResponse => ({data: faker.helpers.arrayElement([{authToken: faker.word.sample(), id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
+export const getCreateFriendResponseMock = (overrideResponse: Partial< DojoApiResponseMemberRelationId > = {}): DojoApiResponseMemberRelationId => ({data: faker.helpers.arrayElement([{value: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
 export const getUpdateResponseMock = (overrideResponse: Partial< DojoApiResponseMemberUpdateResponse > = {}): DojoApiResponseMemberUpdateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getGetProfileResponseMock = (overrideResponse: Partial< DojoApiResponseMemberProfileResponse > = {}): DojoApiResponseMemberProfileResponse => ({data: faker.helpers.arrayElement([{friendCount: faker.number.int({min: undefined, max: undefined}), isFriend: faker.datatype.boolean(), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), pickCount: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+export const getSearchMemberResponseMock = (overrideResponse: Partial< DojoApiResponseListMemberSearchResponse > = {}): DojoApiResponseListMemberSearchResponse => ({data: faker.helpers.arrayElement([Array.from({ length: faker.number.int({ min: 1, max: 10 }) }, (_, i) => i + 1).map(() => ({isFriend: faker.datatype.boolean(), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()})), undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getGetProfileMockResponseMock = (overrideResponse: Partial< DojoApiResponseMemberProfileResponse > = {}): DojoApiResponseMemberProfileResponse => ({data: faker.helpers.arrayElement([{friendCount: faker.number.int({min: undefined, max: undefined}), isFriend: faker.datatype.boolean(), memberId: faker.word.sample(), memberName: faker.word.sample(), ordinal: faker.number.int({min: undefined, max: undefined}), pickCount: faker.number.int({min: undefined, max: undefined}), platform: faker.word.sample(), profileImageUrl: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
@@ -63,6 +69,21 @@ export const getLoginMockHandler = (overrideResponse?: DojoApiResponseMemberLogi
   })
 }
 
+export const getCreateFriendMockHandler = (overrideResponse?: DojoApiResponseMemberRelationId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseMemberRelationId> | DojoApiResponseMemberRelationId)) => {
+  return http.post('https://docker-ecs.net/member/friend', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getCreateFriendResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
 export const getUpdateMockHandler = (overrideResponse?: DojoApiResponseMemberUpdateResponse | ((info: Parameters<Parameters<typeof http.patch>[1]>[0]) => Promise<DojoApiResponseMemberUpdateResponse> | DojoApiResponseMemberUpdateResponse)) => {
   return http.patch('https://docker-ecs.net/member/:id', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
@@ -83,6 +104,34 @@ export const getGetProfileMockHandler = (overrideResponse?: DojoApiResponseMembe
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getGetProfileResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
+export const getSearchMemberMockHandler = (overrideResponse?: DojoApiResponseListMemberSearchResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseListMemberSearchResponse> | DojoApiResponseListMemberSearchResponse)) => {
+  return http.get('https://docker-ecs.net/member/search', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getSearchMemberResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
+export const getMyPickMockHandler = () => {
+  return http.get('https://docker-ecs.net/member/my-space/pick', async () => {await delay(1000);
+    return new HttpResponse(null,
       {
         status: 200,
         headers: {
@@ -125,8 +174,11 @@ export const getMeMockHandler = (overrideResponse?: DojoApiResponseMyProfileResp
 export const getMemberMock = () => [
   getCreateMockHandler(),
   getLoginMockHandler(),
+  getCreateFriendMockHandler(),
   getUpdateMockHandler(),
   getGetProfileMockHandler(),
+  getSearchMemberMockHandler(),
+  getMyPickMockHandler(),
   getGetProfileMockMockHandler(),
   getMeMockHandler()
 ]
