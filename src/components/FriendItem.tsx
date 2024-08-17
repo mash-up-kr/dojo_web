@@ -1,6 +1,7 @@
 import { useCreateFriend, useMe } from "@/generated/member/member";
 import type { FriendInfoResponse } from "@/generated/model";
 import { useMyFlow } from "@/stackflow/useMyFlow";
+import { cn } from "@/utils/cn";
 import { type FC, useEffect } from "react";
 import { Button } from "./common/Button";
 import Image from "./common/Image";
@@ -9,9 +10,14 @@ import { Toast } from "./common/Toast";
 type FriendItemProps = {
   friendInfo: FriendInfoResponse;
   isMyFriend?: boolean;
+  className?: string;
 };
 
-export const FriendItem: FC<FriendItemProps> = ({ friendInfo, isMyFriend }) => {
+export const FriendItem: FC<FriendItemProps> = ({
+  friendInfo,
+  isMyFriend,
+  className,
+}) => {
   const { push } = useMyFlow();
   const onClick = () => {
     if (!isMyFriend) return;
@@ -19,7 +25,7 @@ export const FriendItem: FC<FriendItemProps> = ({ friendInfo, isMyFriend }) => {
   };
 
   return (
-    <li className="px-4 py-2.5 flex items-center gap-3 ">
+    <li className={cn("px-4 py-2.5 flex items-center gap-3", className)}>
       <button
         type="button"
         onClick={onClick}

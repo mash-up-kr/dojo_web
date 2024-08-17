@@ -4,7 +4,9 @@ import BRONZE from "@/assets/ic32_bronze.svg?react";
 import GOLD from "@/assets/ic32_gold.svg?react";
 import SILVER from "@/assets/ic32_silver.svg?react";
 import Back from "@/assets/ic_24_back.svg?react";
+import { FriendItem } from "@/components/FriendItem";
 import { Header } from "@/components/common/Header";
+import { useGetFriends } from "@/generated/member-relation/member-relation";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
 import { useMyFlow } from "@/stackflow/useMyFlow";
@@ -20,6 +22,7 @@ export const MySpace = () => {
     threshold: 0.9,
     initialIsIntersecting: true,
   });
+  const { data: friendsRes } = useGetFriends();
 
   return (
     <AppScreen>
@@ -61,17 +64,16 @@ export const MySpace = () => {
           containerClassName="pt-10"
           titleIcon={<GHOST />}
           title="내 친구들"
-          onClickMoreButton={() => push("VotePage", {})}
+          onClickMoreButton={() => push("FriendMainPage", {})}
         >
-          <div className="h-[76px] flex items-center justify-center bg-gray040">
-            태규형 마무리 부탁~!
-          </div>
-          <div className="h-[76px] flex items-center justify-center bg-gray040">
-            태규형 마무리 부탁~!
-          </div>
-          <div className="h-[76px] flex items-center justify-center bg-gray040">
-            태규형 마무리 부탁~!
-          </div>
+          {friendsRes?.data?.map((friend) => (
+            <FriendItem
+              key={friend.memberId}
+              friendInfo={friend}
+              isMyFriend
+              className="px-0"
+            />
+          ))}
         </ListContainer>
       </div>
     </AppScreen>

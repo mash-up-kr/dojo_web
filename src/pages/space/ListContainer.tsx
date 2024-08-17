@@ -36,7 +36,7 @@ export const ListContainer: FC<ListContainerProps> = ({
           <button
             type="button"
             onClick={onClickMoreButton}
-            className="t-c1-m-13 text-gray54"
+            className="t-c1-m-13 text-gray054"
           >
             더보기
           </button>
