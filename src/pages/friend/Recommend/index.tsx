@@ -4,12 +4,20 @@ import { Header } from "@/components/common/Header";
 import { useGetRecommendFriends } from "@/generated/member-relation/member-relation";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
-import type { ActivityComponentType } from "@stackflow/react";
+import { type ActivityComponentType, useActivity } from "@stackflow/react";
+import { useEffect } from "react";
 import { SearchInput } from "../SearchInput";
 
 export const FriendRecommendPage: ActivityComponentType = () => {
   const { pop } = useMyFlow();
-  const { data: recommendFriendRes } = useGetRecommendFriends();
+  const { transitionState } = useActivity();
+  const { data: recommendFriendRes, refetch } = useGetRecommendFriends();
+
+  useEffect(() => {
+    if (transitionState === "enter-active") {
+      refetch();
+    }
+  }, [transitionState, refetch]);
 
   return (
     <AppScreen>
