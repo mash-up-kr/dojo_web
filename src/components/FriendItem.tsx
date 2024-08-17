@@ -56,7 +56,9 @@ const FriendAddButton: FC<FriendAddButtonProps> = ({ friendId }) => {
   const onClick = () => {
     mutate({
       data: {
-        fromMemberId: meRes?.data?.memberId ?? "",
+        // useMe mock인 동안 임시
+        fromMemberId:
+          "409c9126-7e69-4496-b4eb-90354ae48945" ?? meRes?.data?.memberId,
         toMemberId: friendId,
       },
     });
