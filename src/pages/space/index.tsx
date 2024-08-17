@@ -1,9 +1,16 @@
 import { useMe } from "@/generated/member/member";
-import { useActivityParams } from "@stackflow/react";
+import type { ActivityComponentType } from "@stackflow/react";
 import { MySpace } from "./MySpace";
 import { OtherSpace } from "./OtherSpace";
 
-export const SpacePage = () => {
+type SpcaePageProps = {
+  memberId: string;
+};
+
+export const SpacePage: ActivityComponentType<SpcaePageProps> = ({
+  params,
+}) => {
+  const { memberId } = params;
   const { data, isPending } = useMe({
     query: {
       select: ({ data }) => {
@@ -11,12 +18,8 @@ export const SpacePage = () => {
       },
     },
   });
-  const { memberId } = useActivityParams<{
-    memberId: string;
-  }>();
 
   const isMySpace = data?.memberId === memberId;
-
   if (isPending) {
     // TODO: Loading Component
     return <div>loading...</div>;
