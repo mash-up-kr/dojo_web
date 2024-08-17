@@ -14,7 +14,7 @@ const createApiInstance = () => {
     (config) => {
       const tokenFromCookie = Cookies.get("token");
       if (tokenFromCookie) {
-        config.headers.Authorization = tokenFromCookie;
+        config.headers.Authorization = `Bearer ${tokenFromCookie}`;
       }
       return config;
     },
