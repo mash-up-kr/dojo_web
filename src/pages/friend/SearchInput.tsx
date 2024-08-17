@@ -32,7 +32,7 @@ export const SearchInput: FC<SearchInputProps> = ({
       <input
         ref={inputRef}
         onChange={(e) => debouncedSetKeyword(e.target.value)}
-        className="flex-grow appearance-none bg-offWhite020 placeholder-gray040 focus:outline-none cursor-pointer caret-purple100 t-b2-r-15"
+        className="flex-grow appearance-none bg-offWhite020 placeholder-gray040 focus:outline-none cursor-pointer caret-purple100 t-b2-r-15 text-base"
         placeholder="검색"
       />
     </div>
