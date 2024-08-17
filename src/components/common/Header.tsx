@@ -21,7 +21,15 @@ export const Header = ({
   right,
   title,
   className,
-}: { className?: string } & AtLeastOne<{
+  leftClassName,
+  titleClassName,
+  rightClassName,
+}: {
+  className?: string;
+  leftClassName?: string;
+  titleClassName?: string;
+  rightClassName?: string;
+} & AtLeastOne<{
   left: ReactNode;
   right: ReactNode;
   title: string;
@@ -33,13 +41,28 @@ export const Header = ({
         className,
       )}
     >
-      {left ? <div className="flex-shrink-0 z-[11]">{left}</div> : <div />}
+      {left ? (
+        <div className={cn("flex-shrink-0 z-[11]", leftClassName)}>{left}</div>
+      ) : (
+        <div />
+      )}
       {title ? (
-        <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[64px] max-w-full">
+        <h1
+          className={cn(
+            "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 t-h5-sb-17 grow text-center truncate px-[64px] max-w-full",
+            titleClassName,
+          )}
+        >
           {title}
         </h1>
       ) : null}
-      {right ? <div className="flex-shrink-0 z-[11]">{right}</div> : <div />}
+      {right ? (
+        <div className={cn("flex-shrink-0 z-[11]", rightClassName)}>
+          {right}
+        </div>
+      ) : (
+        <div />
+      )}
     </header>
   );
 };

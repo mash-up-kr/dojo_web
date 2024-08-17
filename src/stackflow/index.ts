@@ -1,5 +1,6 @@
 import { FriendMainPage } from "@/pages/friend/Main";
 import { FriendRecommendPage } from "@/pages/friend/Recommend";
+import { FriendSearchPage } from "@/pages/friend/Search";
 import { LogInPage } from "@/pages/login";
 import { MyPickPage } from "@/pages/my-pick";
 import { MyPickDetailPage } from "@/pages/my-pick-detail";
@@ -46,6 +47,7 @@ export const { Stack, activities } = stackflow({
     SpacePage,
     OnBoardPage,
     FriendMainPage,
+    FriendSearchPage,
     FriendRecommendPage,
   },
   initialActivity: () => "LogInPage",

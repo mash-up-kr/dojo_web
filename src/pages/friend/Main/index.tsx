@@ -37,7 +37,11 @@ export const FriendMainPage: ActivityComponentType = () => {
         }
         title="내 친구들"
       />
-      <SearchInput />
+      <Link activityName="FriendSearchPage" activityParams={{}}>
+        <div className="px-4 py-1.5">
+          <SearchInput />
+        </div>
+      </Link>
       <section className="mb-2">
         <header className="flex justify-between items-center px-4 pt-3 pb-1">
           <h2 className="t-b3-sb-14">추천 친구</h2>
