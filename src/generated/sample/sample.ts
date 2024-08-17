@@ -27,7 +27,7 @@ type SecondParameter<T extends (...args: any) => any> = Parameters<T>[1];
  * Sample API 입니다요
  * @summary Sample API
  */
-export const test = (
+export const test1 = (
     id: string,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
@@ -40,41 +40,41 @@ export const test = (
     }
   
 
-export const getTestQueryKey = (id: string,) => {
+export const getTest1QueryKey = (id: string,) => {
     return [`https://docker-ecs.net/test/${id}`] as const;
     }
 
     
-export const getTestQueryOptions = <TData = Awaited<ReturnType<typeof test>>, TError = ErrorType<unknown>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTest1QueryOptions = <TData = Awaited<ReturnType<typeof test1>>, TError = ErrorType<unknown>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof test1>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getTestQueryKey(id);
+  const queryKey =  queryOptions?.queryKey ?? getTest1QueryKey(id);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof test>>> = ({ signal }) => test(id, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof test1>>> = ({ signal }) => test1(id, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof test1>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type TestQueryResult = NonNullable<Awaited<ReturnType<typeof test>>>
-export type TestQueryError = ErrorType<unknown>
+export type Test1QueryResult = NonNullable<Awaited<ReturnType<typeof test1>>>
+export type Test1QueryError = ErrorType<unknown>
 
 /**
  * @summary Sample API
  */
-export const useTest = <TData = Awaited<ReturnType<typeof test>>, TError = ErrorType<unknown>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const useTest1 = <TData = Awaited<ReturnType<typeof test1>>, TError = ErrorType<unknown>>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof test1>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getTestQueryOptions(id,options)
+  const queryOptions = getTest1QueryOptions(id,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

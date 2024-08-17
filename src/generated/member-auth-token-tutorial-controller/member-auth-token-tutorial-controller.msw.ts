@@ -13,14 +13,14 @@ import {
   http
 } from 'msw'
 
-export const getTest1ResponseMock = (): string => (faker.word.sample())
+export const getTest2ResponseMock = (): string => (faker.word.sample())
 
 
-export const getTest1MockHandler = (overrideResponse?: string | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<string> | string)) => {
+export const getTest2MockHandler = (overrideResponse?: string | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<string> | string)) => {
   return http.get('https://docker-ecs.net/authentication/test', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getTest1ResponseMock()),
+            : getTest2ResponseMock()),
       {
         status: 200,
         headers: {
@@ -31,5 +31,5 @@ export const getTest1MockHandler = (overrideResponse?: string | ((info: Paramete
   })
 }
 export const getMemberAuthTokenTutorialControllerMock = () => [
-  getTest1MockHandler()
+  getTest2MockHandler()
 ]

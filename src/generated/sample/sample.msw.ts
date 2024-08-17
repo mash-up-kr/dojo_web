@@ -16,14 +16,14 @@ import type {
   DojoApiResponseString
 } from '.././model'
 
-export const getTestResponseMock = (overrideResponse: Partial< DojoApiResponseString > = {}): DojoApiResponseString => ({data: faker.helpers.arrayElement([faker.word.sample(), undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+export const getTest1ResponseMock = (overrideResponse: Partial< DojoApiResponseString > = {}): DojoApiResponseString => ({data: faker.helpers.arrayElement([faker.word.sample(), undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 
-export const getTestMockHandler = (overrideResponse?: DojoApiResponseString | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseString> | DojoApiResponseString)) => {
+export const getTest1MockHandler = (overrideResponse?: DojoApiResponseString | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseString> | DojoApiResponseString)) => {
   return http.get('https://docker-ecs.net/test/:id', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
-            : getTestResponseMock()),
+            : getTest1ResponseMock()),
       {
         status: 200,
         headers: {
@@ -34,5 +34,5 @@ export const getTestMockHandler = (overrideResponse?: DojoApiResponseString | ((
   })
 }
 export const getSampleMock = () => [
-  getTestMockHandler()
+  getTest1MockHandler()
 ]
