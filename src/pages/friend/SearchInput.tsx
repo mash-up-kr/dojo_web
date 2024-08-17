@@ -1,12 +1,24 @@
 import SearchIcon from "@/assets/ic_20_search.svg?react";
-import { type FC, useEffect, useRef } from "react";
+import { debounce } from "@/utils/debounce";
+import { type FC, useCallback, useEffect, useRef } from "react";
 
 type SearchInputProps = {
   autoFocus?: boolean;
+  setKeyword?: (keyword: string) => void;
 };
 
-export const SearchInput: FC<SearchInputProps> = ({ autoFocus }) => {
+export const SearchInput: FC<SearchInputProps> = ({
+  autoFocus,
+  setKeyword,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const debouncedSetKeyword = useCallback(
+    debounce((value: string) => {
+      setKeyword?.(value);
+    }, 300),
+    [],
+  );
 
   useEffect(() => {
     if (inputRef.current && autoFocus) {
@@ -19,6 +31,7 @@ export const SearchInput: FC<SearchInputProps> = ({ autoFocus }) => {
       <SearchIcon className="mr-2" />
       <input
         ref={inputRef}
+        onChange={(e) => debouncedSetKeyword(e.target.value)}
         className="flex-grow appearance-none bg-offWhite020 placeholder-gray040 focus:outline-none cursor-pointer caret-purple100 t-b2-r-15"
         placeholder="검색"
       />
