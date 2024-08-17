@@ -1,3 +1,4 @@
+import { FriendMainPage } from "@/pages/friend/Main";
 import { LogInPage } from "@/pages/login";
 import { MyPickPage } from "@/pages/my-pick";
 import { MyPickDetailPage } from "@/pages/my-pick-detail";
@@ -18,6 +19,9 @@ export const routes = {
   MyPickDetailPage: "/my-pick/:pickId",
   SpacePage: "/space/:memberId",
   OnBoardPage: "/onboard",
+  FriendMainPage: "/friend",
+  FriendRecommendPage: "/friend/recommend",
+  FriendSearchPage: "/friend/search",
 };
 
 export const { Stack, activities } = stackflow({
@@ -40,6 +44,7 @@ export const { Stack, activities } = stackflow({
     MyPickDetailPage,
     SpacePage,
     OnBoardPage,
+    FriendMainPage,
   },
   initialActivity: () => "LogInPage",
 });
