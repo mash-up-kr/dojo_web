@@ -62,7 +62,7 @@ export const FriendMainPage: ActivityComponentType = () => {
           )}
         </ul>
       </section>
-      <section className="mb-2">
+      <section className="mb-20">
         <h2 className="px-4 pt-3 pb-1 t-b3-sb-14">내 친구</h2>
         <ul>
           {friendRes?.data?.map((friend) => {
