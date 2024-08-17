@@ -1,15 +1,35 @@
 import { Button } from "@/components/common/Button";
 import Image from "@/components/common/Image";
+import type { ReceivedPickDetail } from "@/generated/model";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
 
 export const PickNoticeList = ({
   onSelectPick,
+  picks,
 }: {
   onSelectPick: (pickId: string) => void;
+  picks?: ReceivedPickDetail[];
 }) => {
+  // const { data: pickList } = useSuspenseQuery(
+  //   getGetPickDetailQueryOptions(
+  //     {
+  //       pageNumber: 0,
+  //       pageSize: 100,
+  //       questionId: "2847115b-bbe5-47ca-b72d-5c1f872fb85d",
+  //     },
+  //     {
+  //       query: {
+  //         select: ({ data }) => {
+  //           return data?.picks;
+  //         },
+  //       },
+  //     },
+  //   ),
+  // );
+
   return (
     <ul className="pt-6 pb-[60px]">
-      {[...Array(5)].map((_, index) => (
+      {picks?.map((pick, index) => (
         <li
           className="h-[106px] px-4 items-center"
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -19,7 +39,10 @@ export const PickNoticeList = ({
             <Image alt="pick" className="w-[44px] h-[44px]" />
             <div className="flex flex-col space-y-1.5 flex-1">
               <p className="text-gray084">
-                <strong>14기 Web 김계란님</strong>
+                <strong>
+                  {pick.pickerOrdinal ?? "**"}기 {pick.pickerPlatform ?? "***"}{" "}
+                  {pick.pickerFullName ?? "***"}님
+                </strong>
                 에게 선택받았어요.
               </p>
               <span className="t-c1-r-13 text-gray054">

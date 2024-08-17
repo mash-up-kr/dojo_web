@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import confetti from "canvas-confetti";
 import { AnimatePresence, motion } from "framer-motion";
 import { type FC, type ReactNode, useEffect, useRef } from "react";
@@ -8,14 +9,21 @@ type ModalProps = {
   onClose: () => void;
   children: ReactNode;
   useConfetti?: boolean;
+  className?: string;
 };
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, useConfetti, children }) => {
+const Modal: FC<ModalProps> = ({
+  isOpen,
+  onClose,
+  useConfetti,
+  children,
+  className,
+}) => {
   return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 bg-gray100 bg-opacity-50 flex items-center justify-center"
+          className="fixed inset-0 bg-gray100 bg-opacity-50 flex items-center justify-center z-10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -34,7 +42,10 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, useConfetti, children }) => {
             />
           )}
           <motion.div
-            className="bg-offWhite010 p-4 rounded-20"
+            className={cn(
+              "bg-offWhite010 p-4 rounded-20 w-full mx-[38px]",
+              className,
+            )}
             initial={{ scale: 0.5, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.5, opacity: 0 }}

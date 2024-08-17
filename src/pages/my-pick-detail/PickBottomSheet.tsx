@@ -36,13 +36,12 @@ export const PickBottomSheet = ({ ...rest }: PickBottomSheetProps) => {
 
   return (
     <BottomSheet {...rest}>
-      <div className="flex flex-col p-4 items-center">
+      <div className="flex flex-col p-4 items-center space-y-2">
         <span className="t-h5-b-17 text-gray084">
           8기 ***님의 어떤 정보를 확인할까요?
         </span>
         <p className="text-gray040">
-          내 매시젬
-          <strong className="text-purple100">520개</strong>
+          내 매시젬 <strong className="text-purple100">520개</strong>
         </p>
       </div>
 

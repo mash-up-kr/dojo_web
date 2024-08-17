@@ -62,7 +62,8 @@ const PickCard = ({
     <li className="h-[116px] px-4 items-center">
       <Link
         activityName="MyPickDetailPage"
-        activityParams={{ pickId: "1" }}
+        // TODO: questionId를 받아서 MyPickDetailPage로 이동
+        activityParams={{ questionId: "2847115b-bbe5-47ca-b72d-5c1f872fb85d" }}
         className="h-[116px] flex items-center border-b-gray005 border-solid border-b &:first-of-type:border-t-gray005 &:first-child:border-t"
       >
         <div className="flex flex-col space-y-1.5 flex-1">
