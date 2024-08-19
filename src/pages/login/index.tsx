@@ -1,12 +1,9 @@
 import KAKAOTALK from "@/assets/kakaotalk.svg?react";
 import { Header, HeaderLogo } from "@/components/common/Header";
-import Image from "@/components/common/Image";
-import { Link } from "@/stackflow/Link";
 import { getGradientBg } from "@/utils/getGradientBg";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import clsx from "clsx";
-import KeyVisualImage from "../../assets/images/key-visual.png";
 import { useLoginHandler } from "./useLoginHandler";
 const bg = getGradientBg();
 
@@ -15,18 +12,11 @@ export const LogInPage: ActivityComponentType = () => {
 
   return (
     <AppScreen>
-      <div className={clsx("min-h-screen flex flex-col", bg)}>
-        <Header
-          left={<HeaderLogo />}
-          right={
-            <Link activityName="MyPickPage" activityParams={{}}>
-              <Image className="w-8 h-8 bg-gray084 rounded-full" />
-            </Link>
-          }
-        />
+      <div className={clsx("h-full flex flex-col", bg)}>
+        <Header left={<HeaderLogo />} />
         <main className="flex flex-col flex-grow px-4 py-7 items-center ">
           <div className="flex-grow flex items-center">
-            <Image src={KeyVisualImage} />
+            <img width={"100%"} alt="left-time" src="/src/assets/Maship.gif" />
           </div>
           <button
             type="button"

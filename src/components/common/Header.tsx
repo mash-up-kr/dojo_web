@@ -1,6 +1,7 @@
 import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import type { ReactNode } from "react";
+import Image from "./Image";
 
 export function HeaderLogo() {
   return (
@@ -9,9 +10,7 @@ export function HeaderLogo() {
       activityParams={{}}
       className="flex space-x-2 items-center"
     >
-      <span className="text-2xl">🤫</span>
-      {/* TODO: update service name */}
-      <h1 className="t-h3-b-22">Messhit</h1>
+      <Image src={"/src/assets/images/logo.png"} w={66} />
     </Link>
   );
 }
