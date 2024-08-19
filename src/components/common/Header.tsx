@@ -1,10 +1,15 @@
 import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
+import { useActivity } from "@stackflow/react";
 import type { ReactNode } from "react";
 import Image from "./Image";
 
 export function HeaderLogo() {
-  return (
+  const activity = useActivity();
+
+  return activity.name === "VotePage" ? (
+    <Image src={"/src/assets/images/logo.png"} w={66} />
+  ) : (
     <Link
       activityName="VotePage"
       activityParams={{}}
