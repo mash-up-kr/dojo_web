@@ -3,7 +3,9 @@ import { Header, HeaderLogo } from "@/components/common/Header";
 import Image from "@/components/common/Image";
 import { useMe } from "@/generated/member/member";
 import { Link } from "@/stackflow/Link";
+import { cn } from "@/utils/cn";
 import { getGradientBg } from "@/utils/getGradientBg";
+import { AppScreen } from "@stackflow/plugin-basic-ui";
 import clsx from "clsx";
 
 const bg = getGradientBg();
@@ -16,13 +18,13 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className={clsx("min-h-screen", bg)}>
+    <AppScreen>
       <Header
         left={<HeaderLogo />}
         right={
           <Link
             activityName="SpacePage"
-            activityParams={{ memberId: meRes.data.memberId }}
+            activityParams={{ memberId: meRes?.data?.memberId ?? "" }}
             className="relative"
           >
             <Image
@@ -32,8 +34,11 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
             <NavIcon className="absolute -bottom-[1px] -right-[1px]" />
           </Link>
         }
+        className={cn("transition-colors duration-100 bg-transparent")}
       />
-      {children}
-    </div>
+      <div className={clsx("min-h-screen absolute top-0 w-full", bg)}>
+        {children}
+      </div>
+    </AppScreen>
   );
 }

@@ -3,7 +3,6 @@ import type { QuestionSheetCandidate } from "@/generated/model/questionSheetCand
 import { getCreate1MutationOptions } from "@/generated/pick/pick";
 import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
 import { useMyFlow } from "@/stackflow/useMyFlow";
-import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import React, { Suspense, useMemo } from "react";
@@ -37,40 +36,38 @@ function VotePageInner() {
     return;
   }
   return (
-    <AppScreen>
-      <VoteLayout>
-        <main className="flex flex-col gap-3 py-6 px-8 items-center">
-          <Indicator current={qIndex} total={data.sheetTotalCount} />
-          <VoteQuestions
-            content={question.questionContent}
-            imgSrc={question.questionEmojiImageUrl}
-            imgAlt={question.questionCategory}
-            members={question.candidates}
-            onSelect={async (v) => {
-              // TODO: uncomment this after impl the mutation
-              // try {
-              // await mutateAsync({
-              mutateAsync({
-                data: {
-                  pickedId: v.pickId,
-                  questionId: question.questionId,
-                  questionSetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
-                  questionSheetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
-                },
-              });
-              if (qIndex === data.sheetTotalCount) {
-                push("VoteDonePage", {});
-                return;
-              }
-              setQIndex((p) => p + 1);
-              // } catch (e) {
-              // console.error(e);
-              // }
-            }}
-          />
-        </main>
-      </VoteLayout>
-    </AppScreen>
+    <VoteLayout>
+      <main className="flex flex-col gap-3 pt-[52px] pb-6 px-4 items-center">
+        <Indicator current={qIndex} total={data.sheetTotalCount} />
+        <VoteQuestions
+          content={question.questionContent}
+          imgSrc={question.questionEmojiImageUrl}
+          imgAlt={question.questionCategory}
+          members={question.candidates}
+          onSelect={async (v) => {
+            // TODO: uncomment this after impl the mutation
+            // try {
+            // await mutateAsync({
+            mutateAsync({
+              data: {
+                pickedId: v.pickId,
+                questionId: question.questionId,
+                questionSetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
+                questionSheetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
+              },
+            });
+            if (qIndex === data.sheetTotalCount) {
+              push("VoteDonePage", {});
+              return;
+            }
+            setQIndex((p) => p + 1);
+            // } catch (e) {
+            // console.error(e);
+            // }
+          }}
+        />
+      </main>
+    </VoteLayout>
   );
 }
 
@@ -98,7 +95,7 @@ function VoteQuestions({
 
   return (
     <>
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-3 px-4">
         <p className="flex items-center justify-center text-center t-h4-sb-20 h-[75px]">
           {content}
         </p>

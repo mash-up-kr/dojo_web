@@ -3,12 +3,11 @@ import THUMB from "@/assets/ic24_thumb.svg?react";
 import BRONZE from "@/assets/ic32_bronze.svg?react";
 import GOLD from "@/assets/ic32_gold.svg?react";
 import SILVER from "@/assets/ic32_silver.svg?react";
-import Back from "@/assets/ic_24_back.svg?react";
 import { FriendItem } from "@/components/FriendItem";
+import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
 import { useGetFriends } from "@/generated/member-relation/member-relation";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
-import { Link } from "@/stackflow/Link";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
@@ -28,16 +27,12 @@ export const MySpace = () => {
     <AppScreen>
       <Header
         title="마이 스페이스"
-        left={
-          <Link activityName="VotePage" activityParams={{}}>
-            <Back />
-          </Link>
-        }
-        className={cn("fixed transition-colors duration-100", {
+        left={<BackButton />}
+        className={cn("transition-colors duration-100 bg-transparent", {
           "bg-offWhite010": !isIntersecting,
         })}
       />
-      <div className="flex flex-col pb-20">
+      <div className="flex flex-col pb-20 absolute top-0">
         <MyProfile profileRef={ref} />
         <ListContainer
           titleIcon={<THUMB />}

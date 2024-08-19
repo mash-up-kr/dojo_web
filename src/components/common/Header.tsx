@@ -42,12 +42,14 @@ export const Header = ({
   return (
     <header
       className={cn(
-        "relative flex items-center justify-between p-4 min-h-[52px] w-full z-20",
+        "flex items-center justify-between px-4 py-[14px] h-[52px] w-full z-20 sticky top-0 bg-offWhite010",
         className,
       )}
     >
       {left ? (
-        <div className={cn("flex-shrink-0 z-[11]", leftClassName)}>{left}</div>
+        <div className={cn("flex flex-shrink-0 z-[11]", leftClassName)}>
+          {left}
+        </div>
       ) : (
         <div />
       )}

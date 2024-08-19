@@ -1,32 +1,22 @@
-import Back from "@/assets/ic_24_back.svg?react";
+import { BackButton } from "@/components/common/BackButton";
 import { DeferredComponent } from "@/components/common/DefferedComponent";
 import { Header } from "@/components/common/Header";
 import type { GetReceivedPickListSort } from "@/generated/model";
-import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { Suspense, useState } from "react";
 import { ChipButton } from "./ChipButton";
 import { PickCardList } from "./PickCardList";
 
 export const MyPickPage = () => {
-  const { pop } = useMyFlow();
   const [selectedChipFilter, setSelectedChipFilter] =
     useState<GetReceivedPickListSort>("LATEST");
 
   return (
     <AppScreen>
       <div className="h-full flex flex-col">
-        <Header
-          title="내가 받은 픽"
-          left={
-            <button type="button" onClick={pop}>
-              <Back />
-            </button>
-          }
-          className="sticky top-0 bg-offWhite010"
-        />
+        <Header title="내가 받은 픽" left={<BackButton />} />
         <div className="flex flex-col flex-1">
-          <div className="flex items-center space-x-2 px-4 py-1.5 sticky top-[56px] bg-offWhite010">
+          <div className="flex items-center space-x-2 px-4 py-1.5 sticky top-[52px] bg-offWhite010">
             <ChipButton
               isActive={selectedChipFilter === "LATEST"}
               onClick={() => setSelectedChipFilter("LATEST")}

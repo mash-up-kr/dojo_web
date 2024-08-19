@@ -16,14 +16,14 @@ import { stackflow } from "@stackflow/react";
 export const routes = {
   LogInPage: "/login",
   VotePage: "/vote",
-  VoteDonePage: "/vote/done",
-  MyPickPage: "/my-pick",
-  MyPickDetailPage: "/my-pick/:questionId",
-  SpacePage: "/space/:memberId",
-  OnBoardPage: "/onboard",
-  FriendMainPage: "/friend",
-  FriendRecommendPage: "/friend/recommend",
-  FriendSearchPage: "/friend/search",
+  VoteDonePage: "/vote/done", // OK
+  MyPickPage: "/my-pick", // OK
+  MyPickDetailPage: "/my-pick/:questionId", // OK
+  SpacePage: "/space/:memberId", // OK
+  OnBoardPage: "/onboard", // OK
+  FriendMainPage: "/friend", // OK
+  FriendRecommendPage: "/friend/recommend", // OK
+  FriendSearchPage: "/friend/search", // OK
 };
 
 export const { Stack, activities } = stackflow({

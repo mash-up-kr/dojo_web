@@ -1,17 +1,15 @@
-import Back from "@/assets/ic_24_back.svg?react";
+import { BackButton } from "@/components/common/BackButton";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
 import { Toast } from "@/components/common/Toast";
 import { uploadInfo } from "@/generated/image/image";
 import { useMe, useUpdate } from "@/generated/member/member";
-import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import axios from "axios";
 import { useRef } from "react";
 
 export function OnBoardPage() {
-  const { pop } = useMyFlow();
   const { data: meRes, refetch: refectchMe } = useMe();
   const { mutate: updateProfile } = useUpdate({
     mutation: { onSuccess: () => refectchMe() },
@@ -56,14 +54,7 @@ export function OnBoardPage() {
   return (
     <AppScreen>
       <div>
-        <Header
-          left={
-            <button type="button" onClick={pop}>
-              <Back />
-            </button>
-          }
-          title="프로필 변경하기"
-        />
+        <Header left={<BackButton />} title="프로필 변경하기" />
         <main className="flex flex-col items-center">
           <div className="flex flex-col items-center w-[280px] mt-[140px]">
             <Image

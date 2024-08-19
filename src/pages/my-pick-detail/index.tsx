@@ -1,9 +1,8 @@
 import GEM from "@/assets/ic22_dia.svg?react";
-import Close from "@/assets/ic_24_close.svg?react";
+import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
 import { getGetPickDetailQueryOptions } from "@/generated/pick/pick";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
-import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
@@ -52,7 +51,7 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
   }>(null);
   const [isOpenSheet, setIsOpenSheet] = useState(false);
   const { ref, isIntersecting } = useIntersectionObserver({
-    threshold: 0.5,
+    threshold: 0.9,
     initialIsIntersecting: true,
   });
 
@@ -71,15 +70,7 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
     <AppScreen>
       <Header
         title={isIntersecting ? "" : question.questionContent}
-        left={
-          <Link
-            activityName="MyPickPage"
-            activityParams={{}}
-            className="w-6 h-6 flex items-center"
-          >
-            <Close />
-          </Link>
-        }
+        left={<BackButton />}
         right={
           // TODO: GEM 개수 API 연동
           <div className="flex space-x-[2px] items-center">
@@ -87,11 +78,11 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
             <span className="t-h6-sb-15">200</span>
           </div>
         }
-        className={cn("fixed transition-colors duration-300", {
+        className={cn("transition-colors duration-100 bg-transparent", {
           "bg-offWhite010": !isIntersecting,
         })}
       />
-      <div className="flex flex-col">
+      <div className="flex flex-col absolute top-0">
         <PickNotice descriptionRef={ref} {...question} />
         <PickNoticeList onSelectPick={handleSelectPick} picks={picks} />
       </div>

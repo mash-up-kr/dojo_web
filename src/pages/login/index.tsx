@@ -14,8 +14,8 @@ export const LogInPage: ActivityComponentType = () => {
   return (
     <AppScreen>
       <div className={clsx("h-full flex flex-col", bg)}>
-        <Header left={<HeaderLogo />} />
-        <main className="flex flex-col flex-grow px-4 py-7 items-center ">
+        <Header left={<HeaderLogo />} className="bg-transparent" />
+        <main className="flex flex-col flex-grow px-4 py-7 items-center">
           <div className="flex-grow flex items-center">
             <img width={"100%"} alt="Maship!" src={MashipLogoGif} />
           </div>
