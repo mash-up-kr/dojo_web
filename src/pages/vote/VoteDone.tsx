@@ -1,3 +1,5 @@
+import CongratGif from "@/assets/Congrat.gif";
+import WaitingGif from "@/assets/Waiting.gif";
 import { getGetNextPickTimeQueryOptions } from "@/generated/pick/pick";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -40,7 +42,7 @@ function DoneCongrat() {
           height={120}
           className="animate-zoom"
           alt="congrat"
-          src="/src/assets/Congrat.gif"
+          src={CongratGif}
         />
       </div>
       <div className="px-5 py-4 flex flex-col items-center space-y-[10px] bg-offWhite010/40 rounded-12 animate-zoom-sm">
@@ -77,12 +79,7 @@ function VoteLeftTime() {
   return (
     <>
       <div className="flex items-end justify-center h-[250px]">
-        <img
-          width={120}
-          height={120}
-          alt="left-time"
-          src="/src/assets/Waiting.gif"
-        />
+        <img width={120} height={120} alt="left-time" src={WaitingGif} />
       </div>
       <div className="px-5 py-4 flex flex-col items-center space-y-[10px] bg-offWhite010/40 rounded-12">
         <h4 className="t-b2-m-15 text-gray064">다음 투표까지 남은 시간:</h4>

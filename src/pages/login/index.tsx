@@ -1,3 +1,4 @@
+import MashipLogoGif from "@/assets/Maship.gif";
 import KAKAOTALK from "@/assets/kakaotalk.svg?react";
 import { Header, HeaderLogo } from "@/components/common/Header";
 import { getGradientBg } from "@/utils/getGradientBg";
@@ -16,7 +17,7 @@ export const LogInPage: ActivityComponentType = () => {
         <Header left={<HeaderLogo />} />
         <main className="flex flex-col flex-grow px-4 py-7 items-center ">
           <div className="flex-grow flex items-center">
-            <img width={"100%"} alt="left-time" src="/src/assets/Maship.gif" />
+            <img width={"100%"} alt="Maship!" src={MashipLogoGif} />
           </div>
           <button
             type="button"

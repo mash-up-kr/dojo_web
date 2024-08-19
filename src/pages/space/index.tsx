@@ -19,8 +19,6 @@ export const SpacePage: ActivityComponentType<SpcaePageProps> = ({
     },
   });
 
-  console.log(data);
-
   const isMySpace = data?.memberId === memberId;
   if (isPending) {
     // TODO: Loading Component

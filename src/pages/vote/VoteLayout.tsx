@@ -11,6 +11,10 @@ const bg = getGradientBg();
 export function VoteLayout({ children }: { children: React.ReactNode }) {
   const { data: meRes } = useMe();
 
+  if (meRes?.data?.memberId === undefined) {
+    return null;
+  }
+
   return (
     <div className={clsx("min-h-screen", bg)}>
       <Header
@@ -18,7 +22,7 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
         right={
           <Link
             activityName="SpacePage"
-            activityParams={{ memberId: meRes?.data?.memberId ?? "" }}
+            activityParams={{ memberId: meRes.data.memberId }}
             className="relative"
           >
             <Image

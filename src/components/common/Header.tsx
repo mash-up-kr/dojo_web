@@ -1,3 +1,4 @@
+import LogoImage from "@/assets/images/logo.png";
 import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import { useActivity } from "@stackflow/react";
@@ -8,14 +9,14 @@ export function HeaderLogo() {
   const activity = useActivity();
 
   return activity.name === "VotePage" ? (
-    <Image src={"/src/assets/images/logo.png"} w={66} />
+    <Image src={LogoImage} w={66} />
   ) : (
     <Link
       activityName="VotePage"
       activityParams={{}}
       className="flex space-x-2 items-center"
     >
-      <Image src={"/src/assets/images/logo.png"} w={66} />
+      <Image src={LogoImage} w={66} />
     </Link>
   );
 }
