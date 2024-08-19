@@ -36,9 +36,7 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
         }
         className={cn("transition-colors duration-100 bg-transparent")}
       />
-      <div className={clsx("min-h-screen absolute top-0 w-full", bg)}>
-        {children}
-      </div>
+      <div className={clsx("h-full absolute top-0 w-full", bg)}>{children}</div>
     </AppScreen>
   );
 }
