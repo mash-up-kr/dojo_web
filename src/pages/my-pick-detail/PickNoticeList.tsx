@@ -40,7 +40,7 @@ export const PickNoticeList = ({
             <div className="flex flex-col space-y-1.5 flex-1">
               <p className="text-gray084">
                 <strong>
-                  {pick.pickerOrdinal ?? "**"}기 {pick.pickerPlatform ?? "***"}{" "}
+                  {pick.pickerOrdinal ?? "**"}기 {pick.pickerPlatform ?? ""}{" "}
                   {pick.pickerFullName ?? "***"}님
                 </strong>
                 에게 선택받았어요.
