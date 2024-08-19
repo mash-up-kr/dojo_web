@@ -3,6 +3,7 @@ import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
 import { getMeQueryOptions } from "@/generated/member/member";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
+import { Link } from "@/stackflow/Link";
 import { cn } from "@/utils/cn";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
@@ -37,13 +38,16 @@ export const MyProfile = memo(
         <div className="bg-gradient-white absolute bottom-0 right-0 left-0 h-[62px]" />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
-            <div className="relative">
+            <Link
+              activityName="OnBoardPage"
+              activityParams={{}}
+              className="relative"
+            >
               <Image
                 src={profile?.profileImageUrl}
                 alt="이름"
                 className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-offWhite010"
               />
-              {/* TODO: 갤러리 이동 후 -> 사진업로드 -> 프로필 사진 변경 로직 */}
               <button
                 className="absolute -bottom-[14px] -right-[14px] w-[42px] h-[42px] flex justify-center items-center"
                 type="button"
@@ -52,7 +56,7 @@ export const MyProfile = memo(
                   <CAMERA />
                 </div>
               </button>
-            </div>
+            </Link>
             <div className="flex flex-col space-y-1 ml-3">
               <strong className="t-h5-b-17">{profile?.memberName}</strong>
               <p className="t-c1-r-13">{profile?.platform}</p>

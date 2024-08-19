@@ -1,14 +1,21 @@
-// import { customInstance } from "@/apis/custom-client";
+import Back from "@/assets/ic_24_back.svg?react";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
-import { Link } from "@/stackflow/Link";
+import { Toast } from "@/components/common/Toast";
+import { uploadInfo } from "@/generated/image/image";
+import { useMe, useUpdate } from "@/generated/member/member";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
-import { useRef, useState } from "react";
+import axios from "axios";
+import { useRef } from "react";
 
 export function OnBoardPage() {
-  // const [imageSrc, setImageSrc] = useState();
-  const [imageSrc] = useState();
+  const { pop } = useMyFlow();
+  const { data: meRes, refetch: refectchMe } = useMe();
+  const { mutate: updateProfile } = useUpdate({
+    mutation: { onSuccess: () => refectchMe() },
+  });
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -23,12 +30,26 @@ export function OnBoardPage() {
   ) => {
     const file = event.target.files?.[0];
     if (file) {
-      // const response = await customInstance({
-      //   path: "/image",
-      //   method: "POST",
-      //   body: { file },
-      // });
-      // setImageSrc(response.data.url);
+      try {
+        const { data } = await uploadInfo({ contentType: "JPEG" });
+        if (!data) throw new Error("알수 없는 오류 발생");
+        const { uuid, uploadUrl } = data;
+        await axios.put(uploadUrl, file, {
+          headers: {
+            "Content-Type": file.type,
+          },
+        });
+        updateProfile({
+          id: meRes?.data?.memberId ?? "",
+          data: { profileImageId: uuid },
+        });
+      } catch (e) {
+        if (e instanceof Error) {
+          Toast.alert(e.message, () => {});
+        } else {
+          console.log(e);
+        }
+      }
     }
   };
 
@@ -36,22 +57,25 @@ export function OnBoardPage() {
     <AppScreen>
       <div>
         <Header
-          right={
-            <Link
-              activityName="VotePage"
-              activityParams={{}}
-              className="text-purple100 t-h5-sb-17"
-            >
-              다음
-            </Link>
+          left={
+            <button type="button" onClick={pop}>
+              <Back />
+            </button>
           }
+          title="프로필 변경하기"
         />
         <main className="flex flex-col items-center">
           <div className="flex flex-col items-center w-[280px] mt-[140px]">
-            <Image src={imageSrc} alt="Profile Image" w={80} h={80} />
+            <Image
+              src={meRes?.data?.profileImageUrl}
+              alt="Profile Image"
+              className="w-[88px] h-[88px] border border-gray005"
+            />
             <div className="mt-3 flex flex-col items-center space-y-1">
-              <h1 className="t-h4-b-20">낭은영</h1>
-              <p className="t-b3-r-14 bg-grey054">14기 Product Design</p>
+              <h1 className="t-h4-b-20">{meRes?.data?.memberName}</h1>
+              <p className="t-b3-r-14 bg-grey054">
+                {meRes?.data?.ordinal}기 {meRes?.data?.platform}
+              </p>
             </div>
             <Button
               size="md"
@@ -63,7 +87,7 @@ export function OnBoardPage() {
             </Button>
             <input
               type="file"
-              accept="image/*"
+              accept=".png, .jpeg, .jpg"
               ref={fileInputRef}
               style={{ display: "none" }}
               onChange={handleFileChange}

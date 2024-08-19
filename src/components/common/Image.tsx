@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import type { FC } from "react";
 import DefaultProfileImage from "../../assets/images/default-profile.png";
 type ImageProps = {
@@ -15,7 +16,7 @@ const Image: FC<ImageProps> = ({ src, alt, w, h, className }) => {
       alt={alt}
       width={w}
       height={h}
-      className={`rounded-full ${className}`}
+      className={cn("rounded-full object-cover", className)}
     />
   );
 };
