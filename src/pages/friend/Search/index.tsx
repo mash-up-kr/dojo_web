@@ -31,10 +31,14 @@ export const FriendSearchPage: ActivityComponentType = () => {
         }
         rightClassName="ml-3 flex-grow"
       />
-      {
-        <ul className="mb-2">
-          {keyword &&
-            searchMemberRes?.data?.map((member) => {
+      {keyword &&
+        (searchMemberRes?.data?.length === 0 ? (
+          <p className="t-h5-sb-17 text-gray084 mt-[140px] text-center">
+            검색 결과가 없어요.
+          </p>
+        ) : (
+          <ul className="mb-2">
+            {searchMemberRes?.data?.map((member) => {
               return (
                 <FriendItem
                   key={member.memberId}
@@ -43,8 +47,8 @@ export const FriendSearchPage: ActivityComponentType = () => {
                 />
               );
             })}
-        </ul>
-      }
+          </ul>
+        ))}
     </AppScreen>
   );
 };
