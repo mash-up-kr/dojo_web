@@ -1,11 +1,10 @@
-import { useCreateFriend, useMe } from "@/generated/member/member";
 import type { FriendInfoResponse } from "@/generated/model";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
-import { type FC, useEffect, useState } from "react";
-import { Button } from "./common/Button";
+import type { FC } from "react";
+import { FriendAddButton } from "./FriendAddButton";
+
 import Image from "./common/Image";
-import { Toast } from "./common/Toast";
 
 type FriendItemProps = {
   friendInfo: FriendInfoResponse;
@@ -19,9 +18,7 @@ export const FriendItem: FC<FriendItemProps> = ({
   className,
 }) => {
   const { push } = useMyFlow();
-  const [isFriend, setIsFriend] = useState(isMyFriend);
   const onClick = () => {
-    if (!isFriend) return;
     push("SpacePage", { memberId: friendInfo.memberId });
   };
 
@@ -47,68 +44,7 @@ export const FriendItem: FC<FriendItemProps> = ({
           </p>
         </div>
       </button>
-      {!isMyFriend && (
-        <FriendAddButton
-          friendId={friendInfo.memberId}
-          setIsFriend={setIsFriend}
-        />
-      )}
+      {!isMyFriend && <FriendAddButton memberId={friendInfo.memberId} />}
     </li>
-  );
-};
-
-type FriendAddButtonProps = {
-  friendId: string;
-  setIsFriend: (isFriend: boolean) => void;
-};
-
-const FriendAddButton: FC<FriendAddButtonProps> = ({
-  friendId,
-  setIsFriend,
-}) => {
-  const { data: meRes } = useMe();
-  const { mutate, isSuccess, isError } = useCreateFriend();
-
-  const onClick = () => {
-    mutate({
-      data: {
-        // useMe mock인 동안 임시
-        fromMemberId:
-          "409c9126-7e69-4496-b4eb-90354ae48945" ?? meRes?.data?.memberId,
-        toMemberId: friendId,
-      },
-    });
-  };
-
-  useEffect(() => {
-    if (isSuccess) {
-      setIsFriend(isSuccess);
-      Toast.alert(
-        "친구가 추가되었습니다! 친구는 어떤 픽을 받았는지 확인해보세요 🙂",
-        () => {},
-      );
-    }
-  }, [isSuccess, setIsFriend]);
-
-  useEffect(() => {
-    if (isError) {
-      Toast.alert(
-        "친구가 정상적으로 추가되지 않았습니다. 다시 시도해 주세요.",
-        () => {},
-      );
-    }
-  }, [isError]);
-
-  return (
-    <Button
-      type="button"
-      disabled={isSuccess}
-      buttonType={isSuccess ? "disable" : "primary"}
-      size="xs"
-      onClick={onClick}
-      className="w-[69px]"
-    >
-      {isSuccess ? "추가됨" : "친구 추가"}
-    </Button>
   );
 };

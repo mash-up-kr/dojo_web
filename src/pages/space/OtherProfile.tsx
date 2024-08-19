@@ -1,4 +1,4 @@
-import { Button } from "@/components/common/Button";
+import { FriendAddButton } from "@/components/FriendAddButton";
 import Image from "@/components/common/Image";
 import { getGetProfileQueryOptions } from "@/generated/member/member";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
@@ -13,11 +13,9 @@ export const OtherProfile = memo(
   ({
     profileRef,
     containerClassName,
-    isFriend = false,
   }: {
     profileRef: IntersectionReturn["ref"];
     containerClassName?: ClassNameValue;
-    isFriend?: boolean;
   }) => {
     const { memberId } = useActivityParams<{
       memberId: string;
@@ -57,9 +55,7 @@ export const OtherProfile = memo(
               <p className="t-c1-r-13">{profile?.platform}</p>
             </div>
           </div>
-          <Button disabled={isFriend} className="w-fit px-2.5 py-1.5">
-            {profile?.isFriend ? "추가됨" : "친구 추가"}
-          </Button>
+          <FriendAddButton memberId={memberId} />
         </div>
         <div className="flex space-x-4 mt-6 z-10 relative">
           <CounterBox title="받은 픽" counter={profile?.pickCount ?? 0} />
