@@ -39,7 +39,9 @@ export const PickNotice = ({
         transition={{ duration: 0.65, repeat: 5, repeatType: "reverse" }}
       >
         <div className="flex flex-col space-y-1 items-center bg-offWhite010 px-7 pt-3 pb-4 rounded-[100px] relative shadow-lg">
-          <strong className="t-h5-b-17 text-gray084">7명</strong>
+          <strong className="t-h5-b-17 text-gray084">
+            {question.totalReceivedPickCount}명
+          </strong>
           <span className=" t-c2-m-12 text-gray054">
             이 질문에서 {profile?.memberName ?? "-"} 님을{" "}
             <strong className="text-purple100">Pick</strong>했어요

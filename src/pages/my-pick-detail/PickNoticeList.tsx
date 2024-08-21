@@ -10,23 +10,6 @@ export const PickNoticeList = ({
   onSelectPick: (pickId: string) => void;
   picks?: ReceivedPickDetail[];
 }) => {
-  // const { data: pickList } = useSuspenseQuery(
-  //   getGetPickDetailQueryOptions(
-  //     {
-  //       pageNumber: 0,
-  //       pageSize: 100,
-  //       questionId: "2847115b-bbe5-47ca-b72d-5c1f872fb85d",
-  //     },
-  //     {
-  //       query: {
-  //         select: ({ data }) => {
-  //           return data?.picks;
-  //         },
-  //       },
-  //     },
-  //   ),
-  // );
-
   return (
     <ul className="pt-6 pb-[60px]">
       {picks?.map((pick, index) => (
@@ -55,7 +38,7 @@ export const PickNoticeList = ({
               className="ml-3"
               onClick={(e) => {
                 e.stopPropagation();
-                onSelectPick("pickId");
+                onSelectPick(pick.pickId);
               }}
             >
               확인하기

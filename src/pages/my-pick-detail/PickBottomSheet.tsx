@@ -9,51 +9,71 @@ import {
   type BottomSheetProps,
 } from "@/components/common/BottomSheet";
 import { Button } from "@/components/common/Button";
+import { Toast } from "@/components/common/Toast";
+import { useMe } from "@/generated/member/member";
+import type {
+  PickOpenResponsePickOpenItemDto,
+  ReceivedPickDetail,
+} from "@/generated/model";
 import { cn } from "@/utils/cn";
 import { type ButtonHTMLAttributes, useState } from "react";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
-  selectedPick: null | {
-    pickId: string;
-  };
+  selectedPick: null | ReceivedPickDetail;
 };
 
-export const PickBottomSheet = ({ ...rest }: PickBottomSheetProps) => {
-  const [selectedPick, setSelectedPick] = useState<{
-    pickId: string;
-  } | null>(null);
+export const PickBottomSheet = ({
+  selectedPick,
+  ...rest
+}: PickBottomSheetProps) => {
+  const { data: profile } = useMe({
+    query: {
+      select: ({ data }) => data,
+    },
+  });
+  const [selectedPickType, setSelectedPickType] =
+    useState<PickOpenResponsePickOpenItemDto | null>(null);
 
-  const handleSelectPick = (pickId: string) => {
-    if (selectedPick?.pickId === pickId) {
-      setSelectedPick(null);
+  const handleSelectPick = (pickInfo: (typeof PICKUP_INFO_BUTTONS)[number]) => {
+    if (selectedPickType === pickInfo.pickType) {
+      setSelectedPickType(null);
       return;
     }
 
-    setSelectedPick({ pickId });
+    if (!profile || profile?.coinCount < pickInfo.amount) {
+      Toast.alert("젬이 부족합니다.");
+      return;
+    }
+
+    setSelectedPickType(pickInfo.pickType);
   };
 
-  const disabled = selectedPick === null;
+  const disabled = setSelectedPickType === null;
 
   return (
     <BottomSheet {...rest}>
       <div className="flex flex-col p-4 items-center space-y-2">
         <span className="t-h5-b-17 text-gray084">
-          8기 ***님의 어떤 정보를 확인할까요?
+          {selectedPick?.pickerOrdinal ?? "**"}기{" "}
+          {selectedPick?.pickerPlatform ?? ""}{" "}
+          {selectedPick?.pickerFullName ?? "***"}님의 어떤 정보를 확인할까요?
         </span>
         <p className="text-gray040">
-          내 매시젬 <strong className="text-purple100">520개</strong>
+          내 매시젬{" "}
+          <strong className="text-purple100">
+            {profile?.coinCount ?? 0}개
+          </strong>
         </p>
       </div>
-
       <div className="space-y-[10px]">
         {PICKUP_INFO_BUTTONS.map((info) => (
           <PickInfoButton
-            isSelected={selectedPick?.pickId === info.pickId}
-            key={info.pickId}
-            onClick={() => {
-              handleSelectPick(info.pickId);
-            }}
             {...info}
+            isSelected={selectedPickType === info.pickType}
+            key={info.description}
+            onClick={() => {
+              handleSelectPick(info);
+            }}
           />
         ))}
       </div>
@@ -101,30 +121,36 @@ const PickInfoButton = ({
   );
 };
 
-const PICKUP_INFO_BUTTONS = [
+const PICKUP_INFO_BUTTONS: {
+  pickType: PickOpenResponsePickOpenItemDto;
+  title: string;
+  description: string;
+  amount: number;
+  Image: React.FC;
+}[] = [
   {
-    pickId: "pickId1",
+    pickType: "GENDER",
     title: "성별",
     description: "두근두근 성별 정보 보기",
     amount: 10,
     Image: GIRL_IMAGE,
   },
   {
-    pickId: "pickId2",
+    pickType: "PLATFORM",
     title: "플랫폼",
     description: "매시업 내 6개 직군 정보 보기",
     amount: 50,
     Image: MAN_IMAGE,
   },
   {
-    pickId: "pickId3",
+    pickType: "MID_INITIAL_NAME",
     title: "초성 1자",
     description: "그의 이름 중 1자 정보 보기",
     amount: 50,
     Image: ABC_IMAGE,
   },
   {
-    pickId: "pickId4",
+    pickType: "FULL_NAME",
     title: "이름",
     description: "그의 모든 것, 풀 이름 보기",
     amount: 150,

@@ -20,20 +20,6 @@ export const PickCardList = ({
 
   const cardList = data.data?.pickList ?? [];
 
-  // const { data: cardList, isPending } = useGetReceivedPickList(
-  //   { sort: "LATEST" },
-  //   {
-  //     query: {
-  //       select: ({ data }) => {
-  //         if (!data) {
-  //           return [];
-  //         }
-  //         return data.pickList || [];
-  //       },
-  //     },
-  //   },
-  // );
-
   if (cardList.length === 0) {
     return (
       <div className="flex-1 flex flex-col space-y-1.5 items-center justify-center">
@@ -57,13 +43,14 @@ const PickCard = ({
   questionContent,
   questionEmojiImageUrl,
   totalReceivedPickCount,
+  questionId,
 }: PickResponse) => {
   return (
     <li className="h-[116px] px-4 items-center">
       <Link
         activityName="MyPickDetailPage"
         // TODO: questionId를 받아서 MyPickDetailPage로 이동
-        activityParams={{ questionId: "2847115b-bbe5-47ca-b72d-5c1f872fb85d" }}
+        activityParams={{ questionId }}
         className="h-[116px] flex items-center border-b-gray005 border-solid border-b &:first-of-type:border-t-gray005 &:first-child:border-t"
       >
         <div className="flex flex-col space-y-1.5 flex-1">

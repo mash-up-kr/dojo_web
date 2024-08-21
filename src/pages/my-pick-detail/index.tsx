@@ -1,6 +1,7 @@
 import GEM from "@/assets/ic22_dia.svg?react";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
+import type { ReceivedPickDetail } from "@/generated/model";
 import { getGetPickDetailQueryOptions } from "@/generated/pick/pick";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
@@ -44,11 +45,9 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
     ),
   );
 
-  console.log(questionId);
-  // TODO: generator DTO 반영
-  const [selectedPick, setSelectedPick] = useState<null | {
-    pickId: string;
-  }>(null);
+  const [selectedPick, setSelectedPick] = useState<null | ReceivedPickDetail>(
+    null,
+  );
   const [isOpenSheet, setIsOpenSheet] = useState(false);
   const { ref, isIntersecting } = useIntersectionObserver({
     threshold: 0.9,
@@ -56,7 +55,8 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
   });
 
   const handleSelectPick = (pickId: string) => {
-    setSelectedPick({ pickId });
+    const pick = pickDetail?.picks.find((pick) => pick.pickId === pickId);
+    setSelectedPick(pick ?? null);
     setIsOpenSheet(true);
   };
 

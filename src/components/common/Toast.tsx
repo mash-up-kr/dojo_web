@@ -5,7 +5,8 @@ import { toast } from "sonner";
 function ToastUI({
   message,
   onAction,
-}: { message: string; onAction: () => void }) {
+  isAction = false,
+}: { message: string; onAction?: VoidFunction; isAction?: boolean }) {
   return (
     <button
       onClick={onAction}
@@ -20,21 +21,24 @@ function ToastUI({
           {message}
         </span>
       </div>
-      <div className="t-c1-sb-13 ml-4 flex items-center whitespace-nowrap">
-        확인하기 <LeftArrow />
-      </div>
+      {isAction && (
+        <div className="t-c1-sb-13 ml-4 flex items-center whitespace-nowrap">
+          확인하기 <LeftArrow />
+        </div>
+      )}
     </button>
   );
 }
 
 export const Toast = {
-  alert: (message: string, onAction: () => void) => {
+  alert: (message: string, onAction?: VoidFunction) => {
     toast.dismiss();
     toast.custom((t) => (
       <ToastUI
         message={message}
+        isAction={onAction !== undefined}
         onAction={() => {
-          onAction();
+          onAction?.();
           toast.dismiss(t);
         }}
       />
