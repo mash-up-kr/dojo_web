@@ -20,10 +20,10 @@ import type {
 import type {
   CreatePickRequest,
   DojoApiResponseLocalDateTime,
+  DojoApiResponsePickDetailPaging,
   DojoApiResponsePickId,
   DojoApiResponsePickOpenResponse,
-  DojoApiResponsePickPaging,
-  DojoApiResponseReceivedPickListGetResponse,
+  DojoApiResponseReceivedPickPagingGetResponse,
   GetPickDetailParams,
   GetReceivedPickListParams,
   PickOpenRequest
@@ -153,8 +153,8 @@ export const useOpenPick = <TError = ErrorType<unknown>,
       return useMutation(mutationOptions);
     }
     /**
- * 내가 받은 픽들을 정렬하여 보여주는 API. default sort : 최신 순
- * @summary 내가 받은 픽 List API
+ * 내가 받은 픽들을 페이징 처리 후 정렬하여 보여주는 API. default sort : 최신 순
+ * @summary 내가 받은 픽 페이징 API
  */
 export const getReceivedPickList = (
     params?: GetReceivedPickListParams,
@@ -162,7 +162,7 @@ export const getReceivedPickList = (
 ) => {
       
       
-      return customInstance<DojoApiResponseReceivedPickListGetResponse>(
+      return customInstance<DojoApiResponseReceivedPickPagingGetResponse>(
       {url: `https://docker-ecs.net/pick/picked-list`, method: 'GET',
         params, signal
     },
@@ -197,7 +197,7 @@ export type GetReceivedPickListQueryResult = NonNullable<Awaited<ReturnType<type
 export type GetReceivedPickListQueryError = ErrorType<unknown>
 
 /**
- * @summary 내가 받은 픽 List API
+ * @summary 내가 받은 픽 페이징 API
  */
 export const useGetReceivedPickList = <TData = Awaited<ReturnType<typeof getReceivedPickList>>, TError = ErrorType<unknown>>(
  params?: GetReceivedPickListParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getReceivedPickList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
@@ -225,7 +225,7 @@ export const getPickDetail = (
 ) => {
       
       
-      return customInstance<DojoApiResponsePickPaging>(
+      return customInstance<DojoApiResponsePickDetailPaging>(
       {url: `https://docker-ecs.net/pick/picked-detail`, method: 'GET',
         params, signal
     },

@@ -8,11 +8,11 @@ export const PickNoticeList = ({
   picks,
 }: {
   onSelectPick: (pickId: string) => void;
-  picks?: ReceivedPickDetail[];
+  picks: ReceivedPickDetail[];
 }) => {
   return (
     <ul className="pt-6 pb-[60px]">
-      {picks?.map((pick, index) => (
+      {picks.map((pick, index) => (
         <li
           className="h-[106px] px-4 items-center"
           // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -38,7 +38,7 @@ export const PickNoticeList = ({
               className="ml-3"
               onClick={(e) => {
                 e.stopPropagation();
-                onSelectPick(pick.pickId);
+                onSelectPick(pick.pickId ?? "");
               }}
             >
               확인하기

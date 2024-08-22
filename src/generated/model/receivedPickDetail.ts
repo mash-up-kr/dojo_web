@@ -9,16 +9,17 @@ import type { ReceivedPickDetailPickerPlatform } from './receivedPickDetailPicke
 
 export interface ReceivedPickDetail {
   latestPickedAt: string;
-  pickerFullName: string;
+  pickerFullName?: string;
   pickerFullNameOpen: boolean;
-  pickerGender: ReceivedPickDetailPickerGender;
+  pickerGender?: ReceivedPickDetailPickerGender;
   pickerGenderOpen: boolean;
-  pickerId: string;
+  pickerId?: string;
   pickerIdOpen: boolean;
   pickerOrdinal: number;
-  pickerPlatform: ReceivedPickDetailPickerPlatform;
+  pickerPlatform?: ReceivedPickDetailPickerPlatform;
   pickerPlatformOpen: boolean;
-  pickerSecondInitialName: string;
+  pickerProfileImageUrl: string;
+  pickerSecondInitialName?: string;
   pickerSecondInitialNameOpen: boolean;
-  pickId: string;
+  pickId?: string;
 }

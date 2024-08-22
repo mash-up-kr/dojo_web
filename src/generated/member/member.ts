@@ -18,6 +18,7 @@ import type {
   UseQueryResult
 } from '@tanstack/react-query'
 import type {
+  DojoApiResponseFriendSpacePickResponse,
   DojoApiResponseListMemberSearchResponse,
   DojoApiResponseMemberCreateResponse,
   DojoApiResponseMemberLoginResponse,
@@ -25,6 +26,7 @@ import type {
   DojoApiResponseMemberRelationId,
   DojoApiResponseMemberUpdateResponse,
   DojoApiResponseMyProfileResponse,
+  DojoApiResponseMySpacePickResponse,
   MemberCreateFriendRelationRequest,
   MemberCreateRequest,
   MemberLoginRequest,
@@ -400,54 +402,54 @@ export const useSearchMember = <TData = Awaited<ReturnType<typeof searchMember>>
  * 마이스페이스 탭 중 내가 받은 픽의 대한 API입니다. 공동 등수를 자동으로 계산하고 반환합니다. Pick이 많은 순서대로 등수를 나누고, 최신순, 내림차순으로 정렬합니다.
  * @summary 마이 스페이스 내가 받은 픽 API
  */
-export const myPick = (
+export const mySpace = (
     
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<unknown>(
+      return customInstance<DojoApiResponseMySpacePickResponse>(
       {url: `https://docker-ecs.net/member/my-space/pick`, method: 'GET', signal
     },
       options);
     }
   
 
-export const getMyPickQueryKey = () => {
+export const getMySpaceQueryKey = () => {
     return [`https://docker-ecs.net/member/my-space/pick`] as const;
     }
 
     
-export const getMyPickQueryOptions = <TData = Awaited<ReturnType<typeof myPick>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMySpaceQueryOptions = <TData = Awaited<ReturnType<typeof mySpace>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof mySpace>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getMyPickQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getMySpaceQueryKey();
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof myPick>>> = ({ signal }) => myPick(requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof mySpace>>> = ({ signal }) => mySpace(requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData> & { queryKey: QueryKey }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof mySpace>>, TError, TData> & { queryKey: QueryKey }
 }
 
-export type MyPickQueryResult = NonNullable<Awaited<ReturnType<typeof myPick>>>
-export type MyPickQueryError = ErrorType<unknown>
+export type MySpaceQueryResult = NonNullable<Awaited<ReturnType<typeof mySpace>>>
+export type MySpaceQueryError = ErrorType<unknown>
 
 /**
  * @summary 마이 스페이스 내가 받은 픽 API
  */
-export const useMyPick = <TData = Awaited<ReturnType<typeof myPick>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof myPick>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const useMySpace = <TData = Awaited<ReturnType<typeof mySpace>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof mySpace>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
-  const queryOptions = getMyPickQueryOptions(options)
+  const queryOptions = getMySpaceQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 
@@ -572,6 +574,68 @@ export const useMe = <TData = Awaited<ReturnType<typeof me>>, TError = ErrorType
   ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
 
   const queryOptions = getMeQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * 친구 스페이스 탭 중 친구가 받은 픽의 대한 API입니다. 공동 등수를 자동으로 계산하고 반환합니다. Pick이 많은 순서대로 등수를 나누고, 최신순, 내림차순으로 정렬합니다.
+ * @summary 친구 스페이스 친구가 받은 픽 API
+ */
+export const friendSpace = (
+    friendId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<DojoApiResponseFriendSpacePickResponse>(
+      {url: `https://docker-ecs.net/member/friend-space/${friendId}/pick`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+export const getFriendSpaceQueryKey = (friendId: string,) => {
+    return [`https://docker-ecs.net/member/friend-space/${friendId}/pick`] as const;
+    }
+
+    
+export const getFriendSpaceQueryOptions = <TData = Awaited<ReturnType<typeof friendSpace>>, TError = ErrorType<unknown>>(friendId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof friendSpace>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getFriendSpaceQueryKey(friendId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof friendSpace>>> = ({ signal }) => friendSpace(friendId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(friendId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof friendSpace>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type FriendSpaceQueryResult = NonNullable<Awaited<ReturnType<typeof friendSpace>>>
+export type FriendSpaceQueryError = ErrorType<unknown>
+
+/**
+ * @summary 친구 스페이스 친구가 받은 픽 API
+ */
+export const useFriendSpace = <TData = Awaited<ReturnType<typeof friendSpace>>, TError = ErrorType<unknown>>(
+ friendId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof friendSpace>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+
+  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } => {
+
+  const queryOptions = getFriendSpaceQueryOptions(friendId,options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

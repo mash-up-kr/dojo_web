@@ -10,8 +10,6 @@ export const PickCardList = ({
 }: {
   sort: GetReceivedPickListSort;
 }) => {
-  console.log(sort);
-
   const { data } = useSuspenseQuery(
     getGetReceivedPickListQueryOptions({
       sort,

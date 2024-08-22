@@ -9,7 +9,7 @@ export const PickNotice = ({
   ...question
 }: {
   descriptionRef: IntersectionReturn["ref"];
-} & Omit<PickPaging, "picks">) => {
+} & Omit<PickPaging, "picks" | "anyOpenPickerCount">) => {
   const { data: profile } = useMe({
     query: {
       select: ({ data }) => data,
@@ -17,7 +17,7 @@ export const PickNotice = ({
   });
 
   return (
-    <div className="bg-gradient-purple pt-[54px] flex flex-col items-center relative">
+    <div className="bg-gradient-purple pt-[54px] flex flex-col items-center relative px-6">
       <div className="bg-gradient-white absolute bottom-0 right-0 left-0 top-[175px]" />
       <p
         className="t-h3-sb-22 text-gray084 text-center px-[28px] h-[84px]"
@@ -33,7 +33,7 @@ export const PickNotice = ({
         />
       </div>
       <motion.div
-        className="w-[250px] relative mt-5"
+        className="w-full relative mt-5"
         initial={{ transform: "translateY(-10px)" }}
         animate={{ transform: "translateY(0px)" }}
         transition={{ duration: 0.65, repeat: 5, repeatType: "reverse" }}

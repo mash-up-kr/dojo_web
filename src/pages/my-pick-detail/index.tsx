@@ -1,6 +1,7 @@
 import GEM from "@/assets/ic22_dia.svg?react";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
+import { useMe } from "@/generated/member/member";
 import type { ReceivedPickDetail } from "@/generated/model";
 import { getGetPickDetailQueryOptions } from "@/generated/pick/pick";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
@@ -21,11 +22,14 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
   params,
 }) => {
   const { questionId } = params;
+  const { data: profile } = useMe({
+    query: {
+      select: ({ data }) => data,
+    },
+  });
   const { data: pickDetail } = useQuery(
     getGetPickDetailQueryOptions(
       {
-        pageNumber: 0,
-        pageSize: 100,
         questionId,
       },
       {
@@ -75,14 +79,14 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
           // TODO: GEM 개수 API 연동
           <div className="flex space-x-[2px] items-center">
             <GEM />
-            <span className="t-h6-sb-15">200</span>
+            <span className="t-h6-sb-15">{profile?.coinCount ?? "-"}</span>
           </div>
         }
         className={cn("transition-colors duration-100 bg-transparent", {
           "bg-offWhite010": !isIntersecting,
         })}
       />
-      <div className="flex flex-col absolute top-0">
+      <div className="flex flex-col absolute top-0 w-full">
         <PickNotice descriptionRef={ref} {...question} />
         <PickNoticeList onSelectPick={handleSelectPick} picks={picks} />
       </div>
@@ -93,7 +97,6 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
           setIsOpenSheet(false);
         }}
       />
-      {/* <PickAlert /> */}
     </AppScreen>
   );
 };

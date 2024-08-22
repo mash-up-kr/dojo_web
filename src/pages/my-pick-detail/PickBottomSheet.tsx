@@ -15,8 +15,11 @@ import type {
   PickOpenResponsePickOpenItemDto,
   ReceivedPickDetail,
 } from "@/generated/model";
+import { getGetPickDetailQueryKey, useOpenPick } from "@/generated/pick/pick";
 import { cn } from "@/utils/cn";
+import { useQueryClient } from "@tanstack/react-query";
 import { type ButtonHTMLAttributes, useState } from "react";
+import { PickAlert, type PickAlertProps } from "./PickAlert";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
   selectedPick: null | ReceivedPickDetail;
@@ -26,6 +29,13 @@ export const PickBottomSheet = ({
   selectedPick,
   ...rest
 }: PickBottomSheetProps) => {
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const [alertProps, setAlertProps] = useState<null | Omit<
+    PickAlertProps,
+    "selectedPick"
+  >>(null);
+  const { mutateAsync: openPick } = useOpenPick();
+  const queryClient = useQueryClient();
   const { data: profile } = useMe({
     query: {
       select: ({ data }) => data,
@@ -35,7 +45,7 @@ export const PickBottomSheet = ({
     useState<PickOpenResponsePickOpenItemDto | null>(null);
 
   const handleSelectPick = (pickInfo: (typeof PICKUP_INFO_BUTTONS)[number]) => {
-    if (selectedPickType === pickInfo.pickType) {
+    if (selectedPickType === pickInfo.picktype) {
       setSelectedPickType(null);
       return;
     }
@@ -45,44 +55,89 @@ export const PickBottomSheet = ({
       return;
     }
 
-    setSelectedPickType(pickInfo.pickType);
+    setSelectedPickType(pickInfo.picktype);
   };
 
+  const handleSubmit = async () => {
+    const pickId = selectedPick?.pickId;
+
+    if (!pickId || !selectedPickType) {
+      return;
+    }
+
+    await openPick(
+      {
+        id: pickId,
+        data: {
+          pickOpenItemDto: selectedPickType,
+        },
+      },
+      {
+        onSuccess: ({ data }) => {
+          queryClient.invalidateQueries({
+            queryKey: getGetPickDetailQueryKey({
+              questionId: pickId,
+            }),
+          });
+
+          if (data) {
+            setAlertProps({
+              pickOpen: data,
+              onClose: () => {
+                setAlertProps(null);
+              },
+            });
+            setIsOpenAlert(true);
+          }
+          // TODO: OpenPick 성공 시, Alert
+        },
+      },
+    );
+  };
   const disabled = setSelectedPickType === null;
 
   return (
-    <BottomSheet {...rest}>
-      <div className="flex flex-col p-4 items-center space-y-2">
-        <span className="t-h5-b-17 text-gray084">
-          {selectedPick?.pickerOrdinal ?? "**"}기{" "}
-          {selectedPick?.pickerPlatform ?? ""}{" "}
-          {selectedPick?.pickerFullName ?? "***"}님의 어떤 정보를 확인할까요?
-        </span>
-        <p className="text-gray040">
-          내 매시젬{" "}
-          <strong className="text-purple100">
-            {profile?.coinCount ?? 0}개
-          </strong>
-        </p>
-      </div>
-      <div className="space-y-[10px]">
-        {PICKUP_INFO_BUTTONS.map((info) => (
-          <PickInfoButton
-            {...info}
-            isSelected={selectedPickType === info.pickType}
-            key={info.description}
-            onClick={() => {
-              handleSelectPick(info);
-            }}
-          />
-        ))}
-      </div>
-      <div className="pb-6 pt-10">
-        <Button buttonType="primary" onClick={console.log} disabled={disabled}>
-          {disabled ? "보고 싶은 정보를 선택하세요" : "이 정보 확인"}
-        </Button>
-      </div>
-    </BottomSheet>
+    <>
+      <BottomSheet {...rest}>
+        <div className="flex flex-col p-4 items-center space-y-2">
+          <span className="t-h5-b-17 text-gray084">
+            {selectedPick?.pickerOrdinal ?? "**"}기{" "}
+            {selectedPick?.pickerPlatform ?? ""}{" "}
+            {selectedPick?.pickerFullName ?? "***"}님의 어떤 정보를 확인할까요?
+          </span>
+          <p className="text-gray040">
+            내 매시젬{" "}
+            <strong className="text-purple100">
+              {profile?.coinCount ?? 0}개
+            </strong>
+          </p>
+        </div>
+        <div className="space-y-[10px]">
+          {PICKUP_INFO_BUTTONS.map((info) => (
+            <PickInfoButton
+              {...info}
+              isSelected={selectedPickType === info.picktype}
+              key={info.description}
+              onClick={() => {
+                handleSelectPick(info);
+              }}
+            />
+          ))}
+        </div>
+        <div className="pb-6 pt-10">
+          <Button
+            buttonType="primary"
+            onClick={handleSubmit}
+            disabled={disabled}
+          >
+            {disabled ? "보고 싶은 정보를 선택하세요" : "이 정보 확인"}
+          </Button>
+        </div>
+      </BottomSheet>
+      {isOpenAlert && alertProps && selectedPick && (
+        <PickAlert {...alertProps} selectedPick={selectedPick} />
+      )}
+    </>
   );
 };
 
@@ -122,35 +177,35 @@ const PickInfoButton = ({
 };
 
 const PICKUP_INFO_BUTTONS: {
-  pickType: PickOpenResponsePickOpenItemDto;
+  picktype: PickOpenResponsePickOpenItemDto;
   title: string;
   description: string;
   amount: number;
   Image: React.FC;
 }[] = [
   {
-    pickType: "GENDER",
+    picktype: "GENDER",
     title: "성별",
     description: "두근두근 성별 정보 보기",
     amount: 10,
     Image: GIRL_IMAGE,
   },
   {
-    pickType: "PLATFORM",
+    picktype: "PLATFORM",
     title: "플랫폼",
     description: "매시업 내 6개 직군 정보 보기",
     amount: 50,
     Image: MAN_IMAGE,
   },
   {
-    pickType: "MID_INITIAL_NAME",
+    picktype: "MID_INITIAL_NAME",
     title: "초성 1자",
     description: "그의 이름 중 1자 정보 보기",
     amount: 50,
     Image: ABC_IMAGE,
   },
   {
-    pickType: "FULL_NAME",
+    picktype: "FULL_NAME",
     title: "이름",
     description: "그의 모든 것, 풀 이름 보기",
     amount: 150,

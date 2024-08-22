@@ -1,17 +1,44 @@
 import { Button } from "@/components/common/Button";
 import Image from "@/components/common/Image";
 import Modal from "@/components/common/Modal";
+import type { PickOpenResponse, ReceivedPickDetail } from "@/generated/model";
 
-export const PickAlert = () => {
+const PICK_OPEN_TEXT: Record<PickOpenResponse["pickOpenItem"], string> = {
+  FULL_NAME: "이름",
+  GENDER: "성별",
+  MID_INITIAL_NAME: "초성은",
+  PLATFORM: "플랫폼",
+};
+
+export type PickAlertProps = {
+  pickOpen: Omit<PickOpenResponse, "pickId">;
+  selectedPick: ReceivedPickDetail;
+  onClose: VoidFunction;
+};
+
+export const PickAlert = ({
+  pickOpen,
+  selectedPick,
+  onClose,
+}: PickAlertProps) => {
   return (
-    <Modal isOpen onClose={() => {}} className="p-7 max-w-[300px]">
+    <Modal isOpen onClose={onClose} className="p-7 max-w-[300px]">
       <div className="flex flex-col items-center">
-        <p className="t-h5-b-17">타이틀</p>
+        <p className="t-h5-b-17">
+          {selectedPick.pickerOrdinal ?? "**"}기{" "}
+          {selectedPick.pickerPlatform ?? ""}{" "}
+          {selectedPick.pickerFullName ?? "***"}님의{" "}
+          {PICK_OPEN_TEXT[pickOpen.pickOpenItem]}은?
+        </p>
         <div className="space-y-3 text-center mt-6">
           <Image src="https://via.placeholder.com/150" alt="이미지" />
-          <span className="t-h3-b-22 inline-block">남성</span>
+          <span className="t-h3-b-22 inline-block">
+            {pickOpen.pickOpenValue}
+          </span>
         </div>
-        <Button className="rounded-full mt-10">확인</Button>
+        <Button className="rounded-full mt-10" onClick={onClose}>
+          확인
+        </Button>
       </div>
     </Modal>
   );
