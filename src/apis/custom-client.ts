@@ -1,3 +1,4 @@
+import { routes } from "@/stackflow";
 import axios from "axios";
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
@@ -26,7 +27,10 @@ const createApiInstance = () => {
   instance.interceptors.response.use(
     (res) => res,
     (err: AxiosError) => {
-      if (err.response?.status === 401) {
+      if (
+        err.response?.status === 401 &&
+        window.location.pathname.replace(/\/$/, "") !== routes.LogInPage
+      ) {
         Cookies.remove("token");
         const urlParams = new URLSearchParams(window.location.search);
         const memberId = urlParams.get("memberId");
