@@ -5,7 +5,7 @@ import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import React, { Suspense, useMemo } from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { customRipple } from "use-ripple-hook";
 import { VoteLayout } from "./VoteLayout";
@@ -81,14 +81,30 @@ function VoteQuestions({
   members: QuestionSheetCandidate[];
   onSelect: (v: { pickId: string }) => void;
 }) {
-  const [selection, setSelection] = React.useState<number | null>(null);
-  const [shuffled, setIsShuffled] = React.useState(false);
+  const [selection, setSelection] = useState<number | null>(null);
+  const [showIndex, setShowIndex] = useState(0);
+  const [shuffledMembers, setShuffledMembers] = useState<
+    QuestionSheetCandidate[]
+  >([]);
 
-  const selects = useMemo(() => {
-    const randMems = members.slice(0, 8).sort(() => Math.random() - 0.5);
-    if (shuffled) return randMems.slice(4, 8);
-    return randMems.slice(0, 4);
-  }, [members, shuffled]);
+  // Shuffle members when the component mounts or when members prop changes
+  useEffect(() => {
+    const shuffled = [...members].sort(() => Math.random() - 0.5);
+    setShuffledMembers(shuffled);
+    setShowIndex(0);
+  }, [members]);
+
+  const displayedMembers = useMemo(() => {
+    return shuffledMembers.slice(showIndex, showIndex + 4);
+  }, [shuffledMembers, showIndex]);
+
+  const handleShuffle = () => {
+    if (showIndex === 0 && shuffledMembers.length > 4) {
+      setShowIndex(4);
+    }
+  };
+
+  const isShuffleDisabled = showIndex !== 0 || shuffledMembers.length <= 4;
 
   return (
     <>
@@ -101,7 +117,7 @@ function VoteQuestions({
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
-        {selects.map((v, i) => (
+        {displayedMembers.map((v, i) => (
           <AnswerCard
             key={v.memberId}
             selected={selection === i}
@@ -118,25 +134,8 @@ function VoteQuestions({
           />
         ))}
       </div>
-      {/* shuffle */}
-      <ShuffleButton disabled={shuffled} onClick={() => setIsShuffled(true)} />
+      <ShuffleButton disabled={isShuffleDisabled} onClick={handleShuffle} />
     </>
-  );
-}
-
-function Indicator({ current, total }: { current: number; total: number }) {
-  return (
-    <div className="w-full flex flex-col items-center space-y-6">
-      <div className="relative w-full h-[2px] bg-purple100/30 rounded-full">
-        <div
-          className="absolute inset-0 h-[2px] bg-purple100 rounded-full"
-          style={{ width: `${(current / total) * 100}%` }}
-        />
-      </div>
-      <div className="px-2 py-1 text-purple100/30 t-h6-sb-15 bg-offWhite010/30 rounded-8">
-        <span className="text-purple100">{current}</span> of {total}
-      </div>
-    </div>
   );
 }
 
@@ -204,6 +203,22 @@ function AnswerCard({
         </div>
       </div>
     </button>
+  );
+}
+
+function Indicator({ current, total }: { current: number; total: number }) {
+  return (
+    <div className="w-full flex flex-col items-center space-y-6">
+      <div className="relative w-full h-[2px] bg-purple100/30 rounded-full">
+        <div
+          className="absolute inset-0 h-[2px] bg-purple100 rounded-full"
+          style={{ width: `${(current / total) * 100}%` }}
+        />
+      </div>
+      <div className="px-2 py-1 text-purple100/30 t-h6-sb-15 bg-offWhite010/30 rounded-8">
+        <span className="text-purple100">{current}</span> of {total}
+      </div>
+    </div>
   );
 }
 
