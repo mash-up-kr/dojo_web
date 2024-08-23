@@ -41,7 +41,7 @@ function VotePageInner() {
         <Indicator current={qIndex} total={data.sheetTotalCount} />
         <VoteQuestions
           content={question.questionContent}
-          imgSrc={question.questionEmojiImageUrl}
+          iconImgSrc={question.questionEmojiImageUrl}
           imgAlt={question.questionCategory}
           members={question.candidates}
           onSelect={async (v) => {
@@ -73,13 +73,13 @@ function VotePageInner() {
 
 function VoteQuestions({
   content,
-  imgSrc,
+  iconImgSrc,
   imgAlt,
   members,
   onSelect,
 }: {
   content: string;
-  imgSrc: string;
+  iconImgSrc: string;
   imgAlt: string;
   members: QuestionSheetCandidate[];
   onSelect: (v: { pickId: string }) => void;
@@ -100,7 +100,7 @@ function VoteQuestions({
           {content}
         </p>
         <div className="w-[44px] h-[44px] xs:w-[120px] xs:h-[120px]">
-          <img src={imgSrc} alt={imgAlt} className="w-full" />
+          <img src={iconImgSrc} alt={imgAlt} className="w-full" />
         </div>
       </div>
       <div className="grid grid-cols-2 gap-3">
@@ -116,8 +116,7 @@ function VoteQuestions({
               }, 500);
             }}
             name={v.memberName}
-            // TODO: need to add imgSrc
-            imgSrc={"https://via.placeholder.com/150"}
+            imgSrc={v.memberImageUrl}
             description={v.platform}
           />
         ))}
