@@ -5,7 +5,7 @@ export const CounterBox = ({
 }: {
   counter: number;
   title: string;
-  onClick: VoidFunction;
+  onClick?: VoidFunction;
 }) => {
   return (
     <button
