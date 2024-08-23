@@ -81,6 +81,7 @@ export const PickBottomSheet = ({
             queryKey: getGetPickDetailQueryKey({
               questionId: pickId,
             }),
+            refetchType: "active",
           });
 
           if (data) {
