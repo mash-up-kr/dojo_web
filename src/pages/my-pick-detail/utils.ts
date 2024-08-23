@@ -8,7 +8,7 @@ export const getPlatformText = (
 ) => {
   switch (platform) {
     case "ANDROID":
-      return "Androiod";
+      return "Android";
     case "IOS":
       return "iOS";
     case "NODE":
