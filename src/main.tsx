@@ -33,11 +33,11 @@ if (root) {
   enabledMocking().then(() => {
     ReactDOM.createRoot(root).render(
       <React.StrictMode>
-        <App>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <App>
             <Stack />
-          </QueryClientProvider>
-        </App>
+          </App>
+        </QueryClientProvider>
       </React.StrictMode>,
     );
   });
