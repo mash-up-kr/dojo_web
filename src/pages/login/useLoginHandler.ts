@@ -14,7 +14,7 @@ export const useLoginHandler = () => {
     if (returnUrl) {
       window.location.href = returnUrl;
     } else {
-      push("VotePage", {});
+      push("OnBoardPage", { afterLogin: true });
     }
   }, [push]);
 

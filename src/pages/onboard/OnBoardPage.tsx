@@ -1,15 +1,23 @@
-import { BackButton } from "@/components/common/BackButton";
 import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
 import Image from "@/components/common/Image";
 import { Toast } from "@/components/common/Toast";
 import { uploadInfo } from "@/generated/image/image";
 import { useMe, useUpdate } from "@/generated/member/member";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
+import type { ActivityComponentType } from "@stackflow/react";
 import axios from "axios";
-import { useRef } from "react";
+import { type FC, useRef } from "react";
 
-export function OnBoardPage() {
+type OnBoardPageProps = {
+  afterLogin?: boolean;
+};
+
+export const OnBoardPage: ActivityComponentType<OnBoardPageProps> = ({
+  params,
+}) => {
+  const { afterLogin } = params;
   const { data: meRes, refetch: refectchMe } = useMe();
   const { mutate: updateProfile } = useUpdate({
     mutation: { onSuccess: () => refectchMe() },
@@ -54,7 +62,7 @@ export function OnBoardPage() {
   return (
     <AppScreen>
       <div>
-        <Header left={<BackButton />} title="프로필 변경하기" />
+        <Header right={<ConfirmButton afterLogin={afterLogin} />} />
         <main className="flex flex-col items-center">
           <div className="flex flex-col items-center w-[280px] mt-[140px]">
             <Image
@@ -88,4 +96,26 @@ export function OnBoardPage() {
       </div>
     </AppScreen>
   );
-}
+};
+
+const ConfirmButton: FC<OnBoardPageProps> = ({ afterLogin }) => {
+  const { push, pop } = useMyFlow();
+
+  const onClick = () => {
+    if (afterLogin) {
+      push("VotePage", {});
+    } else {
+      pop();
+    }
+  };
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="t-h5-sb-17 text-purple100"
+    >
+      {afterLogin ? "다음" : "확인"}
+    </button>
+  );
+};
