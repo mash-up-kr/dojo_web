@@ -8,7 +8,7 @@ import Image from "./Image";
 export function HeaderLogo() {
   const activity = useActivity();
 
-  return activity.name === "VotePage" ? (
+  return ["VotePage", "VoteDonePage"].includes(activity.name) ? (
     <Image src={LogoImage} w={66} />
   ) : (
     <Link
