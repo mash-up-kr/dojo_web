@@ -44,25 +44,23 @@ function VotePageInner() {
           imgAlt={question.questionCategory}
           members={question.candidates}
           onSelect={async (v) => {
-            // TODO: uncomment this after impl the mutation
-            // try {
-            // await mutateAsync({
-            mutateAsync({
-              data: {
-                pickedId: v.pickId,
-                questionId: question.questionId,
-                questionSetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
-                questionSheetId: "", //TODO: 타입 에러 때문에 임시로 채워 둠. 이후 수정 필요
-              },
-            });
-            if (qIndex === data.sheetTotalCount) {
-              push("VoteDonePage", {});
-              return;
+            try {
+              await mutateAsync({
+                data: {
+                  pickedId: v.pickId,
+                  questionId: question.questionId,
+                  questionSetId: data.questionSetId,
+                  questionSheetId: question.questionSheetId,
+                },
+              });
+              if (qIndex === data.sheetTotalCount) {
+                push("VoteDonePage", {});
+                return;
+              }
+              setQIndex((p) => p + 1);
+            } catch (e) {
+              console.error(e);
             }
-            setQIndex((p) => p + 1);
-            // } catch (e) {
-            // console.error(e);
-            // }
           }}
         />
       </main>
