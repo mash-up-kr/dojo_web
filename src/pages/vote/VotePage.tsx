@@ -1,4 +1,5 @@
 import ShuffleSvg from "@/assets/Shuffle.svg?react";
+import { Toast } from "@/components/common/Toast";
 import type { QuestionSheetCandidate } from "@/generated/model/questionSheetCandidate";
 import { getCreate1MutationOptions } from "@/generated/pick/pick";
 import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
@@ -60,6 +61,7 @@ function VotePageInner() {
               }
               setQIndex((p) => p + 1);
             } catch (e) {
+              Toast.alert("투표에 실패했습니다. 다시 시도해주세요.", () => {});
               console.error(e);
             }
           }}
