@@ -25,5 +25,5 @@ export const SpacePage: ActivityComponentType<SpcaePageProps> = ({
     return <div>loading...</div>;
   }
 
-  return isMySpace ? <MySpace /> : <OtherSpace />;
+  return isMySpace ? <MySpace /> : <OtherSpace memberId={memberId} />;
 };
