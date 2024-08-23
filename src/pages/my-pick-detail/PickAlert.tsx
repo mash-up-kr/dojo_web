@@ -52,7 +52,7 @@ export const PickAlert = ({
         </p>
         <div className="space-y-3 text-center mt-6">
           {pickOpen.pickOpenImageUrl && (
-            <Image src={pickOpen.pickOpenImageUrl} alt="이미지" />
+            <Image src={pickOpen.pickOpenImageUrl} alt="프로필" />
           )}
           <span className="t-h3-b-22 inline-block">
             {getPickOpenValueText(

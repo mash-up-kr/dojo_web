@@ -1,7 +1,7 @@
 import GEM from "@/assets/ic22_dia.svg?react";
 import ABC_IMAGE from "@/assets/ic24_abc.svg?react";
 import FUNNY_IMAGE from "@/assets/ic24_funny.svg?react";
-import GIRL_IMAGE from "@/assets/ic24_girl.svg?react";
+import GENDER_IMAGE from "@/assets/ic24_gender.svg?react";
 import MAN_IMAGE from "@/assets/ic24_man.svg?react";
 
 import {
@@ -318,7 +318,7 @@ const PICKUP_INFO_BUTTONS: {
     title: "성별",
     description: "두근두근 성별 정보 보기",
     amount: 10,
-    Image: GIRL_IMAGE,
+    Image: GENDER_IMAGE,
   },
   {
     picktype: "PLATFORM",
