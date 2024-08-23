@@ -36,6 +36,8 @@ export const PickAlert = ({
         return getGenderText(openValue as MemberCreateRequestGender);
       case "PLATFORM":
         return getPlatformText(openValue as ReceivedPickDetailPickerPlatform);
+      case "MID_INITIAL_NAME":
+        return `*${openValue}*`;
       default:
         return openValue;
     }
