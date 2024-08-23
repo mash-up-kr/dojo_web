@@ -27,10 +27,9 @@ function VotePageInner() {
 
   const [qIndex, setQIndex] = React.useState(data.startingQuestionIndex);
 
-  const question =
-    data.questionSheetList.find((q) => q.questionOrder === qIndex) ??
-    // TODO: remove this line after fixing the bug
-    data.questionSheetList[0];
+  const question = data.questionSheetList.find(
+    (q) => q.questionOrder === qIndex,
+  );
 
   if (!question) {
     return;
