@@ -28,7 +28,7 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
     },
   });
 
-  const { data: pickDetail } = useQuery(
+  const { data: pickDetail, refetch } = useQuery(
     getGetPickDetailQueryOptions(
       {
         questionId,
@@ -92,6 +92,7 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
         <PickNoticeList onSelectPick={handleSelectPick} picks={picks} />
       </div>
       <PickBottomSheet
+        refetch={refetch}
         selectedPick={selectedPick}
         isOpen={isOpenSheet}
         onClose={() => {

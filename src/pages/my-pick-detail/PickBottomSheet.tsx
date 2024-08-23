@@ -15,20 +15,21 @@ import type {
   PickOpenResponsePickOpenItemDto,
   ReceivedPickDetail,
 } from "@/generated/model";
-import { getGetPickDetailQueryKey, useOpenPick } from "@/generated/pick/pick";
+import { useOpenPick } from "@/generated/pick/pick";
 import { cn } from "@/utils/cn";
-import { useQueryClient } from "@tanstack/react-query";
 import { type ButtonHTMLAttributes, useState } from "react";
 import { PickAlert, type PickAlertProps } from "./PickAlert";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
   selectedPick: null | ReceivedPickDetail;
   onClose: VoidFunction;
+  refetch: VoidFunction;
 };
 
 export const PickBottomSheet = ({
   selectedPick,
   onClose,
+  refetch,
   ...rest
 }: PickBottomSheetProps) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -42,7 +43,6 @@ export const PickBottomSheet = ({
       select: ({ data }) => data?.amount ?? 0,
     },
   });
-  const queryClient = useQueryClient();
 
   const [selectedPickType, setSelectedPickType] =
     useState<PickOpenResponsePickOpenItemDto | null>(null);
@@ -77,13 +77,7 @@ export const PickBottomSheet = ({
       },
       {
         onSuccess: ({ data }) => {
-          queryClient.invalidateQueries({
-            queryKey: getGetPickDetailQueryKey({
-              questionId: pickId,
-            }),
-            refetchType: "active",
-          });
-
+          refetch();
           if (data) {
             setAlertProps({
               pickOpen: data,

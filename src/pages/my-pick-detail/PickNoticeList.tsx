@@ -19,6 +19,7 @@ export const PickNoticeList = ({
           pick.pickerPlatformOpen &&
           pick.pickerGenderOpen &&
           pick.pickerSecondInitialNameOpen;
+
         return (
           <li className="h-[106px] px-4 items-center" key={pick.pickId}>
             <div className="h-[106px] flex items-center border-b-gray005 border-solid border-b-[1px] space-x-3 text-left">
@@ -60,7 +61,7 @@ export const PickNoticeList = ({
                 </span>
               </div>
               <Button
-                disabled
+                disabled={isDisabled}
                 buttonType="primary"
                 size="sm"
                 className="ml-3"
