@@ -37,7 +37,7 @@ function VotePageInner() {
   }
   return (
     <VoteLayout>
-      <main className="flex flex-col gap-3 pt-[52px] pb-6 px-4 items-center">
+      <main className="flex flex-col gap-3 pt-[52px] pb-6 px-4 items-center h-full">
         <Indicator current={qIndex} total={data.sheetTotalCount} />
         <VoteQuestions
           content={question.questionContent}
