@@ -1,5 +1,6 @@
 import { useGetFriends } from "@/generated/member-relation/member-relation";
 import { useCreateFriend, useMe } from "@/generated/member/member";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { type FC, useEffect } from "react";
 import { Button } from "./common/Button";
 import { Toast } from "./common/Toast";
@@ -9,6 +10,7 @@ type FriendAddButtonProps = {
 };
 
 export const FriendAddButton: FC<FriendAddButtonProps> = ({ memberId }) => {
+  const { push } = useMyFlow();
   const { data: meRes } = useMe();
   const { mutate, isSuccess, isError } = useCreateFriend();
   const { data: friendRes, refetch: refetchFriends } = useGetFriends();
@@ -33,10 +35,10 @@ export const FriendAddButton: FC<FriendAddButtonProps> = ({ memberId }) => {
       refetchFriends();
       Toast.alert(
         "친구가 추가되었습니다! 친구는 어떤 픽을 받았는지 확인해보세요 🙂",
-        () => {},
+        () => push("SpacePage", { memberId }),
       );
     }
-  }, [isSuccess]);
+  }, [isSuccess, push, memberId, refetchFriends]);
 
   useEffect(() => {
     if (isError) {
