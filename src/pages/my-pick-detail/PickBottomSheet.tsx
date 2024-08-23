@@ -18,7 +18,10 @@ import type {
 import { useOpenPick } from "@/generated/pick/pick";
 import { cn } from "@/utils/cn";
 import { type ButtonHTMLAttributes, useState } from "react";
+import { match } from "ts-pattern";
 import { PickAlert, type PickAlertProps } from "./PickAlert";
+import { GENDER_ICON, PLATFORM_ICON } from "./constants";
+import { getGenderText, getPlatformText } from "./utils";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
   selectedPick: null | ReceivedPickDetail;
@@ -77,7 +80,6 @@ export const PickBottomSheet = ({
       },
       {
         onSuccess: ({ data }) => {
-          refetch();
           if (data) {
             setAlertProps({
               pickOpen: data,
@@ -85,8 +87,9 @@ export const PickBottomSheet = ({
                 setAlertProps(null);
               },
             });
-            onClose();
             setIsOpenAlert(true);
+            onClose();
+            refetch();
           }
           // TODO: OpenPick 성공 시, Alert
         },
@@ -109,16 +112,126 @@ export const PickBottomSheet = ({
           </p>
         </div>
         <div className="space-y-[10px]">
-          {PICKUP_INFO_BUTTONS.map((info) => (
-            <PickInfoButton
-              {...info}
-              isSelected={selectedPickType === info.picktype}
-              key={info.description}
-              onClick={() => {
-                handleSelectPick(info);
-              }}
-            />
-          ))}
+          {PICKUP_INFO_BUTTONS.map(({ Image, ...info }) => {
+            const isDisabled = match({
+              pickType: info.picktype,
+              selectedPick: selectedPick,
+            })
+              .with(
+                {
+                  pickType: "FULL_NAME",
+                  selectedPick: {
+                    pickerFullNameOpen: true,
+                  },
+                },
+                () => true,
+              )
+              .with(
+                {
+                  pickType: "MID_INITIAL_NAME",
+                  selectedPick: {
+                    pickerSecondInitialNameOpen: true,
+                  },
+                },
+                () => true,
+              )
+              .with(
+                {
+                  pickType: "PLATFORM",
+                  selectedPick: {
+                    pickerPlatformOpen: true,
+                  },
+                },
+                () => true,
+              )
+              .with(
+                {
+                  pickType: "GENDER",
+                  selectedPick: {
+                    pickerGenderOpen: true,
+                  },
+                },
+                () => true,
+              )
+              .otherwise(() => false);
+
+            const image = match({
+              pickType: info.picktype,
+              isDisabled,
+            })
+              .with(
+                {
+                  pickType: "PLATFORM",
+                  isDisabled: true,
+                },
+                () => {
+                  return PLATFORM_ICON[
+                    selectedPick?.pickerPlatform ?? "UNKNOWN"
+                  ];
+                },
+              )
+              .with(
+                {
+                  pickType: "GENDER",
+                  isDisabled: true,
+                },
+                () => {
+                  return GENDER_ICON[selectedPick?.pickerGender ?? "UNKNOWN"];
+                },
+              )
+              .otherwise(() => Image);
+
+            const value = match({
+              pickType: info.picktype,
+              isDisabled,
+            })
+              .with(
+                {
+                  pickType: "FULL_NAME",
+                  isDisabled: true,
+                },
+                () => selectedPick?.pickerFullName,
+              )
+              .with(
+                {
+                  pickType: "MID_INITIAL_NAME",
+                  isDisabled: true,
+                },
+                () => selectedPick?.pickerSecondInitialName,
+              )
+              .with(
+                {
+                  pickType: "PLATFORM",
+                  isDisabled: true,
+                },
+                () => getPlatformText(selectedPick?.pickerPlatform),
+              )
+              .with(
+                {
+                  isDisabled: true,
+                  pickType: "GENDER",
+                },
+                () => getGenderText(selectedPick?.pickerGender),
+              )
+              .otherwise(() => undefined);
+
+            return (
+              <PickInfoButton
+                value={value}
+                Image={image}
+                isDisabled={isDisabled}
+                isSelected={selectedPickType === info.picktype}
+                key={info.description}
+                onClick={() => {
+                  handleSelectPick({
+                    ...info,
+                    Image,
+                  });
+                }}
+                {...info}
+              />
+            );
+          })}
         </div>
         <div className="pb-6 pt-10">
           <Button
@@ -143,30 +256,48 @@ const PickInfoButton = ({
   amount,
   Image,
   isSelected,
+  value,
+  isDisabled,
   ...rest
 }: (typeof PICKUP_INFO_BUTTONS)[number] &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     isSelected?: boolean;
+    isDisabled?: boolean;
+    value?: string;
   }) => {
   return (
     <button
+      disabled={isDisabled}
       className={cn(
-        "flex px-4 py-3 rounded-8 bg-offWhite020 text-left w-full",
+        "flex px-4 py-3 rounded-8 bg-offWhite020 text-left w-full items-center h-[72px]",
         {
           "shadow-[0_0_0_1px_#854bff_inset] bg-purple006": isSelected,
+          "shadow-[0_0_0_1px_#E0E0E1_inset] bg-offWhite010": isDisabled,
         },
       )}
       type="button"
       {...rest}
     >
-      <Image />
+      <Image width={24} height={24} />
       <div className="flex flex-col space-y-1 flex-1 ml-3 my-1">
-        <span className="t-h6-sb-15 text-gray100">{title}</span>
-        <span className="t-c1-r-13 text-gray040">{description}</span>
+        {isDisabled && value ? (
+          <span className="t-h6-b-15">{value}</span>
+        ) : (
+          <>
+            <span className="t-h6-sb-15 text-gray100">{title}</span>
+            <span className="t-c1-r-13 text-gray040">{description}</span>
+          </>
+        )}
       </div>
       <div className="flex space-x-1">
-        <GEM />
-        <span className="t-h6-sb-15">{amount}개</span>
+        {isDisabled ? (
+          <div className="t-b3-r-14 text-gray054">이미 본 정보에요</div>
+        ) : (
+          <>
+            <GEM />
+            <span className="t-h6-sb-15">{amount}개</span>
+          </>
+        )}
       </div>
     </button>
   );
@@ -177,7 +308,7 @@ const PICKUP_INFO_BUTTONS: {
   title: string;
   description: string;
   amount: number;
-  Image: React.FC;
+  Image: React.FC<React.SVGProps<SVGSVGElement>>;
 }[] = [
   {
     picktype: "GENDER",

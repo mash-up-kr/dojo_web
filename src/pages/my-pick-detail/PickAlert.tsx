@@ -42,7 +42,7 @@ export const PickAlert = ({
   };
 
   return (
-    <Modal isOpen onClose={onClose} className="p-7 max-w-[300px]">
+    <Modal isOpen onClose={() => {}} className="p-7 max-w-[300px]">
       <div className="flex flex-col items-center">
         <p className="t-h5-b-17">
           {selectedPick.pickerOrdinal ?? "**"}기{" "}
