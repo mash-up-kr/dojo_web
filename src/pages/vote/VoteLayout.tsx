@@ -22,17 +22,18 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
       <Header
         left={<HeaderLogo />}
         right={
-          <Link
-            activityName="SpacePage"
-            activityParams={{ memberId: meRes?.data?.memberId ?? "" }}
-            className="relative"
-          >
-            <Image
-              src={meRes?.data?.profileImageUrl}
-              className="w-8 h-8 bg-gray084 rounded-full border border-gray064"
-            />
-            <NavIcon className="absolute -bottom-[1px] -right-[1px]" />
-          </Link>
+          <div className="relative">
+            <Link
+              activityName="SpacePage"
+              activityParams={{ memberId: meRes?.data?.memberId ?? "" }}
+            >
+              <Image
+                src={meRes?.data?.profileImageUrl}
+                className="w-8 h-8 bg-gray084 rounded-full border border-gray064"
+              />
+              <NavIcon className="absolute -bottom-[1px] -right-[1px]" />
+            </Link>
+          </div>
         }
         className={cn("transition-colors duration-100 bg-transparent")}
       />
