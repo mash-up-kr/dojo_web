@@ -5,7 +5,6 @@ import { getGradientBg } from "@/utils/getGradientBg";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import clsx from "clsx";
-import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useLoginHandler } from "./useLoginHandler";
 
@@ -14,7 +13,8 @@ const bg = getGradientBg();
 export const LogInPage: ActivityComponentType = () => {
   const { onClickLoginButton } = useLoginHandler();
 
-  const token = Cookies.get("token");
+  const cookie = document.cookie;
+  const token = cookie.split("token=")[1]?.split(";")[0];
 
   useEffect(() => {
     if (token) {
