@@ -10,7 +10,7 @@ export const getPlatformText = (
     case "ANDROID":
       return "Androiod";
     case "IOS":
-      return "ios";
+      return "iOS";
     case "NODE":
       return "Node";
     case "DESIGN":
