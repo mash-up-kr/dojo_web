@@ -32,6 +32,7 @@ function VotePageInner() {
   );
 
   if (!question) {
+    push("VoteDonePage", {});
     return;
   }
   return (
