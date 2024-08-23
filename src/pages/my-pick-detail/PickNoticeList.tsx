@@ -3,6 +3,7 @@ import Image from "@/components/common/Image";
 import type { ReceivedPickDetail } from "@/generated/model";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
 import { P, match } from "ts-pattern";
+import { getPlatformText } from "./utils";
 
 export const PickNoticeList = ({
   onSelectPick,
@@ -31,7 +32,8 @@ export const PickNoticeList = ({
               <div className="flex flex-col space-y-1.5 flex-1">
                 <p className="text-gray084">
                   <strong>
-                    {pick.pickerOrdinal ?? "**"}기 {pick.pickerPlatform ?? ""}{" "}
+                    {pick.pickerOrdinal ?? "**"}기{" "}
+                    {getPlatformText(pick.pickerPlatform) ?? ""}{" "}
                     {match({
                       pickerFullName: pick.pickerFullName,
                       pickerSecondInitialName: pick.pickerSecondInitialName,

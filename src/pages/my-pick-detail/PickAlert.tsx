@@ -1,7 +1,13 @@
 import { Button } from "@/components/common/Button";
 import Image from "@/components/common/Image";
 import Modal from "@/components/common/Modal";
-import type { PickOpenResponse, ReceivedPickDetail } from "@/generated/model";
+import type {
+  MemberCreateRequestGender,
+  PickOpenResponse,
+  ReceivedPickDetail,
+  ReceivedPickDetailPickerPlatform,
+} from "@/generated/model";
+import { getGenderText, getPlatformText } from "./utils";
 
 const PICK_OPEN_TEXT: Record<PickOpenResponse["pickOpenItem"], string> = {
   FULL_NAME: "이름",
@@ -21,6 +27,20 @@ export const PickAlert = ({
   selectedPick,
   onClose,
 }: PickAlertProps) => {
+  const getPickOpenValueText = (
+    openItem: PickOpenResponse["pickOpenItem"],
+    openValue: PickOpenResponse["pickOpenValue"],
+  ) => {
+    switch (openItem) {
+      case "GENDER":
+        return getGenderText(openValue as MemberCreateRequestGender);
+      case "PLATFORM":
+        return getPlatformText(openValue as ReceivedPickDetailPickerPlatform);
+      default:
+        return openValue;
+    }
+  };
+
   return (
     <Modal isOpen onClose={onClose} className="p-7 max-w-[300px]">
       <div className="flex flex-col items-center">
@@ -35,7 +55,10 @@ export const PickAlert = ({
             <Image src={pickOpen.pickOpenImageUrl} alt="이미지" />
           )}
           <span className="t-h3-b-22 inline-block">
-            {pickOpen.pickOpenValue}
+            {getPickOpenValueText(
+              pickOpen.pickOpenItem,
+              pickOpen.pickOpenValue,
+            )}
           </span>
         </div>
         <Button className="rounded-full mt-10" onClick={onClose}>
