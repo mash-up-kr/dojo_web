@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useDragControls } from "framer-motion";
 import { type ReactNode, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 export type BottomSheetProps = {
   isOpen: boolean;
@@ -23,7 +24,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
     }
   }, [isOpen]);
 
-  return (
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -55,6 +56,7 @@ export const BottomSheet: React.FC<BottomSheetProps> = ({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 };
