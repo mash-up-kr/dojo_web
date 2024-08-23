@@ -6,15 +6,23 @@ import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import clsx from "clsx";
 import Cookies from "js-cookie";
+import { useEffect } from "react";
 import { useLoginHandler } from "./useLoginHandler";
+
 const bg = getGradientBg();
 
 export const LogInPage: ActivityComponentType = () => {
   const { onClickLoginButton } = useLoginHandler();
 
-  const tokenFromCookie = Cookies.get("token");
-  if (tokenFromCookie) {
-    window.location.href = "/vote";
+  const token = Cookies.get("token");
+
+  useEffect(() => {
+    if (token) {
+      window.location.href = "/vote";
+    }
+  }, [token]);
+
+  if (!token) {
     return;
   }
 
