@@ -5,6 +5,7 @@ import { getGetCurrentCoinQueryOptions } from "@/generated/coin/coin";
 import { getMeQueryOptions } from "@/generated/member/member";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
+import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
@@ -19,6 +20,7 @@ export const MyProfile = memo(
     profileRef: IntersectionReturn["ref"];
     containerClassName?: ClassNameValue;
   }) => {
+    const { push } = useMyFlow();
     const { data: profile } = useSuspenseQuery(
       getMeQueryOptions({
         query: {
@@ -78,8 +80,17 @@ export const MyProfile = memo(
           </div>
         </div>
         <div className="flex space-x-4 mt-6 z-10 relative">
-          <CounterBox title="내가 받은 픽" counter={profile?.pickCount ?? 0} />
-          <CounterBox title="내 친구들" counter={profile?.friendCount ?? 0} />
+          <CounterBox
+            title="내가 받은 픽"
+            onClick={() => push("MyPickPage", {})}
+            counter={profile?.pickCount ?? 0}
+          />
+
+          <CounterBox
+            title="내 친구들"
+            onClick={() => push("FriendMainPage", {})}
+            counter={profile?.friendCount ?? 0}
+          />
         </div>
       </div>
     );
