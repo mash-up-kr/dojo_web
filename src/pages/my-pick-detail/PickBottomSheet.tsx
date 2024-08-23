@@ -81,13 +81,13 @@ export const PickBottomSheet = ({
       {
         onSuccess: ({ data }) => {
           if (data) {
+            setIsOpenAlert(true);
             setAlertProps({
               pickOpen: data,
               onClose: () => {
                 setAlertProps(null);
               },
             });
-            setIsOpenAlert(true);
             onClose();
             refetch();
           }
@@ -244,7 +244,10 @@ export const PickBottomSheet = ({
         </div>
       </BottomSheet>
       {isOpenAlert && alertProps && selectedPick && (
-        <PickAlert {...alertProps} selectedPick={selectedPick} />
+        <PickAlert
+          {...(alertProps as Omit<PickAlertProps, "selectedPick">)}
+          selectedPick={selectedPick}
+        />
       )}
     </>
   );

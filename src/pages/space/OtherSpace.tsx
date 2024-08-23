@@ -1,9 +1,8 @@
 import THUMB from "@/assets/ic24_thumb.svg?react";
-import BRONZE from "@/assets/ic32_bronze.svg?react";
-import GOLD from "@/assets/ic32_gold.svg?react";
-import SILVER from "@/assets/ic32_silver.svg?react";
+import EYES from "@/assets/ic_eyes.gif";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
+import Image from "@/components/common/Image";
 import { useFriendSpace } from "@/generated/member/member";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
@@ -45,7 +44,7 @@ export const OtherSpace = ({ memberId }: { memberId: string }) => {
               containerClassName="bg-gradient-blue"
             />
           </Suspense>
-          {otherPickDetail && otherPickDetail.length > 0 && (
+          {otherPickDetail && otherPickDetail.length > 0 ? (
             <ListContainer
               isMore={false}
               titleIcon={<THUMB />}
@@ -62,26 +61,13 @@ export const OtherSpace = ({ memberId }: { memberId: string }) => {
                     icon={RANK_ICON[pick.rank]}
                   />
                 ))}
-                <PickRankCard
-                  disabled
-                  icon={<GOLD />}
-                  content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
-                  pickCount={14}
-                />
-                <PickRankCard
-                  disabled
-                  icon={<SILVER />}
-                  content="대충 작업해도 퀄리티를 등등등 대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등대충 작업해도 퀄리티를 등등등"
-                  pickCount={14}
-                />
-                <PickRankCard
-                  disabled
-                  icon={<BRONZE />}
-                  content="zz"
-                  pickCount={14}
-                />
               </div>
             </ListContainer>
+          ) : (
+            <div className="pt-10 flex flex-col gap-3 items-center w-full">
+              <Image src={EYES} alt="아직 받은 픽이 없음" w={80} h={80} />
+              <span className="t-h5-sb-17">아직 받은 픽이 없어요!</span>
+            </div>
           )}
         </div>
       </ErrorBoundary>
