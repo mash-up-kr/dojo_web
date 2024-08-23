@@ -99,13 +99,13 @@ export const OnBoardPage: ActivityComponentType<OnBoardPageProps> = ({
 };
 
 const ConfirmButton: FC<OnBoardPageProps> = ({ afterLogin }) => {
-  const { push, pop } = useMyFlow();
+  const { push } = useMyFlow();
 
   const onClick = () => {
     if (afterLogin) {
       push("VotePage", {});
     } else {
-      pop();
+      window.history.back();
     }
   };
 
