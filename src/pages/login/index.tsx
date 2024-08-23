@@ -5,11 +5,18 @@ import { getGradientBg } from "@/utils/getGradientBg";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import clsx from "clsx";
+import Cookies from "js-cookie";
 import { useLoginHandler } from "./useLoginHandler";
 const bg = getGradientBg();
 
 export const LogInPage: ActivityComponentType = () => {
   const { onClickLoginButton } = useLoginHandler();
+
+  const tokenFromCookie = Cookies.get("token");
+  if (tokenFromCookie) {
+    window.location.href = "/vote";
+    return;
+  }
 
   return (
     <AppScreen>
