@@ -1,6 +1,7 @@
 import CAMERA from "@/assets/ic14_camera.svg?react";
 import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
+import { getGetCurrentCoinQueryOptions } from "@/generated/coin/coin";
 import { getMeQueryOptions } from "@/generated/member/member";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
@@ -27,6 +28,15 @@ export const MyProfile = memo(
         },
       }),
     );
+
+    const { data: coin } = useSuspenseQuery(
+      getGetCurrentCoinQueryOptions({
+        query: {
+          select: ({ data }) => data?.amount ?? 0,
+        },
+      }),
+    );
+
     return (
       <div
         className={cn(
@@ -64,9 +74,7 @@ export const MyProfile = memo(
           </div>
           <div className="flex justify-center mt-5 items-center">
             <GEM />
-            <strong className="text-gray100 t-h6-sb-15 ml-1">
-              {profile?.coinCount}
-            </strong>
+            <strong className="text-gray100 t-h6-sb-15 ml-1">{coin}</strong>
           </div>
         </div>
         <div className="flex space-x-4 mt-6 z-10 relative">

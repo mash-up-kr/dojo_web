@@ -1,7 +1,7 @@
 import GEM from "@/assets/ic22_dia.svg?react";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
-import { useMe } from "@/generated/member/member";
+import { useGetCurrentCoin } from "@/generated/coin/coin";
 import type { ReceivedPickDetail } from "@/generated/model";
 import { getGetPickDetailQueryOptions } from "@/generated/pick/pick";
 import { useIntersectionObserver } from "@/hooks/useIntersection";
@@ -22,11 +22,12 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
   params,
 }) => {
   const { questionId } = params;
-  const { data: profile } = useMe({
+  const { data: coin } = useGetCurrentCoin({
     query: {
-      select: ({ data }) => data,
+      select: ({ data }) => data?.amount ?? 0,
     },
   });
+
   const { data: pickDetail } = useQuery(
     getGetPickDetailQueryOptions(
       {
@@ -79,7 +80,7 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
           // TODO: GEM 개수 API 연동
           <div className="flex space-x-[2px] items-center">
             <GEM />
-            <span className="t-h6-sb-15">{profile?.coinCount ?? "-"}</span>
+            <span className="t-h6-sb-15">{coin ?? "-"}</span>
           </div>
         }
         className={cn("transition-colors duration-100 bg-transparent", {

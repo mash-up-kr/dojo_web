@@ -31,7 +31,9 @@ export const PickAlert = ({
           {PICK_OPEN_TEXT[pickOpen.pickOpenItem]}은?
         </p>
         <div className="space-y-3 text-center mt-6">
-          <Image src="https://via.placeholder.com/150" alt="이미지" />
+          {selectedPick.pickerProfileImageUrl && (
+            <Image src={selectedPick.pickerProfileImageUrl} alt="이미지" />
+          )}
           <span className="t-h3-b-22 inline-block">
             {pickOpen.pickOpenValue}
           </span>

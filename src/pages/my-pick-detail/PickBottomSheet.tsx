@@ -10,7 +10,7 @@ import {
 } from "@/components/common/BottomSheet";
 import { Button } from "@/components/common/Button";
 import { Toast } from "@/components/common/Toast";
-import { useMe } from "@/generated/member/member";
+import { useGetCurrentCoin } from "@/generated/coin/coin";
 import type {
   PickOpenResponsePickOpenItemDto,
   ReceivedPickDetail,
@@ -23,10 +23,12 @@ import { PickAlert, type PickAlertProps } from "./PickAlert";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
   selectedPick: null | ReceivedPickDetail;
+  onClose: VoidFunction;
 };
 
 export const PickBottomSheet = ({
   selectedPick,
+  onClose,
   ...rest
 }: PickBottomSheetProps) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -35,12 +37,13 @@ export const PickBottomSheet = ({
     "selectedPick"
   >>(null);
   const { mutateAsync: openPick } = useOpenPick();
-  const queryClient = useQueryClient();
-  const { data: profile } = useMe({
+  const { data: coin } = useGetCurrentCoin({
     query: {
-      select: ({ data }) => data,
+      select: ({ data }) => data?.amount ?? 0,
     },
   });
+  const queryClient = useQueryClient();
+
   const [selectedPickType, setSelectedPickType] =
     useState<PickOpenResponsePickOpenItemDto | null>(null);
 
@@ -50,7 +53,7 @@ export const PickBottomSheet = ({
       return;
     }
 
-    if (!profile || profile?.coinCount < pickInfo.amount) {
+    if (!coin || coin < pickInfo.amount) {
       Toast.alert("젬이 부족합니다.");
       return;
     }
@@ -87,6 +90,7 @@ export const PickBottomSheet = ({
                 setAlertProps(null);
               },
             });
+            onClose();
             setIsOpenAlert(true);
           }
           // TODO: OpenPick 성공 시, Alert
@@ -98,7 +102,7 @@ export const PickBottomSheet = ({
 
   return (
     <>
-      <BottomSheet {...rest}>
+      <BottomSheet onClose={onClose} {...rest}>
         <div className="flex flex-col p-4 items-center space-y-2">
           <span className="t-h5-b-17 text-gray084">
             {selectedPick?.pickerOrdinal ?? "**"}기{" "}
@@ -106,10 +110,7 @@ export const PickBottomSheet = ({
             {selectedPick?.pickerFullName ?? "***"}님의 어떤 정보를 확인할까요?
           </span>
           <p className="text-gray040">
-            내 매시젬{" "}
-            <strong className="text-purple100">
-              {profile?.coinCount ?? 0}개
-            </strong>
+            내 매시젬 <strong className="text-purple100">{coin ?? 0}개</strong>
           </p>
         </div>
         <div className="space-y-[10px]">
