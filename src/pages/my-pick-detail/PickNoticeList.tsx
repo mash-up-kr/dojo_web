@@ -59,7 +59,7 @@ export const PickNoticeList = ({
                   에게 선택받았어요.
                 </p>
                 <span className="t-c1-r-13 text-gray054">
-                  {getPassedTimeText(new Date().toDateString())}
+                  {getPassedTimeText(pick.latestPickedAt)}
                 </span>
               </div>
               <Button
