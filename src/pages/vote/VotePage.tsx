@@ -182,7 +182,7 @@ function AnswerCard({
   return (
     <button
       className={clsx(
-        "odd:justify-self-end aspect-[13/10] rounded-10 max-w-44 w-full py-3 transition-colors duration-300",
+        "odd:justify-self-end w-36 rounded-10 py-3 transition-colors duration-300",
         selected ? "bg-offWhite010" : "bg-offWhite010/40",
       )}
       type="button"
