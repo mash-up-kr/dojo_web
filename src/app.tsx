@@ -9,7 +9,7 @@ import { useMyFlow } from "./stackflow/useMyFlow";
 export function App({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <SSEAlert />
+      {/* <SSEAlert /> */}
       {children}
       <Toaster
         position="top-center"
@@ -22,6 +22,8 @@ export function App({ children }: { children: React.ReactNode }) {
   );
 }
 
+// TODO: 추후 사용할 예정
+// biome-ignore lint/correctness/noUnusedVariables: <explanation>
 function SSEAlert() {
   const { push } = useMyFlow();
   const { data } = useMe();
