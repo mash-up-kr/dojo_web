@@ -1,4 +1,3 @@
-import { routes } from "@/stackflow";
 import axios from "axios";
 import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import Cookies from "js-cookie";
@@ -28,8 +27,9 @@ const createApiInstance = () => {
     (res) => res,
     (err: AxiosError) => {
       if (
-        err.response?.status === 401 &&
-        window.location.pathname.replace(/\/$/, "") !== routes.LogInPage
+        err.response?.status === 401
+        // TODO: 추후 페이지 활성화 시 주석 해제
+        // window.location.pathname.replace(/\/$/, "") !== routes.LogInPage
       ) {
         Cookies.remove("token");
         const urlParams = new URLSearchParams(window.location.search);
