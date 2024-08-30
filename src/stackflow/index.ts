@@ -1,4 +1,3 @@
-import { InspectionPage } from "@/pages/InspectionPage";
 import { FriendMainPage } from "@/pages/friend/Main";
 import { FriendRecommendPage } from "@/pages/friend/Recommend";
 import { FriendSearchPage } from "@/pages/friend/Search";
@@ -14,19 +13,17 @@ import { historySyncPlugin } from "@stackflow/plugin-history-sync";
 import { basicRendererPlugin } from "@stackflow/plugin-renderer-basic";
 import { stackflow } from "@stackflow/react";
 
-// TODO: 추후 활성화
 export const routes = {
-  // LogInPage: "/login",
-  // VotePage: "/vote",
-  // VoteDonePage: "/vote/done", // OK
-  // MyPickPage: "/my-pick", // OK
-  // MyPickDetailPage: "/my-pick/:questionId", // OK
-  // SpacePage: "/space/:memberId", // OK
-  // OnBoardPage: "/onboard", // OK
-  // FriendMainPage: "/friend", // OK
-  // FriendRecommendPage: "/friend/recommend", // OK
-  // FriendSearchPage: "/friend/search", // OK
-  InspectionPage: "/inspection", // OK
+  LogInPage: "/login",
+  VotePage: "/vote",
+  VoteDonePage: "/vote/done", // OK
+  MyPickPage: "/my-pick", // OK
+  MyPickDetailPage: "/my-pick/:questionId", // OK
+  SpacePage: "/space/:memberId", // OK
+  OnBoardPage: "/onboard", // OK
+  FriendMainPage: "/friend", // OK
+  FriendRecommendPage: "/friend/recommend", // OK
+  FriendSearchPage: "/friend/search", // OK
 };
 
 export const { Stack, activities } = stackflow({
@@ -38,7 +35,7 @@ export const { Stack, activities } = stackflow({
     }),
     historySyncPlugin({
       routes,
-      fallbackActivity: () => "InspectionPage",
+      fallbackActivity: () => "VotePage",
     }),
   ],
   activities: {
@@ -52,9 +49,8 @@ export const { Stack, activities } = stackflow({
     FriendMainPage,
     FriendSearchPage,
     FriendRecommendPage,
-    InspectionPage,
   },
-  initialActivity: () => "InspectionPage",
+  initialActivity: () => "LogInPage",
 });
 
 export type TypeActivities = typeof activities;
