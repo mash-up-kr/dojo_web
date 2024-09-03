@@ -22,11 +22,11 @@ export const FriendRecommendPage: ActivityComponentType = () => {
     <AppScreen>
       <Header left={<BackButton />} title="추천 친구" />
       <Link activityName="FriendSearchPage" activityParams={{}}>
-        <div className="px-4 py-1.5">
+        <div className="px-4 py-1.5 sticky top-[52px] bg-offWhite010">
           <SearchInput />
         </div>
       </Link>
-      <ul className="mb-2">
+      <ul className="mb-2 mt-1 ov">
         {recommendFriendRes?.data?.map((recommendFriend) => {
           return (
             <FriendItem

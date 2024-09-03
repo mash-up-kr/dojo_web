@@ -29,12 +29,12 @@ export const FriendMainPage: ActivityComponentType = () => {
     <AppScreen>
       <Header left={<BackButton />} title="내 친구들" />
       <Link activityName="FriendSearchPage" activityParams={{}}>
-        <div className="px-4 py-1.5">
+        <div className="px-4 py-1.5 sticky top-[52px] bg-offWhite010">
           <SearchInput />
         </div>
       </Link>
       <section className="mb-2">
-        <header className="flex justify-between items-center px-4 pt-3 pb-1">
+        <header className="flex justify-between items-center px-4 pt-3 pb-1 mt-2">
           <h2 className="t-b3-sb-14">추천 친구</h2>
           <Link
             activityName="FriendRecommendPage"
