@@ -7,7 +7,8 @@ import type {
   ReceivedPickDetail,
   ReceivedPickDetailPickerPlatform,
 } from "@/generated/model";
-import { getGenderText, getPlatformText } from "./utils";
+import { getPlatformText } from "@/utils/getPlatformText";
+import { getGenderText } from "./utils";
 
 const PICK_OPEN_TEXT: Record<PickOpenResponse["pickOpenItem"], string> = {
   FULL_NAME: "이름",

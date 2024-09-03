@@ -5,6 +5,7 @@ import { Toast } from "@/components/common/Toast";
 import { uploadInfo } from "@/generated/image/image";
 import { useMe, useUpdate } from "@/generated/member/member";
 import { useMyFlow } from "@/stackflow/useMyFlow";
+import { getPlatformText } from "@/utils/getPlatformText";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import axios from "axios";
@@ -72,8 +73,9 @@ export const OnBoardPage: ActivityComponentType<OnBoardPageProps> = ({
             />
             <div className="mt-3 flex flex-col items-center space-y-1">
               <h1 className="t-h4-b-20">{meRes?.data?.memberName}</h1>
-              <p className="t-b3-r-14 bg-grey054">
-                {meRes?.data?.ordinal}기 {meRes?.data?.platform}
+              <p className="t-b3-r-14 text-gray054">
+                {meRes?.data?.ordinal}기{" "}
+                {getPlatformText(meRes?.data?.platform ?? "UNKNOWN")}
               </p>
             </div>
             <Button

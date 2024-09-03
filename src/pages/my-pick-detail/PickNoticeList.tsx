@@ -2,8 +2,8 @@ import { Button } from "@/components/common/Button";
 import Image from "@/components/common/Image";
 import type { ReceivedPickDetail } from "@/generated/model";
 import { getPassedTimeText } from "@/utils/getPassedTimeText";
+import { getPlatformText } from "@/utils/getPlatformText";
 import { P, match } from "ts-pattern";
-import { getPlatformText } from "./utils";
 
 export const PickNoticeList = ({
   onSelectPick,

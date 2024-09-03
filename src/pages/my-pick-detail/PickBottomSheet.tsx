@@ -17,11 +17,12 @@ import type {
 } from "@/generated/model";
 import { useOpenPick } from "@/generated/pick/pick";
 import { cn } from "@/utils/cn";
+import { getPlatformText } from "@/utils/getPlatformText";
 import { type ButtonHTMLAttributes, useState } from "react";
 import { match } from "ts-pattern";
 import { PickAlert, type PickAlertProps } from "./PickAlert";
 import { GENDER_ICON, PLATFORM_ICON } from "./constants";
-import { getGenderText, getPlatformText } from "./utils";
+import { getGenderText } from "./utils";
 
 export type PickBottomSheetProps = Omit<BottomSheetProps, "children"> & {
   selectedPick: null | ReceivedPickDetail;

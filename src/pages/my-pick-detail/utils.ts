@@ -1,28 +1,4 @@
-import type {
-  MemberCreateRequestGender,
-  ReceivedPickDetailPickerPlatform,
-} from "@/generated/model";
-
-export const getPlatformText = (
-  platform?: ReceivedPickDetailPickerPlatform,
-) => {
-  switch (platform) {
-    case "ANDROID":
-      return "Android";
-    case "IOS":
-      return "iOS";
-    case "NODE":
-      return "Node";
-    case "DESIGN":
-      return "Product Design";
-    case "SPRING":
-      return "Spring";
-    case "WEB":
-      return "Web";
-    default:
-      return;
-  }
-};
+import type { MemberCreateRequestGender } from "@/generated/model";
 
 export const getGenderText = (gender?: MemberCreateRequestGender) => {
   switch (gender) {
