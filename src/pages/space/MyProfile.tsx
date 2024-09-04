@@ -8,10 +8,10 @@ import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { cn } from "@/utils/cn";
+import { getPlatformText } from "@/utils/getPlatformText";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import type { ClassNameValue } from "tailwind-merge";
-import { getPlatformText } from "../my-pick-detail/utils";
 import { CounterBox } from "./CounterBox";
 
 export const MyProfile = memo(

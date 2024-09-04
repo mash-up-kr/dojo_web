@@ -4,11 +4,11 @@ import { getGetProfileQueryOptions } from "@/generated/member/member";
 import type { ReceivedPickDetailPickerPlatform } from "@/generated/model";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
+import { getPlatformText } from "@/utils/getPlatformText";
 import { useActivityParams } from "@stackflow/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import type { ClassNameValue } from "tailwind-merge";
-import { getPlatformText } from "../my-pick-detail/utils";
 import { CounterBox } from "./CounterBox";
 
 export const OtherProfile = memo(
