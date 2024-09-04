@@ -285,7 +285,7 @@ const PickInfoButton = ({
       <Image width={24} height={24} />
       <div className="flex flex-col space-y-1 flex-1 ml-3 my-1">
         {isDisabled && value ? (
-          <span className="t-h6-b-15">{value}</span>
+          <span className="t-h6-sb-15">{value}</span>
         ) : (
           <>
             <span className="t-h6-sb-15 text-gray100">{title}</span>
