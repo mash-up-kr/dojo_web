@@ -12,6 +12,10 @@ const bubbleArrow = plugin(({ addUtilities }) => {
       borderRight: "8px solid transparent",
       borderBottom: "10px solid #fff",
     },
+
+    ".drop-shadow": {
+      boxShadow: "0px 2px 20px rgba(0, 0, 0, 0.08)",
+    },
   });
 });
 
