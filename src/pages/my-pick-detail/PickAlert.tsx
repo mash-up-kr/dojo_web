@@ -13,7 +13,7 @@ import { getGenderText } from "./utils";
 const PICK_OPEN_TEXT: Record<PickOpenResponse["pickOpenItem"], string> = {
   FULL_NAME: "이름",
   GENDER: "성별",
-  MID_INITIAL_NAME: "초성은",
+  MID_INITIAL_NAME: "초성",
   PLATFORM: "플랫폼",
 };
 
@@ -53,7 +53,7 @@ export const PickAlert = ({
           {selectedPick.pickerFullName ?? "***"}님의{" "}
           {PICK_OPEN_TEXT[pickOpen.pickOpenItem]}은?
         </p>
-        <div className="space-y-3 text-center mt-6">
+        <div className="space-y-3 text-center mt-6 flex flex-col items-center">
           {pickOpen.pickOpenImageUrl && (
             <Image
               src={pickOpen.pickOpenImageUrl}
@@ -68,7 +68,10 @@ export const PickAlert = ({
             )}
           </span>
         </div>
-        <Button className="rounded-full mt-10" onClick={onClose}>
+        <Button
+          className="rounded-full mt-10 !t-h6-b-15 mx-2"
+          onClick={onClose}
+        >
           확인
         </Button>
       </div>
