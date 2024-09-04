@@ -1,8 +1,8 @@
 import GHOST from "@/assets/ic24_ghost.svg?react";
 import THUMB from "@/assets/ic24_thumb.svg?react";
-import BRONZE from "@/assets/ic32_bronze.svg?react";
-import GOLD from "@/assets/ic32_gold.svg?react";
-import SILVER from "@/assets/ic32_silver.svg?react";
+import BRONZE from "@/assets/ic32_bronze.png";
+import GOLD from "@/assets/ic32_gold.png";
+import SILVER from "@/assets/ic32_silver.png";
 import { FriendItem } from "@/components/FriendItem";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
@@ -17,10 +17,10 @@ import { ListContainer } from "./ListContainer";
 import { MyProfile } from "./MyProfile";
 import { PickRankCard } from "./PickRankCard";
 
-export const RANK_ICON: Record<number, JSX.Element> = {
-  1: <GOLD />,
-  2: <SILVER />,
-  3: <BRONZE />,
+export const RANK_ICON: Record<number, string> = {
+  1: GOLD,
+  2: SILVER,
+  3: BRONZE,
 };
 
 export const MySpace = () => {

@@ -1,12 +1,14 @@
 import { FriendAddButton } from "@/components/FriendAddButton";
 import Image from "@/components/common/Image";
 import { getGetProfileQueryOptions } from "@/generated/member/member";
+import type { ReceivedPickDetailPickerPlatform } from "@/generated/model";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { cn } from "@/utils/cn";
 import { useActivityParams } from "@stackflow/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import type { ClassNameValue } from "tailwind-merge";
+import { getPlatformText } from "../my-pick-detail/utils";
 import { CounterBox } from "./CounterBox";
 
 export const OtherProfile = memo(
@@ -33,7 +35,7 @@ export const OtherProfile = memo(
     return (
       <div
         className={cn(
-          "bg-gradient-purple px-4 pb-5 pt-[72px] relative",
+          "bg-gradient-purple px-4 pb-4 pt-[72px] relative",
           containerClassName,
         )}
         ref={profileRef}
@@ -45,14 +47,20 @@ export const OtherProfile = memo(
               <Image
                 src={profile?.profileImageUrl}
                 alt="프로필"
-                className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-offWhite010"
+                className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-gray022"
               />
             </div>
             <div className="flex flex-col space-y-1 ml-3">
               <strong className="t-h5-b-17">
                 {profile?.memberName ?? "-"}
               </strong>
-              <p className="t-c1-r-13">{profile?.platform}</p>
+              <p className="t-c1-r-13">
+                {profile
+                  ? getPlatformText(
+                      profile.platform as ReceivedPickDetailPickerPlatform,
+                    )
+                  : "-"}
+              </p>
             </div>
           </div>
           <FriendAddButton memberId={memberId} />

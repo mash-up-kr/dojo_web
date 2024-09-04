@@ -3,6 +3,7 @@ import GEM from "@/assets/ic22_dia.svg?react";
 import Image from "@/components/common/Image";
 import { getGetCurrentCoinQueryOptions } from "@/generated/coin/coin";
 import { getMeQueryOptions } from "@/generated/member/member";
+import type { ReceivedPickDetailPickerPlatform } from "@/generated/model";
 import type { IntersectionReturn } from "@/hooks/useIntersection";
 import { Link } from "@/stackflow/Link";
 import { useMyFlow } from "@/stackflow/useMyFlow";
@@ -10,6 +11,7 @@ import { cn } from "@/utils/cn";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import type { ClassNameValue } from "tailwind-merge";
+import { getPlatformText } from "../my-pick-detail/utils";
 import { CounterBox } from "./CounterBox";
 
 export const MyProfile = memo(
@@ -42,7 +44,7 @@ export const MyProfile = memo(
     return (
       <div
         className={cn(
-          "bg-gradient-purple px-4 pb-5 pt-[72px] relative",
+          "bg-gradient-purple px-4 pb-4 pt-[72px] relative",
           containerClassName,
         )}
         ref={profileRef}
@@ -58,7 +60,7 @@ export const MyProfile = memo(
               <Image
                 src={profile?.profileImageUrl}
                 alt="이름"
-                className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-offWhite010"
+                className="w-[64px] h-[64px] rounded-[100px] border-[1px] border-solid border-gray022"
               />
               <button
                 className="absolute -bottom-[14px] -right-[14px] w-[42px] h-[42px] flex justify-center items-center"
@@ -71,7 +73,14 @@ export const MyProfile = memo(
             </Link>
             <div className="flex flex-col space-y-1 ml-3">
               <strong className="t-h5-b-17">{profile?.memberName}</strong>
-              <p className="t-c1-r-13">{profile?.platform}</p>
+              <p className="t-c1-r-13">
+                {profile
+                  ? getPlatformText(
+                      profile.platform as ReceivedPickDetailPickerPlatform,
+                    )
+                  : "-"}{" "}
+                {profile?.ordinal ?? "-"}기
+              </p>
             </div>
           </div>
           <div className="flex justify-center mt-5 items-center">
