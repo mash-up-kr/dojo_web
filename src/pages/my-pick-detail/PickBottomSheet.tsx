@@ -110,7 +110,9 @@ export const PickBottomSheet = ({
         <div className="flex flex-col p-4 items-center space-y-2">
           <span className="t-h5-b-17 text-gray084">
             {selectedPick?.pickerOrdinal ?? "**"}기{" "}
-            {selectedPick?.pickerPlatform ?? ""}{" "}
+            {selectedPick?.pickerPlatform
+              ? getPlatformText(selectedPick?.pickerPlatform)
+              : ""}{" "}
             {selectedPick?.pickerFullName ?? "***"}님의 어떤 정보를 확인할까요?
           </span>
           <p className="text-gray040">
