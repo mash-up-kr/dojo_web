@@ -18,7 +18,7 @@ import type {
 import { useOpenPick } from "@/generated/pick/pick";
 import { cn } from "@/utils/cn";
 import { getPlatformText } from "@/utils/getPlatformText";
-import { type ButtonHTMLAttributes, useState } from "react";
+import { type ButtonHTMLAttributes, useEffect, useState } from "react";
 import { match } from "ts-pattern";
 import { PickAlert, type PickAlertProps } from "./PickAlert";
 import { GENDER_ICON, PLATFORM_ICON } from "./constants";
@@ -34,6 +34,7 @@ export const PickBottomSheet = ({
   selectedPick,
   onClose,
   refetch,
+  isOpen,
   ...rest
 }: PickBottomSheetProps) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -97,11 +98,15 @@ export const PickBottomSheet = ({
       },
     );
   };
-  const disabled = setSelectedPickType === null;
+  const disabled = selectedPickType === null;
+
+  useEffect(() => {
+    setSelectedPickType(null);
+  }, [isOpen, setSelectedPickType]);
 
   return (
     <>
-      <BottomSheet onClose={onClose} {...rest}>
+      <BottomSheet onClose={onClose} isOpen={isOpen} {...rest}>
         <div className="flex flex-col p-4 items-center space-y-2">
           <span className="t-h5-b-17 text-gray084">
             {selectedPick?.pickerOrdinal ?? "**"}기{" "}
