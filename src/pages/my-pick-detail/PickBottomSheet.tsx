@@ -236,6 +236,7 @@ export const PickBottomSheet = ({
         </div>
         <div className="pb-6 pt-10">
           <Button
+            className="!t-h5-sb-17 !h-12"
             buttonType="primary"
             onClick={handleSubmit}
             disabled={disabled}
@@ -273,7 +274,7 @@ const PickInfoButton = ({
     <button
       disabled={isDisabled}
       className={cn(
-        "flex px-4 py-3 rounded-8 bg-offWhite020 text-left w-full items-center h-[72px]",
+        "flex px-4 py-3 rounded-8 bg-offWhite020 text-left w-full h-[72px]",
         {
           "shadow-[0_0_0_1px_#854bff_inset] bg-purple006": isSelected,
           "shadow-[0_0_0_1px_#E0E0E1_inset] bg-offWhite010": isDisabled,
@@ -282,10 +283,10 @@ const PickInfoButton = ({
       type="button"
       {...rest}
     >
-      <Image width={24} height={24} />
-      <div className="flex flex-col space-y-1 flex-1 ml-3 my-1">
+      <Image width={48} height={48} />
+      <div className="flex flex-col gap-1 flex-1 ml-3 my-1 h-full">
         {isDisabled && value ? (
-          <span className="t-h6-sb-15">{value}</span>
+          <span className="t-h6-sb-15 leading-9">{value}</span>
         ) : (
           <>
             <span className="t-h6-sb-15 text-gray100">{title}</span>
@@ -294,14 +295,18 @@ const PickInfoButton = ({
         )}
       </div>
       <div className="flex space-x-1">
-        {isDisabled ? (
-          <div className="t-b3-r-14 text-gray054">이미 본 정보에요</div>
-        ) : (
-          <>
-            <GEM />
-            <span className="t-h6-sb-15">{amount}개</span>
-          </>
-        )}
+        <div className="flex items-center h-full">
+          {isDisabled ? (
+            <span className="t-b3-r-14 text-gray054 leading-[44px]">
+              이미 본 정보에요
+            </span>
+          ) : (
+            <>
+              <GEM />
+              <span className="t-h6-sb-15">{amount}개</span>
+            </>
+          )}
+        </div>
       </div>
     </button>
   );
