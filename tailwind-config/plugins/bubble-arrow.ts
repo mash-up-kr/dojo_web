@@ -10,7 +10,7 @@ const bubbleArrow = plugin(({ addUtilities }) => {
       height: "0",
       borderLeft: "8px solid transparent",
       borderRight: "8px solid transparent",
-      borderBottom: "16px solid #fff",
+      borderBottom: "10px solid #fff",
     },
   });
 });

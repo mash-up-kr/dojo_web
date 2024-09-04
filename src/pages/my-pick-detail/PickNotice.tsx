@@ -33,7 +33,7 @@ export const PickNotice = ({
         />
       </div>
       <motion.div
-        className="w-full relative mt-5"
+        className="max-w-[251px] relative mt-5"
         initial={{ transform: "translateY(-10px)" }}
         animate={{ transform: "translateY(0px)" }}
         transition={{ duration: 0.65, repeat: 5, repeatType: "reverse" }}
@@ -47,7 +47,7 @@ export const PickNotice = ({
             <strong className="text-purple100">Pick</strong>했어요
           </span>
         </div>
-        <div className="absolute -top-[16px] arrow-top" />
+        <div className="absolute -top-[10px] arrow-top" />
       </motion.div>
     </div>
   );
