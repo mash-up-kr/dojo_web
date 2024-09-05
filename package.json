@@ -13,6 +13,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@peterek/vite-plugin-favicons": "^2.0.0",
 		"@stackflow/core": "^1.0.13",
 		"@stackflow/link": "^1.4.3",
 		"@stackflow/plugin-basic-ui": "^1.8.4",
