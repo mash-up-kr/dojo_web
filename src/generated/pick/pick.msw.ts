@@ -13,14 +13,14 @@ import {
   http
 } from 'msw'
 import type {
+  DojoApiResponseCreatePickResponse,
   DojoApiResponseLocalDateTime,
   DojoApiResponsePickDetailPaging,
-  DojoApiResponsePickId,
   DojoApiResponsePickOpenResponse,
   DojoApiResponseReceivedPickPagingGetResponse
 } from '.././model'
 
-export const getCreate1ResponseMock = (overrideResponse: Partial< DojoApiResponsePickId > = {}): DojoApiResponsePickId => ({data: faker.helpers.arrayElement([{value: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+export const getCreate1ResponseMock = (overrideResponse: Partial< DojoApiResponseCreatePickResponse > = {}): DojoApiResponseCreatePickResponse => ({data: faker.helpers.arrayElement([{coin: faker.number.int({min: undefined, max: undefined}), pickId: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getOpenPickResponseMock = (overrideResponse: Partial< DojoApiResponsePickOpenResponse > = {}): DojoApiResponsePickOpenResponse => ({data: faker.helpers.arrayElement([{pickId: faker.word.sample(), pickOpenImageUrl: faker.word.sample(), pickOpenItem: faker.helpers.arrayElement(['GENDER','PLATFORM','MID_INITIAL_NAME','FULL_NAME'] as const), pickOpenValue: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
@@ -31,7 +31,7 @@ export const getGetPickDetailResponseMock = (overrideResponse: Partial< DojoApiR
 export const getGetNextPickTimeResponseMock = (overrideResponse: Partial< DojoApiResponseLocalDateTime > = {}): DojoApiResponseLocalDateTime => ({data: faker.helpers.arrayElement([`${faker.date.past().toISOString().split('.')[0]}Z`, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 
-export const getCreate1MockHandler = (overrideResponse?: DojoApiResponsePickId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponsePickId> | DojoApiResponsePickId)) => {
+export const getCreate1MockHandler = (overrideResponse?: DojoApiResponseCreatePickResponse | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseCreatePickResponse> | DojoApiResponseCreatePickResponse)) => {
   return http.post('https://docker-ecs.net/pick', async (info) => {await delay(1000);
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 

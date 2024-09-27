@@ -19,9 +19,9 @@ import type {
 } from '@tanstack/react-query'
 import type {
   CreatePickRequest,
+  DojoApiResponseCreatePickResponse,
   DojoApiResponseLocalDateTime,
   DojoApiResponsePickDetailPaging,
-  DojoApiResponsePickId,
   DojoApiResponsePickOpenResponse,
   DojoApiResponseReceivedPickPagingGetResponse,
   GetPickDetailParams,
@@ -44,7 +44,7 @@ export const create1 = (
  options?: SecondParameter<typeof customInstance>,) => {
       
       
-      return customInstance<DojoApiResponsePickId>(
+      return customInstance<DojoApiResponseCreatePickResponse>(
       {url: `https://docker-ecs.net/pick`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createPickRequest

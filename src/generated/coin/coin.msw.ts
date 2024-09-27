@@ -13,11 +13,32 @@ import {
   http
 } from 'msw'
 import type {
+  DojoApiResponseCoinBySolvedPick,
+  DojoApiResponseCoinUseDetailId,
   DojoApiResponseCurrentCoinResponse
 } from '.././model'
 
+export const getProvideCoinByEventResponseMock = (overrideResponse: Partial< DojoApiResponseCoinUseDetailId > = {}): DojoApiResponseCoinUseDetailId => ({data: faker.helpers.arrayElement([{value: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
 export const getGetCurrentCoinResponseMock = (overrideResponse: Partial< DojoApiResponseCurrentCoinResponse > = {}): DojoApiResponseCurrentCoinResponse => ({data: faker.helpers.arrayElement([{amount: faker.number.int({min: undefined, max: undefined}), coinId: faker.word.sample(), lastUpdatedAt: `${faker.date.past().toISOString().split('.')[0]}Z`, memberId: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
+export const getGetCoinBySolvedPickResponseMock = (overrideResponse: Partial< DojoApiResponseCoinBySolvedPick > = {}): DojoApiResponseCoinBySolvedPick => ({data: faker.helpers.arrayElement([{amount: faker.number.int({min: undefined, max: undefined})}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+
+export const getProvideCoinByEventMockHandler = (overrideResponse?: DojoApiResponseCoinUseDetailId | ((info: Parameters<Parameters<typeof http.post>[1]>[0]) => Promise<DojoApiResponseCoinUseDetailId> | DojoApiResponseCoinUseDetailId)) => {
+  return http.post('https://docker-ecs.net/coin/admin/update', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getProvideCoinByEventResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
 
 export const getGetCurrentCoinMockHandler = (overrideResponse?: DojoApiResponseCurrentCoinResponse | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseCurrentCoinResponse> | DojoApiResponseCurrentCoinResponse)) => {
   return http.get('https://docker-ecs.net/coin', async (info) => {await delay(1000);
@@ -33,6 +54,23 @@ export const getGetCurrentCoinMockHandler = (overrideResponse?: DojoApiResponseC
     )
   })
 }
+
+export const getGetCoinBySolvedPickMockHandler = (overrideResponse?: DojoApiResponseCoinBySolvedPick | ((info: Parameters<Parameters<typeof http.get>[1]>[0]) => Promise<DojoApiResponseCoinBySolvedPick> | DojoApiResponseCoinBySolvedPick)) => {
+  return http.get('https://docker-ecs.net/coin/current/question-set/solved-picks', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getGetCoinBySolvedPickResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
 export const getCoinMock = () => [
-  getGetCurrentCoinMockHandler()
+  getProvideCoinByEventMockHandler(),
+  getGetCurrentCoinMockHandler(),
+  getGetCoinBySolvedPickMockHandler()
 ]

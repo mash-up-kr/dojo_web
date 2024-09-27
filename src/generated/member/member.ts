@@ -27,8 +27,10 @@ import type {
   DojoApiResponseMemberUpdateResponse,
   DojoApiResponseMyProfileResponse,
   DojoApiResponseMySpacePickResponse,
+  DojoApiResponseUnit,
   MemberCreateFriendRelationRequest,
   MemberCreateRequest,
+  MemberDeleteFriendRelationRequest,
   MemberLoginRequest,
   MemberUpdateRequest,
   SearchMemberParams
@@ -211,6 +213,64 @@ export const useCreateFriend = <TError = ErrorType<unknown>,
       > => {
 
       const mutationOptions = getCreateFriendMutationOptions(options);
+
+      return useMutation(mutationOptions);
+    }
+    /**
+ * from 이 to 에 대한 친구(팔로우)를 해제합니다. 이미 친구 관계가 아니라면 예외를 반환해요.
+ * @summary 친구(팔로우)해제 API
+ */
+export const deleteFriend = (
+    memberDeleteFriendRelationRequest: BodyType<MemberDeleteFriendRelationRequest>,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<DojoApiResponseUnit>(
+      {url: `https://docker-ecs.net/member/friend`, method: 'DELETE',
+      headers: {'Content-Type': 'application/json', },
+      data: memberDeleteFriendRelationRequest
+    },
+      options);
+    }
+  
+
+
+export const getDeleteFriendMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteFriend>>, TError,{data: BodyType<MemberDeleteFriendRelationRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteFriend>>, TError,{data: BodyType<MemberDeleteFriendRelationRequest>}, TContext> => {
+const {mutation: mutationOptions, request: requestOptions} = options ?? {};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteFriend>>, {data: BodyType<MemberDeleteFriendRelationRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  deleteFriend(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteFriendMutationResult = NonNullable<Awaited<ReturnType<typeof deleteFriend>>>
+    export type DeleteFriendMutationBody = BodyType<MemberDeleteFriendRelationRequest>
+    export type DeleteFriendMutationError = ErrorType<unknown>
+
+    /**
+ * @summary 친구(팔로우)해제 API
+ */
+export const useDeleteFriend = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteFriend>>, TError,{data: BodyType<MemberDeleteFriendRelationRequest>}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationResult<
+        Awaited<ReturnType<typeof deleteFriend>>,
+        TError,
+        {data: BodyType<MemberDeleteFriendRelationRequest>},
+        TContext
+      > => {
+
+      const mutationOptions = getDeleteFriendMutationOptions(options);
 
       return useMutation(mutationOptions);
     }

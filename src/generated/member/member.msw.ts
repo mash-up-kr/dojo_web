@@ -21,7 +21,8 @@ import type {
   DojoApiResponseMemberRelationId,
   DojoApiResponseMemberUpdateResponse,
   DojoApiResponseMyProfileResponse,
-  DojoApiResponseMySpacePickResponse
+  DojoApiResponseMySpacePickResponse,
+  DojoApiResponseUnit
 } from '.././model'
 
 export const getCreateResponseMock = (overrideResponse: Partial< DojoApiResponseMemberCreateResponse > = {}): DojoApiResponseMemberCreateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
@@ -29,6 +30,8 @@ export const getCreateResponseMock = (overrideResponse: Partial< DojoApiResponse
 export const getLoginResponseMock = (overrideResponse: Partial< DojoApiResponseMemberLoginResponse > = {}): DojoApiResponseMemberLoginResponse => ({data: faker.helpers.arrayElement([{authToken: faker.word.sample(), id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getCreateFriendResponseMock = (overrideResponse: Partial< DojoApiResponseMemberRelationId > = {}): DojoApiResponseMemberRelationId => ({data: faker.helpers.arrayElement([{value: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
+
+export const getDeleteFriendResponseMock = (overrideResponse: Partial< DojoApiResponseUnit > = {}): DojoApiResponseUnit => ({data: faker.helpers.arrayElement([{}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
 export const getUpdateResponseMock = (overrideResponse: Partial< DojoApiResponseMemberUpdateResponse > = {}): DojoApiResponseMemberUpdateResponse => ({data: faker.helpers.arrayElement([{id: faker.word.sample()}, undefined]), error: faker.helpers.arrayElement([{code: faker.word.sample(), message: faker.helpers.arrayElement([faker.word.sample(), undefined])}, undefined]), success: faker.datatype.boolean(), ...overrideResponse})
 
@@ -80,6 +83,21 @@ export const getCreateFriendMockHandler = (overrideResponse?: DojoApiResponseMem
     return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
             ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
             : getCreateFriendResponseMock()),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+    )
+  })
+}
+
+export const getDeleteFriendMockHandler = (overrideResponse?: DojoApiResponseUnit | ((info: Parameters<Parameters<typeof http.delete>[1]>[0]) => Promise<DojoApiResponseUnit> | DojoApiResponseUnit)) => {
+  return http.delete('https://docker-ecs.net/member/friend', async (info) => {await delay(1000);
+    return new HttpResponse(JSON.stringify(overrideResponse !== undefined 
+            ? (typeof overrideResponse === "function" ? await overrideResponse(info) : overrideResponse) 
+            : getDeleteFriendResponseMock()),
       {
         status: 200,
         headers: {
@@ -198,6 +216,7 @@ export const getMemberMock = () => [
   getCreateMockHandler(),
   getLoginMockHandler(),
   getCreateFriendMockHandler(),
+  getDeleteFriendMockHandler(),
   getUpdateMockHandler(),
   getGetProfileMockHandler(),
   getSearchMemberMockHandler(),

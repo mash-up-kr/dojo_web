@@ -10,9 +10,9 @@ import { AppScreen } from "@stackflow/plugin-basic-ui";
 import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { ListContainer } from "./ListContainer";
+import { RANK_ICON } from "./MySpace";
 import { OtherProfile } from "./OtherProfile";
 import { PickRankCard } from "./PickRankCard";
-import { RANK_ICON } from "./MySpace";
 
 export const OtherSpace = ({ memberId }: { memberId: string }) => {
   const { ref, isIntersecting } = useIntersectionObserver({

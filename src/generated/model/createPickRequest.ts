@@ -13,4 +13,5 @@ export interface CreatePickRequest {
   questionId: string;
   questionSetId: string;
   questionSheetId: string;
+  skip: boolean;
 }
