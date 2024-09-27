@@ -1,4 +1,5 @@
-import ShuffleSvg from "@/assets/Shuffle.svg?react";
+import DiceSvg from "@/assets/ic_dice.svg?react";
+import SkipSvg from "@/assets/ic_skip.svg?react";
 import { Toast } from "@/components/common/Toast";
 import type { QuestionSheetCandidate } from "@/generated/model/questionSheetCandidate";
 import { getCreate1MutationOptions } from "@/generated/pick/pick";
@@ -45,7 +46,7 @@ function VotePageInner() {
           iconImgSrc={question.questionEmojiImageUrl}
           imgAlt={question.questionCategory}
           members={question.candidates}
-          onSelect={async (v) => {
+          makePick={async (v) => {
             try {
               await mutateAsync({
                 data: {
@@ -53,6 +54,7 @@ function VotePageInner() {
                   questionId: question.questionId,
                   questionSetId: data.questionSetId,
                   questionSheetId: question.questionSheetId,
+                  skip: v.skip,
                 },
               });
               if (qIndex === data.sheetTotalCount) {
@@ -61,7 +63,7 @@ function VotePageInner() {
               }
               setQIndex((p) => p + 1);
             } catch (e) {
-              Toast.alert("투표에 실패했습니다. 다시 시도해주세요.", () => {});
+              Toast.alert("실패했습니다. 다시 시도해주세요.", () => {});
               console.error(e);
             }
           }}
@@ -76,13 +78,13 @@ function VoteQuestions({
   iconImgSrc,
   imgAlt,
   members,
-  onSelect,
+  makePick,
 }: {
   content: string;
   iconImgSrc: string;
   imgAlt: string;
   members: QuestionSheetCandidate[];
-  onSelect: (v: { pickId: string }) => void;
+  makePick: (v: { pickId: string; skip: boolean }) => void;
 }) {
   const [selection, setSelection] = useState<number | null>(null);
   const [showIndex, setShowIndex] = useState(0);
@@ -127,7 +129,7 @@ function VoteQuestions({
             onClick={() => {
               setSelection(i);
               setTimeout(() => {
-                onSelect({ pickId: v.memberId });
+                makePick({ pickId: v.memberId, skip: false });
                 setSelection(null);
               }, 500);
             }}
@@ -137,7 +139,13 @@ function VoteQuestions({
           />
         ))}
       </div>
-      <ShuffleButton disabled={isShuffleDisabled} onClick={handleShuffle} />
+      <div className="flex justify-between align-middle w-full">
+        <ShuffleButton disabled={isShuffleDisabled} onClick={handleShuffle} />
+        <SkipButton
+          disabled={isShuffleDisabled}
+          onClick={() => makePick({ pickId: "", skip: true })}
+        />
+      </div>
     </>
   );
 }
@@ -151,13 +159,33 @@ function ShuffleButton({
 }) {
   return (
     <button
-      className="group flex gap-2 items-center py-2 px-4 rounded-12 disabled:text-gray040"
+      className="group flex gap-2 items-center py-2 px-4 rounded-[10px] border-[1px] border-solid border-offWhite010/30 disabled:text-gray040"
       disabled={disabled}
       type="button"
       onClick={onClick}
     >
-      <ShuffleSvg className={clsx("group-disabled:[&>path]:fill-gray040")} />
-      <span className="t-b3-m-14">셔플</span>
+      <DiceSvg className={clsx("group-disabled:[&>path]:fill-gray040")} />
+      <span className="t-b3-m-14">셔플 하기</span>
+    </button>
+  );
+}
+
+function SkipButton({
+  disabled,
+  onClick,
+}: {
+  disabled: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      className="group flex gap-1 items-center py-2 px-4 rounded-10 bg-offWhite010/30 disabled:text-gray040"
+      disabled={disabled}
+      type="button"
+      onClick={onClick}
+    >
+      <span className="t-b3-m-14">이 질문 스킵</span>
+      <SkipSvg className={clsx("group-disabled:[&>path]:fill-gray040")} />
     </button>
   );
 }
