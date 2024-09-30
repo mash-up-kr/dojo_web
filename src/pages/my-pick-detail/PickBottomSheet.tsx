@@ -100,6 +100,7 @@ export const PickBottomSheet = ({
   };
   const disabled = selectedPickType === null;
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setSelectedPickType(null);
   }, [isOpen, setSelectedPickType]);

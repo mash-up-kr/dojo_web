@@ -1,3 +1,4 @@
+import GemGif from "@/assets/Gem.gif";
 import DiceSvg from "@/assets/ic_dice.svg?react";
 import SkipSvg from "@/assets/ic_skip.svg?react";
 import { Toast } from "@/components/common/Toast";
@@ -7,7 +8,13 @@ import { getGetQuestionSheetQueryOptions } from "@/generated/question/question";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import React, { Suspense, useEffect, useMemo, useState } from "react";
+import React, {
+  type ElementType,
+  Suspense,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { customRipple } from "use-ripple-hook";
 import { VoteLayout } from "./VoteLayout";
@@ -25,13 +32,24 @@ export function VotePage() {
 function VotePageInner() {
   const { data } = useSuspenseQuery(getGetQuestionSheetQueryOptions());
   const { push } = useMyFlow();
-  const { mutateAsync } = useMutation(getCreate1MutationOptions());
+  const {
+    mutate,
+    data: create1Res,
+    error,
+  } = useMutation(getCreate1MutationOptions());
 
   const [qIndex, setQIndex] = React.useState(data.startingQuestionIndex);
 
   const question = data.questionSheetList.find(
     (q) => q.questionOrder === qIndex,
   );
+
+  useEffect(() => {
+    if (error) {
+      Toast.alert("실패했습니다. 다시 시도해주세요.", () => {});
+      console.log(error);
+    }
+  }, [error]);
 
   if (!question) {
     push("VoteDonePage", {});
@@ -46,26 +64,24 @@ function VotePageInner() {
           iconImgSrc={question.questionEmojiImageUrl}
           imgAlt={question.questionCategory}
           members={question.candidates}
-          makePick={async (v) => {
-            try {
-              await mutateAsync({
-                data: {
-                  pickedId: v.pickId,
-                  questionId: question.questionId,
-                  questionSetId: data.questionSetId,
-                  questionSheetId: question.questionSheetId,
-                  skip: v.skip,
-                },
-              });
-              if (qIndex === data.sheetTotalCount) {
-                push("VoteDonePage", {});
-                return;
-              }
-              setQIndex((p) => p + 1);
-            } catch (e) {
-              Toast.alert("실패했습니다. 다시 시도해주세요.", () => {});
-              console.error(e);
+          makePick={(v) => {
+            mutate({
+              data: {
+                pickedId: v.pickId,
+                questionId: question.questionId,
+                questionSetId: data.questionSetId,
+                questionSheetId: question.questionSheetId,
+                skip: v.skip,
+              },
+            });
+          }}
+          earnedCoin={create1Res?.data?.coin}
+          afterPick={() => {
+            if (qIndex === data.sheetTotalCount) {
+              push("VoteDonePage", {});
+              return;
             }
+            setQIndex((p) => p + 1);
           }}
         />
       </main>
@@ -79,18 +95,25 @@ function VoteQuestions({
   imgAlt,
   members,
   makePick,
+  earnedCoin,
+  afterPick,
 }: {
   content: string;
   iconImgSrc: string;
   imgAlt: string;
   members: QuestionSheetCandidate[];
   makePick: (v: { pickId: string; skip: boolean }) => void;
+  earnedCoin?: number;
+  afterPick: () => void;
 }) {
   const [selection, setSelection] = useState<number | null>(null);
   const [showIndex, setShowIndex] = useState(0);
   const [shuffledMembers, setShuffledMembers] = useState<
     QuestionSheetCandidate[]
   >([]);
+  const [displayingEarnedCoin, setDisplayingEarnedCoin] = useState<
+    number | null
+  >(null);
 
   // Shuffle members when the component mounts or when members prop changes
   useEffect(() => {
@@ -111,6 +134,28 @@ function VoteQuestions({
 
   const isShuffleDisabled = showIndex !== 0 || shuffledMembers.length <= 4;
 
+  const cleanAndNext = () => {
+    setSelection(null);
+    setDisplayingEarnedCoin(null);
+    afterPick();
+  };
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (earnedCoin) {
+      setTimeout(() => {
+        setDisplayingEarnedCoin(earnedCoin);
+        setTimeout(() => {
+          cleanAndNext();
+        }, 1500);
+      }, 1000);
+    }
+
+    if (earnedCoin === 0) {
+      cleanAndNext();
+    }
+  }, [earnedCoin]);
+
   return (
     <>
       <div className="flex flex-col items-center gap-3 px-4">
@@ -124,18 +169,16 @@ function VoteQuestions({
       <div className="grid grid-cols-2 gap-3">
         {displayedMembers.map((v, i) => (
           <AnswerCard
-            key={v.memberId}
+            key={content + v.memberId}
             selected={selection === i}
-            onClick={() => {
+            onClick={async () => {
               setSelection(i);
-              setTimeout(() => {
-                makePick({ pickId: v.memberId, skip: false });
-                setSelection(null);
-              }, 500);
+              makePick({ pickId: v.memberId, skip: false });
             }}
             name={v.memberName}
             imgSrc={v.memberImageUrl}
             description={v.platform}
+            displayingEarnedCoin={selection === i ? displayingEarnedCoin : null}
           />
         ))}
       </div>
@@ -196,12 +239,14 @@ function AnswerCard({
   imgSrc,
   selected,
   onClick,
+  displayingEarnedCoin,
 }: {
   name: string;
   description: string;
   imgSrc: string;
   selected: boolean;
   onClick: () => void;
+  displayingEarnedCoin: number | null;
 }) {
   const [ripple, event] = useMouseOverRipple({
     cancelAutomatically: true,
@@ -223,14 +268,28 @@ function AnswerCard({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-center">
           <img
-            src={imgSrc}
+            src={displayingEarnedCoin ? GemGif : imgSrc}
             alt={name}
             className="w-6 h-6 xs:w-16 xs:h-16 rounded-full"
           />
         </div>
         <div className="flex flex-col items-center justify-center space-y-[2px]">
-          <h6 className="t-h6-sb-15 text-gray084">{name}</h6>
-          <p className="t-c2-m-12 text-gray054">{description}</p>
+          <TextTransition
+            as="h6"
+            className="w-full min-h-[20px]"
+            typoClassName="t-h6-sb-15 text-gray084"
+            oldText={name}
+            newText={`${displayingEarnedCoin} Gem`}
+            showNewText={!!displayingEarnedCoin}
+          />
+          <TextTransition
+            as="p"
+            className="w-full min-h-[14px]"
+            typoClassName="t-c2-m-12 text-gray054"
+            oldText={description}
+            newText="획득!"
+            showNewText={!!displayingEarnedCoin}
+          />
         </div>
       </div>
     </button>
@@ -262,3 +321,44 @@ const useMouseOverRipple = customRipple({
     ref.current.addEventListener("mouseout", event);
   },
 });
+
+function TextTransition<T extends ElementType = "span">({
+  oldText,
+  newText,
+  showNewText,
+  className,
+  typoClassName,
+  as,
+}: {
+  oldText: string;
+  newText: string;
+  showNewText: boolean;
+  className?: string;
+  typoClassName?: string;
+  as?: T;
+}) {
+  const Component = as || "span";
+
+  return (
+    <div className={clsx("relative", className)}>
+      <Component
+        className={clsx(
+          typoClassName,
+          "absolute left-0 right-0  transition-opacity duration-500",
+          showNewText ? "opacity-0" : "opacity-100",
+        )}
+      >
+        {oldText}
+      </Component>
+      <Component
+        className={clsx(
+          typoClassName,
+          "absolute left-0 right-0  transition-opacity duration-500",
+          showNewText ? "opacity-100" : "opacity-0",
+        )}
+      >
+        {newText}
+      </Component>
+    </div>
+  );
+}
