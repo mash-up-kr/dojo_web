@@ -83,7 +83,6 @@ export const MySpace = () => {
             <FriendItem
               key={friend.memberId}
               friendInfo={friend}
-              isMyFriend
               className="px-0"
             />
           ))}

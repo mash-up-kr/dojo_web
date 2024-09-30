@@ -1,5 +1,9 @@
 import { useGetFriends } from "@/generated/member-relation/member-relation";
-import { useCreateFriend, useMe } from "@/generated/member/member";
+import {
+  useCreateFriend,
+  useDeleteFriend,
+  useMe,
+} from "@/generated/member/member";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { type FC, useEffect } from "react";
 import { Button } from "./common/Button";
@@ -12,17 +16,26 @@ type FriendAddButtonProps = {
 export const FriendAddButton: FC<FriendAddButtonProps> = ({ memberId }) => {
   const { push } = useMyFlow();
   const { data: meRes } = useMe();
-  const { mutate, isSuccess, isError } = useCreateFriend();
+  const {
+    mutate: createFriend,
+    isSuccess: isCreateFriendSuccess,
+    isError: isCreateFriendError,
+  } = useCreateFriend();
+  const {
+    mutate: deleteFriend,
+    isSuccess: isDeleteFriendSuccess,
+    isError: isDeleteFriendError,
+  } = useDeleteFriend();
   const { data: friendRes, refetch: refetchFriends } = useGetFriends();
   const isFriend = friendRes?.data?.some(
     (friend) => friend.memberId === memberId,
   );
 
-  const onClick = () => {
+  const onClickCreateFriendButton = () => {
     if (!meRes?.data?.memberId) {
       return;
     }
-    mutate({
+    createFriend({
       data: {
         fromMemberId: meRes?.data?.memberId,
         toMemberId: memberId,
@@ -30,35 +43,59 @@ export const FriendAddButton: FC<FriendAddButtonProps> = ({ memberId }) => {
     });
   };
 
+  const onClickDeleteFriendButton = () => {
+    deleteFriend({
+      data: {
+        toMemberId: memberId,
+      },
+    });
+  };
+
   useEffect(() => {
-    if (isSuccess) {
-      refetchFriends();
+    if (isCreateFriendSuccess) {
       Toast.alert(
         "친구가 추가되었습니다! 친구는 어떤 픽을 받았는지 확인해보세요 🙂",
         () => push("SpacePage", { memberId }),
       );
     }
-  }, [isSuccess, push, memberId, refetchFriends]);
+  }, [isCreateFriendSuccess, push, memberId]);
 
   useEffect(() => {
-    if (isError) {
+    if (isDeleteFriendSuccess) {
+      Toast.alert("친구가 해제되었습니다", () => {});
+      refetchFriends();
+    }
+  }, [isDeleteFriendSuccess, refetchFriends]);
+
+  useEffect(() => {
+    if (isCreateFriendError || isDeleteFriendError) {
       Toast.alert(
-        "친구가 정상적으로 추가되지 않았습니다. 다시 시도해 주세요.",
+        "정상적으로 처리되지 않았습니다. 다시 시도해 주세요.",
         () => {},
       );
     }
-  }, [isError]);
+  }, [isCreateFriendError, isDeleteFriendError]);
 
-  return (
+  return isFriend ? (
     <Button
       type="button"
-      disabled={isFriend}
-      buttonType={isFriend ? "disable" : "primary"}
       size="xs"
-      onClick={onClick}
-      className="w-[69px]"
+      onClick={onClickDeleteFriendButton}
+      className="w-fit"
+      buttonType="line"
     >
-      {isFriend ? "추가됨" : "친구 추가"}
+      친구 해제
+    </Button>
+  ) : (
+    <Button
+      type="button"
+      disabled={isCreateFriendSuccess}
+      buttonType={isCreateFriendSuccess ? "disable" : "primary"}
+      size="xs"
+      onClick={onClickCreateFriendButton}
+      className="w-fit min-w-[69px]"
+    >
+      {isCreateFriendSuccess ? "추가됨" : "친구 추가"}
     </Button>
   );
 };

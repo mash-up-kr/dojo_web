@@ -8,15 +8,10 @@ import Image from "./common/Image";
 
 type FriendItemProps = {
   friendInfo: FriendInfoResponse;
-  isMyFriend?: boolean;
   className?: string;
 };
 
-export const FriendItem: FC<FriendItemProps> = ({
-  friendInfo,
-  isMyFriend,
-  className,
-}) => {
+export const FriendItem: FC<FriendItemProps> = ({ friendInfo, className }) => {
   const { push } = useMyFlow();
   const onClick = () => {
     push("SpacePage", { memberId: friendInfo.memberId });
@@ -44,7 +39,7 @@ export const FriendItem: FC<FriendItemProps> = ({
           </p>
         </div>
       </button>
-      {!isMyFriend && <FriendAddButton memberId={friendInfo.memberId} />}
+      <FriendAddButton memberId={friendInfo.memberId} />
     </li>
   );
 };

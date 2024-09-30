@@ -13,7 +13,7 @@ const variants = tv({
   variants: {
     type: {
       primary: "bg-purple100 text-offWhite010 t-c1-sb-13 border-0",
-      line: "bg-offWhite010 text-purple100 border-solid border-purple100 border-[1px]",
+      line: "bg-offWhite010 text-purple100 border-solid t-c1-sb-13 border-purple100 border-[1px]",
       disable: "bg-gray022 text-offWhite010 border-0",
     },
     disabled: {

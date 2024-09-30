@@ -33,13 +33,7 @@ export const FriendSearchPage: ActivityComponentType = () => {
         ) : (
           <ul className="mb-2">
             {searchMemberRes?.data?.map((member) => {
-              return (
-                <FriendItem
-                  key={member.memberId}
-                  friendInfo={member}
-                  isMyFriend={member.isFriend}
-                />
-              );
+              return <FriendItem key={member.memberId} friendInfo={member} />;
             })}
           </ul>
         ))}
