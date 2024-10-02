@@ -8,22 +8,19 @@ import {
 import { Link } from "@/stackflow/Link";
 import { getRandomItems } from "@/utils/getRandomItems";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
-import { type ActivityComponentType, useActivity } from "@stackflow/react";
+import type { ActivityComponentType } from "@stackflow/react";
 import { useEffect } from "react";
 import { SearchInput } from "../SearchInput";
 
 export const FriendMainPage: ActivityComponentType = () => {
-  const { transitionState } = useActivity();
   const { data: recommendFriendRes, refetch: refetchRecommendFriends } =
     useGetRecommendFriends();
   const { data: friendRes, refetch: refectchFriends } = useGetFriends();
 
   useEffect(() => {
-    if (transitionState === "enter-active") {
-      refetchRecommendFriends();
-      refectchFriends();
-    }
-  }, [transitionState, refectchFriends, refetchRecommendFriends]);
+    refetchRecommendFriends();
+    refectchFriends();
+  }, [window.location.pathname, refectchFriends, refetchRecommendFriends]);
 
   return (
     <AppScreen>
