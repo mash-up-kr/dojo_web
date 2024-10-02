@@ -53,7 +53,7 @@ export const MyProfile = memo(
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <Link
-              activityName="OnBoardPage"
+              activityName="ProfilePage"
               activityParams={{}}
               className="relative"
             >

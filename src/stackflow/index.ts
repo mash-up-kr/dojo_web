@@ -5,6 +5,7 @@ import { LogInPage } from "@/pages/login";
 import { MyPickPage } from "@/pages/my-pick";
 import { MyPickDetailPage } from "@/pages/my-pick-detail";
 import { OnBoardPage } from "@/pages/onboard/OnBoardPage";
+import { ProfilePage } from "@/pages/profile/ProfilePage";
 import { SpacePage } from "@/pages/space";
 import { VoteDonePage } from "@/pages/vote/VoteDone";
 import { VotePage } from "@/pages/vote/VotePage";
@@ -20,6 +21,7 @@ export const routes = {
   MyPickPage: "/my-pick", // OK
   MyPickDetailPage: "/my-pick/:questionId", // OK
   SpacePage: "/space/:memberId", // OK
+  ProfilePage: "/profile",
   OnBoardPage: "/onboard", // OK
   FriendMainPage: "/friend", // OK
   FriendRecommendPage: "/friend/recommend", // OK
@@ -46,6 +48,7 @@ export const { Stack, activities } = stackflow({
     MyPickDetailPage,
     SpacePage,
     OnBoardPage,
+    ProfilePage,
     FriendMainPage,
     FriendSearchPage,
     FriendRecommendPage,
