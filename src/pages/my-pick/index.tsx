@@ -13,29 +13,25 @@ export const MyPickPage = () => {
 
   return (
     <AppScreen>
-      <div className="h-full flex flex-col">
-        <Header title="내가 받은 픽" left={<BackButton />} />
-        <div className="flex flex-col flex-1">
-          <div className="flex items-center space-x-2 px-4 py-1.5 sticky top-[52px] bg-offWhite010">
-            <ChipButton
-              isActive={selectedChipFilter === "LATEST"}
-              onClick={() => setSelectedChipFilter("LATEST")}
-            >
-              최신 Pick 순
-            </ChipButton>
-            <ChipButton
-              isActive={selectedChipFilter === "MOST_PICKED"}
-              onClick={() => setSelectedChipFilter("MOST_PICKED")}
-            >
-              Pick 많은 순
-            </ChipButton>
-          </div>
-          <Suspense
-            fallback={<DeferredComponent>loading...</DeferredComponent>}
+      <Header title="내가 받은 픽" left={<BackButton />} />
+      <div className="flex flex-col flex-1">
+        <div className="flex items-center space-x-2 px-4 py-1.5 sticky top-[52px] bg-offWhite010">
+          <ChipButton
+            isActive={selectedChipFilter === "LATEST"}
+            onClick={() => setSelectedChipFilter("LATEST")}
           >
-            <PickCardList sort={selectedChipFilter} />
-          </Suspense>
+            최신 Pick 순
+          </ChipButton>
+          <ChipButton
+            isActive={selectedChipFilter === "MOST_PICKED"}
+            onClick={() => setSelectedChipFilter("MOST_PICKED")}
+          >
+            Pick 많은 순
+          </ChipButton>
         </div>
+        <Suspense fallback={<DeferredComponent>loading...</DeferredComponent>}>
+          <PickCardList sort={selectedChipFilter} />
+        </Suspense>
       </div>
     </AppScreen>
   );
