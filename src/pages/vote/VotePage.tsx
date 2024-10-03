@@ -184,10 +184,7 @@ function VoteQuestions({
       </div>
       <div className="flex justify-between align-middle w-full mt-auto">
         <ShuffleButton disabled={isShuffleDisabled} onClick={handleShuffle} />
-        <SkipButton
-          disabled={isShuffleDisabled}
-          onClick={() => makePick({ pickId: "", skip: true })}
-        />
+        <SkipButton onClick={() => makePick({ pickId: "", skip: true })} />
       </div>
     </>
   );
@@ -214,16 +211,13 @@ function ShuffleButton({
 }
 
 function SkipButton({
-  disabled,
   onClick,
 }: {
-  disabled: boolean;
   onClick: () => void;
 }) {
   return (
     <button
       className=" group flex gap-1 items-center py-2 px-4 rounded-10 bg-offWhite010/30 disabled:text-gray040"
-      disabled={disabled}
       type="button"
       onClick={onClick}
     >

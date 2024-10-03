@@ -1,6 +1,7 @@
-import GEM from "@/assets/ic22_dia.svg?react";
+import GemImage from "@/assets/gem.png";
 import { BackButton } from "@/components/common/BackButton";
 import { Header } from "@/components/common/Header";
+import Image from "@/components/common/Image";
 import { useGetCurrentCoin } from "@/generated/coin/coin";
 import type { ReceivedPickDetail } from "@/generated/model";
 import { getGetPickDetailQueryOptions } from "@/generated/pick/pick";
@@ -77,9 +78,8 @@ export const MyPickDetailPage: ActivityComponentType<MyPickDetailPageProps> = ({
         title={isIntersecting ? "" : question.questionContent}
         left={<BackButton />}
         right={
-          // TODO: GEM 개수 API 연동
-          <div className="flex space-x-[2px] items-center">
-            <GEM />
+          <div className="flex gap-1 items-center">
+            <Image src={GemImage} className="w-[18px] h-[18px]" />
             <span className="t-h6-sb-15">{coin ?? "-"}</span>
           </div>
         }
