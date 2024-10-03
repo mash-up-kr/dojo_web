@@ -1,123 +1,133 @@
-import { Button } from "@/components/common/Button";
 import { Header } from "@/components/common/Header";
-import Image from "@/components/common/Image";
-import { Toast } from "@/components/common/Toast";
-import { uploadInfo } from "@/generated/image/image";
-import { useMe, useUpdate } from "@/generated/member/member";
+
 import { useMyFlow } from "@/stackflow/useMyFlow";
-import { getPlatformText } from "@/utils/getPlatformText";
+
+import onboardVideo1 from "@/assets/onboard_video_1.mp4";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
+
 import type { ActivityComponentType } from "@stackflow/react";
-import axios from "axios";
-import { type FC, useRef } from "react";
+import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-type OnBoardPageProps = {
-  afterLogin?: boolean;
-};
+import "swiper/css";
+import "swiper/css/pagination";
+import "./swiper.css";
+import { Button } from "@/components/common/Button";
+import { useState } from "react";
 
-export const OnBoardPage: ActivityComponentType<OnBoardPageProps> = ({
-  params,
-}) => {
-  const { afterLogin } = params;
-  const { data: meRes, refetch: refectchMe } = useMe();
-  const { mutate: updateProfile } = useUpdate({
-    mutation: { onSuccess: () => refectchMe() },
-  });
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      try {
-        const { data } = await uploadInfo({ contentType: "JPEG" });
-        if (!data) throw new Error("알수 없는 오류 발생");
-        const { uuid, uploadUrl } = data;
-        await axios.put(uploadUrl, file, {
-          headers: {
-            "Content-Type": file.type,
-          },
-        });
-        updateProfile({
-          id: meRes?.data?.memberId ?? "",
-          data: { profileImageId: uuid },
-        });
-      } catch (e) {
-        if (e instanceof Error) {
-          Toast.alert(e.message, () => {});
-        } else {
-          console.log(e);
-        }
-      }
-    }
+export const OnBoardPage: ActivityComponentType = () => {
+  const { push } = useMyFlow();
+  const [slideIndex, setSlideIndex] = useState<number>();
+  const goToVotePage = () => {
+    push("VotePage", {});
   };
 
   return (
     <AppScreen>
       <div>
-        <Header right={<ConfirmButton afterLogin={afterLogin} />} />
-        <main className="flex flex-col items-center">
-          <div className="flex flex-col items-center w-[280px] mt-[140px]">
-            <Image
-              src={meRes?.data?.profileImageUrl}
-              alt="Profile Image"
-              className="w-[88px] h-[88px] border border-gray005"
-            />
-            <div className="mt-3 flex flex-col items-center space-y-1">
-              <h1 className="t-h4-b-20">{meRes?.data?.memberName}</h1>
-              <p className="t-b3-r-14 text-gray054">
-                {meRes?.data?.ordinal}기{" "}
-                {getPlatformText(meRes?.data?.platform ?? "UNKNOWN")}
-              </p>
-            </div>
-            <Button
-              size="md"
-              buttonType="line"
-              className="mt-8"
-              onClick={handleButtonClick}
+        <Header
+          right={
+            <button
+              type="button"
+              className="t-h5-sb-17 text-gray054"
+              onClick={goToVotePage}
             >
-              프로필 사진 변경하기
-            </Button>
-            <input
-              type="file"
-              accept=".png, .jpeg, .jpg"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              onChange={handleFileChange}
-            />
-          </div>
+              skip
+            </button>
+          }
+        />
+        <main className="flex flex-col items-center gap-10 mt-5 px-4 w-full">
+          <Swiper
+            modules={[Pagination]}
+            spaceBetween={16}
+            slidesPerView={1}
+            className="w-full"
+            pagination={
+              slideContentList.length - 1 === slideIndex
+                ? false
+                : {
+                    clickable: true,
+                  }
+            }
+            onInit={(swiper) => setSlideIndex(swiper.realIndex)}
+            onSlideChange={(swiper) => setSlideIndex(swiper.realIndex)}
+          >
+            {Array.from({ length: slideContentList.length }).map((_, index) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              <SwiperSlide key={index}>
+                <Slide index={index} />
+                {index === slideContentList.length - 1 && (
+                  <Button className="mt-11" onClick={goToVotePage}>
+                    지금 바로 투표하기!
+                  </Button>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </main>
       </div>
     </AppScreen>
   );
 };
 
-const ConfirmButton: FC<OnBoardPageProps> = ({ afterLogin }) => {
-  const { push } = useMyFlow();
+const slideContentList = [
+  {
+    videoSrc: onboardVideo1,
+    description: (
+      <>
+        질문을 보고
+        <br />
+        가장 잘 어울리는 사람에게
+        <br />
+        <span className="text-purple100">Pick하고 Gem을 받아요!</span>💎
+      </>
+    ),
+  },
+  {
+    videoSrc: onboardVideo1,
+    description: (
+      <>
+        후보자 중 Pick할 사람이 없나요?🥲
+        <br />각 질문마다 1회 <span className="text-purple100">셔플</span>{" "}
+        그리고
+        <br />
+        <span className="text-purple100">스킵</span>을 할 수 있어요!
+      </>
+    ),
+  },
+  {
+    videoSrc: onboardVideo1,
+    description: (
+      <>
+        다양한 사람들을 Pick하고 싶나요?🙋‍♀️
+        <br />
+        <span className="text-purple100">친구 추가</span>를 하면 후보지에서
+        <br />더 자주 볼 수 있어요!
+      </>
+    ),
+  },
+  {
+    videoSrc: onboardVideo1,
+    description: (
+      <>
+        나의 Gem으로
+        <br />
+        나를 Pick한 사람의 정보를 확인해요!👻
+      </>
+    ),
+  },
+];
 
-  const onClick = () => {
-    if (afterLogin) {
-      push("VotePage", {});
-    } else {
-      window.history.back();
-    }
-  };
-
+const Slide = ({ index }: { index: number }) => {
+  const { videoSrc, description } = slideContentList[index];
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="t-h5-sb-17 text-purple100"
-    >
-      {afterLogin ? "다음" : "확인"}
-    </button>
+    <div>
+      <video autoPlay muted loop>
+        <source src={videoSrc} type="video/mp4" />
+        <track src="subtitles.vtt" kind="subtitles" default />
+        당신의 브라우저는 비디오 태그를 지원하지 않습니다.
+      </video>
+      <p className="mt-10 t-h5-sb-17 text-center">{description}</p>
+    </div>
   );
 };

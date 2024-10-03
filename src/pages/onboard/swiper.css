@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.swiper-pagination {
+  @apply absolute !bottom-3
+}
+
+.swiper-pagination-bullet {
+  @apply w-5 h-1 bg-gray012 rounded-16 opacity-100; 
+}
+  
+.swiper-pagination-bullet-active {
+  @apply bg-purple100; 
+}
