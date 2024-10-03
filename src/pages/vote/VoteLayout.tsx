@@ -30,12 +30,12 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
             <Link
               activityName="MyPickPage"
               activityParams={{}}
-              className="flex justify-center align-middle relative"
+              className="flex justify-center items-center relative border-[1px] w-[52px] border-solid border-purple100 rounded-[19px]"
               onClick={checkNewPickCount}
             >
-              <Image src={PickImage} className="w-10 my-auto !rounded-0" />
+              <span className="t-h6-b-15 text-purple100">Pick</span>
               {hasNewPick && (
-                <div className="absolute -right-1 top-1.5 rounded-full w-2 h-2 bg-[red]" />
+                <div className="absolute -right-[4px] -top-[4px] rounded-full w-1.5 h-1.5 bg-[red]" />
               )}
             </Link>
             <Link
@@ -46,7 +46,6 @@ export function VoteLayout({ children }: { children: React.ReactNode }) {
                 src={meRes?.data?.profileImageUrl}
                 className="w-8 h-8 bg-gray084 rounded-full border border-gray064"
               />
-              <NavIcon className="absolute -bottom-[1px] -right-[1px]" />
             </Link>
           </div>
         }
