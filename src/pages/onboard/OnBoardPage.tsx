@@ -128,7 +128,7 @@ const Slide = ({ index }: { index: number }) => {
   const { videoSrc, description } = slideContentList[index];
   return (
     <div>
-      <video autoPlay muted loop>
+      <video autoPlay muted loop playsInline>
         <source src={videoSrc} type="video/mp4" />
         <track src="subtitles.vtt" kind="subtitles" default />
         당신의 브라우저는 비디오 태그를 지원하지 않습니다.
