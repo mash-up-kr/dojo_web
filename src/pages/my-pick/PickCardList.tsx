@@ -13,6 +13,7 @@ export const PickCardList = ({
   const { data } = useSuspenseQuery(
     getGetReceivedPickListQueryOptions({
       sort,
+      pageSize: "1000",
     }),
   );
 
