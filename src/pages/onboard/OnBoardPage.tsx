@@ -3,6 +3,9 @@ import { Header } from "@/components/common/Header";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 
 import onboardVideo1 from "@/assets/onboard_video_1.mp4";
+import onboardVideo2 from "@/assets/onboard_video_2.mp4";
+import onboardVideo3 from "@/assets/onboard_video_3.mp4";
+import onboardVideo4 from "@/assets/onboard_video_4.mp4";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 
 import type { ActivityComponentType } from "@stackflow/react";
@@ -90,7 +93,7 @@ const slideContentList = [
     ),
   },
   {
-    videoSrc: onboardVideo1,
+    videoSrc: onboardVideo2,
     description: (
       <>
         후보자 중 Pick할 사람이 없나요?🥲
@@ -102,7 +105,7 @@ const slideContentList = [
     ),
   },
   {
-    videoSrc: onboardVideo1,
+    videoSrc: onboardVideo3,
     description: (
       <>
         다양한 사람들을 Pick하고 싶나요?🙋‍♀️
@@ -113,7 +116,7 @@ const slideContentList = [
     ),
   },
   {
-    videoSrc: onboardVideo1,
+    videoSrc: onboardVideo4,
     description: (
       <>
         나의 Gem으로
