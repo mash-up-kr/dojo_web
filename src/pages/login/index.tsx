@@ -35,9 +35,7 @@ export const LogInPage: ActivityComponentType = () => {
             style={{ backgroundColor: "#fee500" }}
           >
             <KAKAOTALK width={18} height={18} />
-            <span className="t-b2-m-15">
-              카카오 로그인은 아니지만 로그인하기
-            </span>
+            <span className="t-b2-m-15">로그인하기</span>
           </button>
         </main>
       </div>
