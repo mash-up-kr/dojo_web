@@ -1,6 +1,7 @@
 import { Toast } from "@/components/common/Toast";
 import { me, useLogin } from "@/generated/member/member";
 import { useMyFlow } from "@/stackflow/useMyFlow";
+import { checkAlreadyCompleteOnboard } from "@/utils/onboard";
 import Cookies from "js-cookie";
 import { useCallback, useEffect } from "react";
 
@@ -24,6 +25,10 @@ export const useLoginHandler = () => {
     if (hasProfile) {
       push("ProfilePage", { afterLogin: true });
       return;
+    }
+
+    if (!checkAlreadyCompleteOnboard()) {
+      push("OnBoardPage", {});
     }
   }, [push]);
 

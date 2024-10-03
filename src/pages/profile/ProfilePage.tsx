@@ -6,6 +6,7 @@ import { uploadInfo } from "@/generated/image/image";
 import { useMe, useUpdate } from "@/generated/member/member";
 import { useMyFlow } from "@/stackflow/useMyFlow";
 import { getPlatformText } from "@/utils/getPlatformText";
+import { checkAlreadyCompleteOnboard } from "@/utils/onboard";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
 import type { ActivityComponentType } from "@stackflow/react";
 import axios from "axios";
@@ -105,7 +106,11 @@ const ConfirmButton: FC<ProfilePageProps> = ({ afterLogin }) => {
 
   const onClick = () => {
     if (afterLogin) {
-      push("VotePage", {});
+      if (checkAlreadyCompleteOnboard()) {
+        push("VotePage", {});
+      } else {
+        push("OnBoardPage", {});
+      }
     } else {
       window.history.back();
     }

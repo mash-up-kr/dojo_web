@@ -13,6 +13,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "./swiper.css";
 import { Button } from "@/components/common/Button";
+import { saveOnboardCompleteFlag } from "@/utils/onboard";
 import { useState } from "react";
 
 export const OnBoardPage: ActivityComponentType = () => {
@@ -20,6 +21,11 @@ export const OnBoardPage: ActivityComponentType = () => {
   const [slideIndex, setSlideIndex] = useState<number>();
   const goToVotePage = () => {
     push("VotePage", {});
+  };
+
+  const onClickCompleteButton = () => {
+    saveOnboardCompleteFlag();
+    goToVotePage();
   };
 
   return (
@@ -57,7 +63,7 @@ export const OnBoardPage: ActivityComponentType = () => {
               <SwiperSlide key={index}>
                 <Slide index={index} />
                 {index === slideContentList.length - 1 && (
-                  <Button className="mt-11" onClick={goToVotePage}>
+                  <Button className="mt-11" onClick={onClickCompleteButton}>
                     지금 바로 투표하기!
                   </Button>
                 )}
