@@ -57,7 +57,7 @@ function VotePageInner() {
   }
   return (
     <VoteLayout>
-      <main className="flex flex-col gap-3 pt-[52px] pb-6 px-4 items-center h-full">
+      <main className="flex flex-col gap-3 pt-[52px] pb-6 px-8 items-center h-full">
         <Indicator current={qIndex} total={data.sheetTotalCount} />
         <VoteQuestions
           content={question.questionContent}
@@ -166,7 +166,7 @@ function VoteQuestions({
           <img src={iconImgSrc} alt={imgAlt} className="w-full" />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="w-full grid grid-cols-2 gap-3 -mt-2">
         {displayedMembers.map((v, i) => (
           <AnswerCard
             key={content + v.memberId}
@@ -182,7 +182,7 @@ function VoteQuestions({
           />
         ))}
       </div>
-      <div className="flex justify-between align-middle w-full">
+      <div className="flex justify-between align-middle w-full mt-auto">
         <ShuffleButton disabled={isShuffleDisabled} onClick={handleShuffle} />
         <SkipButton
           disabled={isShuffleDisabled}
@@ -222,7 +222,7 @@ function SkipButton({
 }) {
   return (
     <button
-      className="group flex gap-1 items-center py-2 px-4 rounded-10 bg-offWhite010/30 disabled:text-gray040"
+      className=" group flex gap-1 items-center py-2 px-4 rounded-10 bg-offWhite010/30 disabled:text-gray040"
       disabled={disabled}
       type="button"
       onClick={onClick}
@@ -255,7 +255,7 @@ function AnswerCard({
   return (
     <button
       className={clsx(
-        "odd:justify-self-end w-36 rounded-10 py-3 transition-colors duration-300",
+        "w-full odd:justify-self-end  rounded-10 py-3 transition-colors duration-300",
         selected ? "bg-offWhite010" : "bg-offWhite010/40",
       )}
       type="button"
