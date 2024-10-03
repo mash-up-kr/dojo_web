@@ -1,5 +1,4 @@
 import MashipLogoGif from "@/assets/Maship.gif";
-import KAKAOTALK from "@/assets/kakaotalk.svg?react";
 import { Header, HeaderLogo } from "@/components/common/Header";
 import { getGradientBg } from "@/utils/getGradientBg";
 import { AppScreen } from "@stackflow/plugin-basic-ui";
@@ -31,11 +30,9 @@ export const LogInPage: ActivityComponentType = () => {
           <button
             type="button"
             onClick={onClickLoginButton}
-            className="size-full flex gap-2 justify-center items-center py-3 px-4 rounded-8 h-min"
-            style={{ backgroundColor: "#fee500" }}
+            className="size-full flex gap-2 justify-center items-center py-3 px-4 rounded-8 h-min bg-purple100"
           >
-            <KAKAOTALK width={18} height={18} />
-            <span className="t-b2-m-15">로그인하기</span>
+            <span className="t-b2-m-15 text-offWhite010">로그인하기</span>
           </button>
         </main>
       </div>
