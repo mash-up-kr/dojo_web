@@ -7,6 +7,7 @@ import { Toaster } from "sonner";
 // import { useMyFlow } from "./stackflow/useMyFlow";
 
 export function App({ children }: { children: React.ReactNode }) {
+  // console.log("App render");
   return (
     <>
       {/* <SSEAlert /> */}
