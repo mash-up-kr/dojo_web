@@ -1,6 +1,3 @@
-import NavIcon from "@/assets/ic_12_menu.svg?react";
-
-import PickImage from "@/assets/Pick.png";
 import { Header, HeaderLogo } from "@/components/common/Header";
 import Image from "@/components/common/Image";
 import { useMe } from "@/generated/member/member";
